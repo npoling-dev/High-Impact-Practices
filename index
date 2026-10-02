@@ -1,1250 +1,671 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TAMU High-Impact Practices (HIPs) Course Profile Tool</title>
-  <style>
-    :root {
-      --tamu-maroon: #500000;
-      --tamu-dark-maroon: #3c0000;
-      --tamu-gold: #d4af37;
-      --tamu-gray-dark: #1e293b;
-      --tamu-gray-light: #f8fafc;
-      --tamu-border: #cbd5e1;
-      
-      --stem-bg: #f0f9ff;
-      --stem-border: #bae6fd;
-      --stem-badge-bg: #0284c7;
-      --stem-badge-text: #ffffff;
-      
-      --hum-bg: #fffbeb;
-      --hum-border: #fde68a;
-      --hum-badge-bg: #d97706;
-      --hum-badge-text: #ffffff;
-      
-      --bus-bg: #f0fdf4;
-      --bus-border: #bbf7d0;
-      --bus-badge-bg: #16a34a;
-      --bus-badge-text: #ffffff;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    }
-
-    body {
-      background-color: var(--tamu-gray-light);
-      color: var(--tamu-gray-dark);
-      padding: 24px;
-      line-height: 1.5;
-    }
-
-    .container {
-      max-width: 1350px;
-      margin: 0 auto;
-    }
-
-    header {
-      background: var(--tamu-maroon);
-      color: #ffffff;
-      padding: 28px 32px;
-      border-radius: 10px;
-      margin-bottom: 24px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      border-bottom: 5px solid var(--tamu-gold);
-    }
-
-    header h1 {
-      font-size: 1.8rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      margin-bottom: 6px;
-    }
-
-    header p {
-      font-size: 0.95rem;
-      opacity: 0.9;
-    }
-
-    .matrix-wrapper {
-      overflow-x: auto;
-      background: #ffffff;
-      border-radius: 10px;
-      padding: 20px;
-      border: 1px solid var(--tamu-border);
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    }
-
-    .matrix-grid {
-      display: grid;
-      grid-template-columns: 280px repeat(3, 1fr);
-      gap: 12px;
-      min-width: 1000px;
-    }
-
-    .grid-header {
-      background: #e2e8f0;
-      padding: 14px 16px;
-      font-weight: 700;
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      border-radius: 6px;
-      color: var(--tamu-gray-dark);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .grid-header .score-tag {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: #475569;
-      margin-top: 4px;
-      text-transform: none;
-    }
-
-    .quadrant-row-header {
-      grid-column: span 4;
-      background: var(--tamu-dark-maroon);
-      color: #ffffff;
-      padding: 12px 18px;
-      font-weight: 700;
-      font-size: 0.95rem;
-      border-radius: 6px;
-      margin-top: 14px;
-      letter-spacing: 0.04em;
-    }
-
-    .element-title-cell {
-      background: #ffffff;
-      padding: 16px;
-      border-radius: 6px;
-      border: 1px solid var(--tamu-border);
-      border-left: 5px solid var(--tamu-maroon);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .element-title-cell h3 {
-      font-size: 0.95rem;
-      color: var(--tamu-maroon);
-      margin-bottom: 6px;
-    }
-
-    .element-title-cell p {
-      font-size: 0.78rem;
-      color: #64748b;
-    }
-
-    .matrix-cell {
-      background: #ffffff;
-      padding: 16px;
-      border-radius: 6px;
-      border: 1px solid var(--tamu-border);
-      cursor: pointer;
-      transition: all 0.2s ease-in-out;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .matrix-cell:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 16px rgba(80, 0, 0, 0.12);
-      border-color: var(--tamu-maroon);
-    }
-
-    .cell-text {
-      font-size: 0.85rem;
-      color: var(--tamu-gray-dark);
-      margin-bottom: 12px;
-    }
-
-    .cell-action {
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: var(--tamu-maroon);
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(15, 23, 42, 0.65);
-      backdrop-filter: blur(4px);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-      padding: 20px;
-    }
-
-    .modal-overlay.active {
-      display: flex;
-    }
-
-    .modal-content {
-      background: #ffffff;
-      width: 100%;
-      max-width: 960px;
-      max-height: 90vh;
-      border-radius: 12px;
-      overflow-y: auto;
-      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25);
-      position: relative;
-    }
-
-    .modal-header {
-      background: var(--tamu-maroon);
-      color: #ffffff;
-      padding: 24px;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      border-bottom: 3px solid var(--tamu-gold);
-    }
-
-    .modal-header h2 {
-      font-size: 1.35rem;
-      margin-bottom: 4px;
-    }
-
-    .modal-header p {
-      font-size: 0.88rem;
-      opacity: 0.9;
-    }
-
-    .close-btn {
-      position: absolute;
-      top: 20px;
-      right: 24px;
-      background: rgba(255, 255, 255, 0.2);
-      color: #ffffff;
-      border: none;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      font-size: 1.2rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .close-btn:hover {
-      background: rgba(255, 255, 255, 0.4);
-    }
-
-    .modal-body {
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .track-card {
-      border-radius: 8px;
-      padding: 20px;
-      border: 1px solid var(--tamu-border);
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .track-card.stem {
-      background: var(--stem-bg);
-      border-color: var(--stem-border);
-    }
-
-    .track-card.humanities {
-      background: var(--hum-bg);
-      border-color: var(--hum-border);
-    }
-
-    .track-card.business {
-      background: var(--bus-bg);
-      border-color: var(--bus-border);
-    }
-
-    .track-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-      padding-bottom: 10px;
-    }
-
-    .track-badge {
-      font-size: 0.72rem;
-      font-weight: 700;
-      padding: 4px 10px;
-      border-radius: 4px;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-
-    .track-badge.stem {
-      background: var(--stem-badge-bg);
-      color: var(--stem-badge-text);
-    }
-
-    .track-badge.humanities {
-      background: var(--hum-badge-bg);
-      color: var(--hum-badge-text);
-    }
-
-    .track-badge.business {
-      background: var(--bus-badge-bg);
-      color: var(--bus-badge-text);
-    }
-
-    .discipline-title {
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--tamu-gray-dark);
-    }
-
-    .item-group {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .item-label {
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
-      color: var(--tamu-maroon);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .item-text {
-      font-size: 0.88rem;
-      color: #334155;
-      padding-left: 20px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAMU High-Impact Practices (HIPs) Course Profile Tool</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #printable-report, #printable-report * {
+                visibility: visible;
+            }
+            #printable-report {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                margin: 0;
+                padding: 20px;
+                box-shadow: none !important;
+                border: none !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
+        .bg-matrix-cell {
+            background-color: #f1f5f9;
+        }
+        .bg-tamu-maroon {
+            background-color: #500000;
+        }
+        .text-tamu-maroon {
+            color: #500000;
+        }
+        .border-tamu-maroon {
+            border-color: #500000;
+        }
+    </style>
 </head>
-<body>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col">
 
-  <div class="container">
-    <header>
-      <h1>TAMU High-Impact Practices (HIPs) Course Profile Tool</h1>
-      <p>Center for Teaching Excellence | Fidelity Matrix & Disciplinary Exemplars</p>
+    <!-- Header -->
+    <header class="bg-tamu-maroon text-white shadow-md no-print">
+        <div class="max-w-7xl mx-auto px-4 py-6 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div>
+                <div class="flex items-center gap-2">
+                    <i data-lucide="award" class="w-8 h-8 text-amber-400"></i>
+                    <h1 class="text-2xl font-bold tracking-tight">Texas A&M University</h1>
+                </div>
+                <p class="text-slate-200 text-sm mt-1">High-Impact Practices (HIPs) Course Profile & Design Tool</p>
+            </div>
+            <div class="flex items-center gap-3">
+                <span class="bg-amber-400 text-slate-900 text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider">
+                    All 4 Quadrants • 8 AAC&U Elements
+                </span>
+            </div>
+        </div>
     </header>
 
-    <div class="matrix-wrapper">
-      <div class="matrix-grid" id="matrixContainer"></div>
-    </div>
-  </div>
-
-  <div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close-btn" onclick="closeModal()">&times;</button>
-        <h2 id="modalTitle">Element Title</h2>
-        <p id="modalSubtitle">Quadrant & Scope Level</p>
-      </div>
-      <div class="modal-body" id="modalBody"></div>
-    </div>
-  </div>
-
-  <script>
-    const matrixData = [
-      {
-        quadrant: "QUADRANT A: ENGAGEMENT",
-        elements: [
-          {
-            title: "Interactions (Faculty/Peer)",
-            rationale: "Social Capital ROI: Measures the density of mentorship. Higher interaction scores predict higher alumni engagement and post-grad success.",
-            tiers: {
-              foundational: {
-                scope: "Foundational (Scope 1: Internal Classroom — Target: 8-13 pts)",
-                desc: "Faculty-led modeling; peers provide introductory feedback based on provided checklists.",
-                exemplars: [
-                  {
-                    track: "stem",
-                    trackLabel: "STEM Track",
-                    discipline: "Biology / Chemistry",
-                    outcome: "Apply standardized peer-review protocols to evaluate classmate laboratory calculation workflows.",
-                    activity: "Peer-Led Team Learning (PLTL) session where students cross-verify lab procedures using structured checklists.",
-                    assessment: "Peer Verification Signoff Sheet evaluated for diagnostic accuracy and feedback depth."
-                  },
-                  {
-                    track: "humanities",
-                    trackLabel: "Humanities & Social Sciences Track",
-                    discipline: "History / English",
-                    outcome: "Analyze peer thesis statements using instructor-modeled rubrics for logical argument structure.",
-                    activity: "Structured 'Fishbowl' peer review workshop evaluating essay introductions against formal thesis rubrics.",
-                    assessment: "Annotated Peer Thesis Review Rubric with actionable revision notes."
-                  },
-                  {
-                    track: "business",
-                    trackLabel: "Business & Co-Curricular Track",
-                    discipline: "Management / Student Leadership",
-                    outcome: "Execute structured team peer-evaluations following established organizational communication norms.",
-                    activity: "Team charter orientation drafting ground rules and practicing introductory peer feedback scenarios.",
-                    assessment: "Completed Peer Feedback Worksheet and signed Team Operating Agreement."
-                  }
-                ]
-              },
-              applied: {
-                scope: "Applied (Scope 2: Campus & Community — Target: 14-19 pts)",
-                desc: "Iterative collaboration; peers provide formative critique; faculty acts as a 'Consultant.'",
-                exemplars: [
-                  {
-                    track: "stem",
-                    trackLabel: "STEM Track",
-                    discipline: "Civil Engineering",
-                    outcome: "Refine site design prototypes through formative critique sessions with faculty acting as engineering consultants.",
-                    activity: "Weekly studio 'Pin-Up' sessions presenting stormwater drainage models to faculty and peer reviewers.",
-                    assessment: "Design Iteration Log documenting how peer and instructor feedback altered the engineering draft."
-                  },
-                  {
-                    track: "humanities",
-                    trackLabel: "Humanities & Social Sciences Track",
-                    discipline: "Sociology / Communication",
-                    outcome: "Co-design community survey instruments through iterative peer feedback and instructor consultations.",
-                    activity: "Collaborative workshop revising qualitative survey questions based on pilot test feedback from campus groups.",
-                    assessment: "Survey Methodology Proposal accompanied by a Peer Revision & Response Matrix."
-                  },
-                  {
-                    track: "business",
-                    trackLabel: "Business & Co-Curricular Track",
-                    discipline: "Marketing / Campus Programs",
-                    outcome: "Execute multi-stage campaign planning with faculty acting as strategic advisors during project sprints.",
-                    activity: "Bi-weekly sprint review meetings where student project managers present campaign metrics to faculty advisors.",
-                    assessment: "Mid-Project Progress Memo with peer 360-degree performance evaluation summaries."
-                  }
-                ]
-              },
-              integrated: {
-                scope: "Integrated (Scope 3: External & Professional — Target: 20-24 pts)",
-                desc: "Sustained partnership; students and faculty/partners co-author or co-design the final product.",
-                exemplars: [
-                  {
-                    track: "stem",
-                    trackLabel: "STEM Track",
-                    discipline: "Physics / Biomedical Engineering",
-                    outcome: "Co-author original scientific findings alongside faculty and external lab sponsors for publication.",
-                    activity: "Year-long collaborative laboratory research sprints co-investigating novel biomedical compound delivery.",
-                    assessment: "Co-Authored Journal Manuscript draft and External Sponsor Technical Defense."
-                  },
-                  {
-                    track: "humanities",
-                    trackLabel: "Humanities & Social Sciences Track",
-                    discipline: "Public History / Fine Arts",
-                    outcome: "Co-curate a public museum exhibit in direct partnership with faculty and community archivists.",
-                    activity: "On-site archival curation and community oral history gathering with regional historical society directors.",
-                    assessment: "Public Exhibit Catalogue & External Partner Co-Design Evaluation."
-                  },
-                  {
-                    track: "business",
-                    trackLabel: "Business & Co-Curricular Track",
-                    discipline: "Executive Consulting / Non-Profit Governance",
-                    outcome: "Co-create long-term strategic growth frameworks alongside corporate or municipal leadership boards.",
-                    activity: "Executive advisory board meetings co-leading strategic policy design for external client organizations.",
-                    assessment: "Client-Signed Governance Strategy Deliverable and External Board Rating."
-                  }
-                ]
-              }
-            }
-          },
-          {
-            title: "Iterative Feedback",
-            rationale: "Efficiency Math: Formative feedback reduces 'D-F-W' (Drop/Fail/Withdraw) rates by catching learning gaps before the final assessment.",
-            tiers: {
-              foundational: {
-                scope: "Foundational (Scope 1: Internal Classroom — Target: 8-13 pts)",
-                desc: "Feedback focuses on accuracy, alignment with models, and basic skill acquisition.",
-                exemplars: [
-                  {
-                    track: "stem",
-                    trackLabel: "STEM Track",
-                    discipline: "Mathematics / Physics",
-                    outcome: "Correct technical calculation errors by incorporating instructor feedback on early homework drafts.",
-                    activity: "Two-stage homework submission process where Stage 1 receives targeted feedback on mathematical rigor.",
-                    assessment: "Revised Problem Set demonstrating error corrections and step-by-step logic."
-                  },
-                  {
-                    track: "humanities",
-                    trackLabel: "Humanities & Social Sciences Track",
-                    discipline: "English / Philosophy",
-                    outcome: "Refine paragraph unity and citation accuracy following low-stakes instructor writing feedback.",
-                    activity: "Writing center peer-review module focusing on citation formatting and structural thesis alignment.",
-                    assessment: "Draft Evolution Portfolio showing original submission, feedback notes, and final text."
-                  },
-                  {
-                    track: "business",
-                    trackLabel: "Business & Co-Curricular Track",
-                    discipline: "Accounting / Finance",
-                    outcome: "Identify spreadsheet formatting errors against standardized financial modeling guidelines.",
-                    activity: "In-class lab auditing financial spreadsheets using automated check formulas and instructor tips.",
-                    assessment: "Corrected Financial Statement Sheet with audit change log."
-                  }
-                ]
-              },
-              applied: {
-                scope: "Applied (Scope 2: Campus & Community — Target: 14-19 pts)",
-                desc: "Feedback focuses on the application of theory to practice and the quality of revisions.",
-                exemplars: [
-                  {
-                    track: "stem",
-                    trackLabel: "STEM Track",
-                    discipline: "Computer Science / GIS",
-                    outcome: "Modify spatial algorithms based on real-world dataset feedback provided by campus facilities staff.",
-                    activity: "Agile development sprint where campus planners test student software tools and log feature requests.",
-                    assessment: "Sprint Release Notes & Code Revision Documentation responding to user feedback."
-                  },
-                  {
-                    track: "humanities",
-                    trackLabel: "Humanities & Social Sciences Track",
-                    discipline: "Political Science / Urban Planning",
-                    outcome: "Adapt policy recommendation briefs based on formative feedback from local municipal officials.",
-                    activity: "Roundtable presentation of preliminary policy briefs to city staff, receiving live critique on feasibility.",
-                    assessment: "Revised Municipal Policy Brief incorporating partner feedback and feasibility adjustments."
-                  },
-                  {
-                    track: "business",
-                    trackLabel: "Business & Co-Curricular Track",
-                    discipline: "Supply Chain / Business Analytics",
-                    outcome: "Optimize supply chain logistics models in response to client critique on cost constraints.",
-                    activity: "Mid-semester client design review adjusting inventory models based on real-world constraints.",
-                    assessment: "Logistics Optimization Report featuring a dedicated 'Client Feedback Response' section."
-                  }
-                ]
-              },
-              integrated: {
-                scope: "Integrated (Scope 3: External & Professional — Target: 20-24 pts)",
-                desc: "Feedback focuses on the impact, professional ethics, and public reach of the final work.",
-                exemplars: [
-                  {
-                    track: "stem",
-                    trackLabel: "STEM Track",
-                    discipline: "Biomedical Devices / Data Science",
-                    outcome: "Refine medical device designs to adhere to professional regulatory and ethical standards.",
-                    activity: "Formal advisory board review with industry compliance officers evaluating device safety protocols.",
-                    assessment: "Regulatory Compliance Audit & Final Industrial Design Specification."
-                  },
-                  {
-                    track: "humanities",
-                    trackLabel: "Humanities & Social Sciences Track",
-                    discipline: "Journalism / Public Policy",
-                    outcome: "Publish investigative reports meeting professional editorial and media ethics standards.",
-                    activity: "Editorial board review cycles with professional journalists interrogating source credibility and ethics.",
-                    assessment: "Published News Feature or Policy Report with Editorial Signoff Certification."
-                  },
-                  {
-                    track: "business",
-                    trackLabel: "Business & Co-Curricular Track",
-                    discipline: "Entrepreneurship / Venture Capital",
-                    outcome: "Pitch scalable business models refined through feedback from external angel investor panels.",
-                    activity: "Venture pitch showcase receiving direct critique on market entry strategy and financial risk.",
-                    assessment: "Final Investment Prospectus & Executive Board Pitch Defense."
-                  }
-                ]
-              }
-            }
-          }
-        ]
-      },
-      {
-        quadrant: "QUADRANT B: CHALLENGE AND RIGOR",
-        elements: [
-          {
-            title: "Time & Effort",
-            rationale: "Retention Math: Research shows a direct correlation between 'time on task' in HIPs and student retention/graduation rates.",
-            tiers: {
-              foundational: {
-                scope: "Foundational (Scope 1: Internal Classroom — Target: 8-13 pts)",
-                desc: "Consistent engagement with the HIP over a term (<20 hours of engagement); focus on establishing workflow and habits.",
-                exemplars: [
-                  {
-                    track: "stem",
-                    trackLabel: "STEM Track",
-                    discipline: "General Chemistry / Biology",
-                    outcome: "Maintain a consistent weekly laboratory notebook meeting standardized scientific logging routines.",
-                    activity: "Weekly pre-lab prep work and post-lab observations totaling 15 hours across the semester.",
-                    assessment: "Weekly Lab Notebook Inspection evaluated on accuracy, timeliness, and consistency."
-                  },
-                  {
-                    track: "humanities",
-                    trackLabel: "Humanities & Social Sciences Track",
-                    discipline: "English Composition / Communications",
-                    outcome: "Sustain regular drafting and editing schedules across multiple short writing assignments.",
-                    activity: "Weekly 2-hour writing lab modules incorporating low-stakes editing exercises.",
-                    assessment: "Drafting Log and Completed Writing Portfolio."
-                  },
-                  {
-                    track: "business",
-                    trackLabel: "Business & Co-Curricular Track",
-                    discipline: "Introduction to Business / Org Leadership",
-                    outcome: "Demonstrate personal time-management habits using professional digital task boards.",
-                    activity: "Weekly project tracking updates logged in digital project management tools (e.g., Trello/Asana).",
-                    assessment: "Weekly Project Management Log & Task Completion Verification."
-                  }
-                ]
-              },
-              applied: {
-                scope: "Applied (Scope 2: Campus & Community — Target: 14-19 pts)",
-                desc: "Sustained intensity; significant out-of-class time (40–80 hours) dedicated to iterative project development.",
-                exemplars: [
-                  {
-                    track: "stem",
-                    trackLabel: "STEM Track",
-                    discipline: "Environmental Science / CURE",
-                    outcome: "Execute an extended multi-week campus environmental field sampling protocol requiring 50+ hours.",
-                    activity: "Bi-weekly field sampling trips, lab processing, and longitudinal data tracking across the campus watershed.",
-                    assessment: "Mid-Term Field Data Summary & Final Environmental Analysis Report."
-                  },
-                  {
-                    track: "humanities",
-                    trackLabel: "Humanities & Social Sciences Track",
-                    discipline: "Sociology / Anthropology",
-                    outcome: "Conduct extensive observational field research accumulating 60+ hours of qualitative community data.",
-                    activity: "Fieldwork observation hours, transcript coding, and qualitative data entry over 8 weeks.",
-                    assessment: "Fieldwork Transcript Archive & Qualitative Research Synthesis."
-                  },
-                  {
-                    track: "business",
-                    trackLabel: "Business & Co-Curricular Track",
-                    discipline: "Event Management / Marketing",
-                    outcome: "Coordinate semester-long campus marketing campaigns requiring 60+ total project hours.",
-                    activity: "Managing event logistics, social media marketing schedules, and live event setup teams.",
-                    assessment: "Campaign Operational Audit and Event Execution Metric Portfolio."
-                  }
-                ]
-              },
-              integrated: {
-                scope: "Integrated (Scope 3: External & Professional — Target: 20-24 pts)",
-                desc: "Deep, immersive investment (100+ hours); students manage complex timelines and competing priorities.",
-                exemplars: [
-                  {
-                    track: "stem",
-                    trackLabel: "STEM Track",
-                    discipline: "Engineering Senior Design / CS Capstone",
-                    outcome: "Manage full-lifecycle physical engineering fabrication requiring 120+ total team project hours.",
-                    activity: "Daily design fabrication, stress testing, and industry client status updates across 15 weeks.",
-                    assessment: "Senior Design Capstone Defense & Physical Prototype Sponsor Verification."
-                  },
-                  {
-                    track: "humanities",
-                    trackLabel: "Humanities & Social Sciences Track",
-                    discipline: "Clinical Student Teaching / International Internships",
-                    outcome: "Complete full-time professional immersion managing daily instructional or organizational tasks.",
-                    activity: "12-week full-time immersion (300+ hours) managing real-world client or classroom operations.",
-                    assessment: "Clinical Supervisor Evaluation & edTPA / Internship Capstone Portfolio."
-                  },
-                  {
-                    track: "business",
-                    trackLabel: "Business & Co-Curricular Track",
-                    discipline: "Student Organization Executive Leadership",
-                    outcome: "Direct year-round executive operations managing budgets and enterprise-scale projects.",
-                    activity: "Managing multi-team committee structures, fiscal budgets, and external partner contracts (150+ hours).",
-                    assessment: "Annual Governance Audit & Executive Leadership Transition Archive."
-                  }
-                ]
-              }
-            }
-          },
-          {
-            title: "Performance Expectations",
-            rationale: "Audit Defense: Prevents 'HIP-in-name-only' reporting. High expectations ensure the value of the TAMU degree remains gold-standard in state audits.",
-            tiers: {
-              foundational: {
-                scope: "Foundational (Scope 1: Internal Classroom — Target: 8-13 pts)",
-                desc: "Students identify and follow modeled professional standards to complete structured tasks.",
-                exemplars: [
-                  {
-                    track: "stem",
-                    trackLabel: "STEM Track",
-                    discipline: "Microbiology / Genetics",
-                    outcome: "Adhere to professional biosafety level (BSL-2) laboratory protocols and data logging standards.",
-                    activity: "Laboratory safety drills and standardized culture plating exercises following strict protocol guidelines.",
-                    assessment: "Biosafety Audit Checklist and Peer Safety Compliance Verification."
-                  },
-                  {
-                    track: "humanities",
-                    trackLabel: "Humanities & Social Sciences Track",
-                    discipline: "History / Art History",
-                    outcome: "Apply professional Chicago Manual of Style standards to construct annotated bibliographies.",
-                    activity: "Archival citation workshop locating primary sources and formatting entry notes.",
-                    assessment: "Annotated Bibliography evaluated against professional citation standards."
-                  },
-                  {
-                    track: "business",
-                    trackLabel: "Business & Co-Curricular Track",
-                    discipline: "Business Communication",
-                    outcome: "Produce executive memos adhering to professional corporate formatting and tone standards.",
-                    activity: "Drafting internal communications based on corporate scenario templates.",
-                    assessment: "Executive Memo Rubric scored against industry communication standards."
-                  }
-                ]
-              },
-              applied: {
-                scope: "Applied (Scope 2: Campus & Community — Target: 14-19 pts)",
-                desc: "Students apply standards to solve semi-structured problems with increasing autonomy.",
-                exemplars: [
-                  {
-                    track: "stem",
-                    trackLabel: "STEM Track",
-                    discipline: "Mechanical Engineering",
-                    outcome: "Apply ASME engineering standards to troubleshoot structural flaws in campus utility equipment.",
-                    activity: "Site inspection and stress-strain testing on campus mechanical systems in collaboration with facilities.",
-                    assessment: "Engineering Diagnostic Report evaluated against ASME professional codes."
-                  },
-                  {
-                    track: "humanities",
-                    trackLabel: "Humanities & Social Sciences Track",
-                    discipline: "Psychology / Human Services",
-                    outcome: "Execute ethical intake interviews adhering to APA professional counseling guidelines.",
-                    activity: "Simulated client intakes with campus wellness centers using standardized diagnostic instruments.",
-                    assessment: "Client Intake Case Summary & Ethics Rubric."
-                  },
-                  {
-                    track: "business",
-                    trackLabel: "Business & Co-Curricular Track",
-                    discipline: "Finance / Real Estate",
-                    outcome: "Apply GAAP accounting principles to audit campus student organization financial records.",
-                    activity: "Financial audit sprint analyzing operational budgets for compliance and risk exposure.",
-                    assessment: "Formal Audit Findings Report presented to student treasurer boards."
-                  }
-                ]
-              },
-              integrated: {
-                scope: "Integrated (Scope 3: External & Professional — Target: 20-24 pts)",
-                desc: "Students negotiate/define the standards and criteria for original, unscripted outcomes.",
-                exemplars: [
-                  {
-                    track: "stem",
-                    trackLabel: "STEM Track",
-                    discipline: "Aerospace Engineering / Software Systems",
-                    outcome: "Establish industry-grade quality criteria for original unscripted deliverables for external partners.",
-                    activity: "Negotiating technical specifications and acceptance criteria directly with NASA or industry engineers.",
-                    assessment: "Sponsor-Approved Systems Requirement Document & Final Design Review."
-                  },
-                  {
-                    track: "humanities",
-                    trackLabel: "Humanities & Social Sciences Track",
-                    discipline: "Public Policy / International Affairs",
-                    outcome: "Draft policy frameworks complying with international regulatory and human rights standards.",
-                    activity: "Co-designing legislative policy drafts with NGO leadership during live policy briefs.",
-                    assessment: "Legislative Policy Proposal & External Stakeholder Defense."
-                  },
-                  {
-                    track: "business",
-                    trackLabel: "Business & Co-Curricular Track",
-                    discipline: "Strategic Management / Consulting",
-                    outcome: "Define performance benchmarks and KPI frameworks for external corporate clients.",
-                    activity: "Contract negotiation and deliverables scoping with corporate C-suite executives.",
-                    assessment: "Master Services Agreement & Client Performance Rating."
-                  }
-                ]
-              }
-            }
-          }
-        ]
-      },
-      {
-        quadrant: "QUADRANT C: INTEGRATION",
-        elements: [
-          {
-            title: "Experiences with Diversity",
-            rationale: "Market Readiness: Employers prioritize 'cultural competence.' This cell measures the university's success in preparing students for global markets.",
-            tiers: {
-              foundational: {
-                scope: "Foundational (Scope 1: Internal Classroom — Target: 8-13 pts)",
-                desc: "Exposure to diverse perspectives through guided readings, guest speakers, or initial contact.",
-                exemplars: [
-                  {
-                    track: "stem",
-                    trackLabel: "STEM Track",
-                    discipline: "Global Health / Agriculture",
-                    outcome: "Identify how agricultural resource access varies across socio-economic and global demographics.",
-                    activity: "Guided seminar analyzing global case studies of resource distribution and agricultural tech access.",
-                    assessment: "Comparative Case Analysis Brief on agricultural equity."
-                  },
-                  {
-                    track: "humanities",
-                    trackLabel: "Humanities & Social Sciences Track",
-                    discipline: "Cultural Anthropology / Literature",
-                    outcome: "Describe how personal cultural assumptions influence interpretation of non-Western texts.",
-                    activity: "Guest speaker panel featuring international scholars followed by structured reflection prompts.",
-                    assessment: "Cultural Identity Reflective Essay."
-                  },
-                  {
-                    track: "business",
-                    trackLabel: "Business & Co-Curricular Track",
-                    discipline: "International Business",
-                    outcome: "Compare cross-cultural business etiquette and negotiation practices across global markets.",
-                    activity: "Simulated cross-cultural negotiation exercise incorporating global business norm frameworks.",
-                    assessment: "Cross-Cultural Negotiation Analysis Paper."
-                  }
-                ]
-              },
-              applied: {
-                scope: "Applied (Scope 2: Campus & Community — Target: 14-19 pts)",
-                desc: "Engagement with 'otherness' through project-based work; students navigate differing viewpoints.",
-                exemplars: [
-                  {
-                    track: "stem",
-                    trackLabel: "STEM Track",
-                    discipline: "Urban Planning / Environmental Design",
-                    outcome: "Adapt urban infrastructure designs to accommodate diverse community accessibility requirements.",
-                    activity: "Conducting site accessibility audits with local advocacy groups representing community members with disabilities.",
-                    assessment: "Universal Design Site Assessment Report."
-                  },
-                  {
-                    track: "humanities",
-                    trackLabel: "Humanities & Social Sciences Track",
-                    discipline: "Sociology / Education",
-                    outcome: "Facilitate inclusive dialogues addressing differing community perspectives on local educational access.",
-                    activity: "Organizing multi-stakeholder community listening sessions bringing together diverse local populations.",
-                    assessment: "Community Perspective Synthesis Paper & Moderation Critique."
-                  },
-                  {
-                    track: "business",
-                    trackLabel: "Business & Co-Curricular Track",
-                    discipline: "Human Resource Management",
-                    outcome: "Design workplace inclusion initiatives addressing diverse employee needs in campus departments.",
-                    activity: "Auditing campus workplace environments and interviewing diverse employee focus groups.",
-                    assessment: "Inclusion & Belonging Audit Report."
-                  }
-                ]
-              },
-              integrated: {
-                scope: "Integrated (Scope 3: External & Professional — Target: 20-24 pts)",
-                desc: "Transformation through sustained, direct engagement in unfamiliar or complex environments.",
-                exemplars: [
-                  {
-                    track: "stem",
-                    trackLabel: "STEM Track",
-                    discipline: "Biomedical Outreach / Water Engineering",
-                    outcome: "Co-design appropriate medical technologies directly within under-resourced international communities.",
-                    activity: "Immersive field engineering fellowship in international communities working alongside local health providers.",
-                    assessment: "Field Deployment Protocol & Community Partner Impact Assessment."
-                  },
-                  {
-                    track: "humanities",
-                    trackLabel: "Humanities & Social Sciences Track",
-                    discipline: "International Relations / Immigration Law",
-                    outcome: "Advocate for marginalized stakeholder populations within complex legal or civic environments.",
-                    activity: "Semester-long immersion working directly in legal aid clinics or international refugee support NGOs.",
-                    assessment: "Client Advocacy Casebook & Supervisor Performance Rating."
-                  },
-                  {
-                    track: "business",
-                    trackLabel: "Business & Co-Curricular Track",
-                    discipline: "Global Supply Chain / Microfinance",
-                    outcome: "Develop sustainable microfinance frameworks supporting female entrepreneurs in emerging economies.",
-                    activity: "On-site or virtual consulting with international micro-entrepreneurs to restructure loan systems.",
-                    assessment: "Microfinance Impact Portfolio & Partner Renewal Review."
-                  }
-                ]
-              }
-            }
-          },
-          {
-            title: "Structured Reflection",
-            rationale: "The 'Learning Engine': Converts activity into portable skills. Without reflection, the 'Impact' is lost once the semester ends.",
-            tiers: {
-              foundational: {
-                scope: "Foundational (Scope 1: Internal Classroom — Target: 8-13 pts)",
-                desc: "Descriptive: 'How does this experience match what I am learning in the classroom?'",
-                exemplars: [
-                  {
-                    track: "stem",
-                    trackLabel: "STEM Track",
-                    discipline: "Introductory Biology",
-                    outcome: "Connect lab-observed enzyme reaction rates to theoretical kinetics equations taught in lecture.",
-                    activity: "Weekly post-lab 3-question exit ticket prompting connection between lab data and lecture theory.",
-                    assessment: "Weekly Reflection Exit Ticket Log."
-                  },
-                  {
-                    track: "humanities",
-                    trackLabel: "Humanities & Social Sciences Track",
-                    discipline: "Psychology",
-                    outcome: "Describe how personal cognitive bias was manifested during classroom debate exercises.",
-                    activity: "Post-discussion journal entries analyzing personal reactions using psychological concepts.",
-                    assessment: "Descriptive Reflection Journal Rubric."
-                  },
-                  {
-                    track: "business",
-                    trackLabel: "Business & Co-Curricular Track",
-                    discipline: "Principles of Marketing",
-                    outcome: "Identify alignment between course consumer behavior models and personal purchasing habits.",
-                    activity: "Weekly self-audit blog analyzing personal brand choices against textbook marketing concepts.",
-                    assessment: "Consumer Behavior Personal Audit Journal."
-                  }
-                ]
-              },
-              applied: {
-                scope: "Applied (Scope 2: Campus & Community — Target: 14-19 pts)",
-                desc: "Integrative: 'How am I adapting my skills to meet the specific needs of this context?'",
-                exemplars: [
-                  {
-                    track: "stem",
-                    trackLabel: "STEM Track",
-                    discipline: "Civil Engineering / Field Geology",
-                    outcome: "Analyze discrepancies between theoretical computer models and messy field-collected soil samples.",
-                    activity: "Mid-project reflection essay examining why real-world field conditions diverged from lab simulations.",
-                    assessment: "Integrative Process Audit Memo."
-                  },
-                  {
-                    track: "humanities",
-                    trackLabel: "Humanities & Social Sciences Track",
-                    discipline: "Community Sociology",
-                    outcome: "Evaluate how academic research methods were modified to accommodate community partner schedules.",
-                    activity: "Guided reflection roundtables discussing ethical adaptations made during community field research.",
-                    assessment: "Methodological Adaptation Essay."
-                  },
-                  {
-                    track: "business",
-                    trackLabel: "Business & Co-Curricular Track",
-                    discipline: "Project Management",
-                    outcome: "Critique personal leadership adaptations made when managing unexpected group conflict.",
-                    activity: "STAR-method (Situation, Task, Action, Result) reflection write-up following major project milestones.",
-                    assessment: "STAR Leadership Retrospective Analysis."
-                  }
-                ]
-              },
-              integrated: {
-                scope: "Integrated (Scope 3: External & Professional — Target: 20-24 pts)",
-                desc: "Metacognitive: 'How has this partnership redefined my professional identity and values?'",
-                exemplars: [
-                  {
-                    track: "stem",
-                    trackLabel: "STEM Track",
-                    discipline: "Bioethics / Computer Science Capstone",
-                    outcome: "Articulate personal professional identity and ethical responsibilities as a emerging technical practitioner.",
-                    activity: "Capstone e-Portfolio curation compiling project artifacts alongside a professional ethics philosophy essay.",
-                    assessment: "Professional Capstone e-Portfolio Defense."
-                  },
-                  {
-                    track: "humanities",
-                    trackLabel: "Humanities & Social Sciences Track",
-                    discipline: "Education / Social Work",
-                    outcome: "Synthesize how long-term community immersion altered personal career trajectory and systemic values.",
-                    activity: "Senior exit interview and oral defense presenting a multi-year reflection on civic identity.",
-                    assessment: "Senior Identity Synthesis Defense."
-                  },
-                  {
-                    track: "business",
-                    trackLabel: "Business & Co-Curricular Track",
-                    discipline: "Executive Business Leadership",
-                    outcome: "Translate complex student leadership experiences into marketable, high-impact career narratives.",
-                    activity: "Mock executive interview and digital career portfolio presentation for industry recruiters.",
-                    assessment: "Executive Career Portfolio & Oral Defense."
-                  }
-                ]
-              }
-            }
-          }
-        ]
-      },
-      {
-        quadrant: "QUADRANT D: IMPACT",
-        elements: [
-          {
-            title: "Real-World Application",
-            rationale: "External Brand Value: Measures the university's impact on the community. High scores here justify state and private donor funding.",
-            tiers: {
-              foundational: {
-                scope: "Foundational (Scope 1: Internal Classroom — Target: 8-13 pts)",
-                desc: "Hypothetical or 'simulated' real-world scenarios; low-stakes external connection.",
-                exemplars: [
-                  {
-                    track: "stem",
-                    trackLabel: "STEM Track",
-                    discipline: "Introductory Engineering / CS",
-                    outcome: "Solve a simulated structural stress scenario using pre-programmed software tools.",
-                    activity: "In-class simulation lab testing bridge truss stability against modeled load forces.",
-                    assessment: "Simulation Accuracy Report."
-                  },
-                  {
-                    track: "humanities",
-                    trackLabel: "Humanities & Social Sciences Track",
-                    discipline: "Pre-Law / Political Science",
-                    outcome: "Argue a simulated constitutional case using established legal precedents.",
-                    activity: "In-class Moot Court simulation presenting oral arguments before peer judges.",
-                    assessment: "Moot Court Oral Argument Rubric."
-                  },
-                  {
-                    track: "business",
-                    trackLabel: "Business & Co-Curricular Track",
-                    discipline: "Corporate Finance",
-                    outcome: "Evaluate corporate financial risk using historical stock market case studies.",
-                    activity: "Simulated stock portfolio management exercise tracking mock investments across 6 weeks.",
-                    assessment: "Portfolio Performance Analysis."
-                  }
-                ]
-              },
-              applied: {
-                scope: "Applied (Scope 2: Campus & Community — Target: 14-19 pts)",
-                desc: "Active projects with a live stakeholder; solving a defined problem with real consequences.",
-                exemplars: [
-                  {
-                    track: "stem",
-                    trackLabel: "STEM Track",
-                    discipline: "Environmental Science",
-                    outcome: "Develop an actionable campus recycling plan addressing specific waste accumulation data.",
-                    activity: "Collaborating with TAMU Office of Sustainability to audit and redesign campus waste station placement.",
-                    assessment: "Waste Audit Proposal & Campus Implementation Plan."
-                  },
-                  {
-                    track: "humanities",
-                    trackLabel: "Humanities & Social Sciences Track",
-                    discipline: "Communication / Journalism",
-                    outcome: "Produce promotional media content for local non-profit community partners.",
-                    activity: "Field filming and interviews creating promotional videos for local food bank initiatives.",
-                    assessment: "Final Client Video Asset & Non-Profit Media Review."
-                  },
-                  {
-                    track: "business",
-                    trackLabel: "Business & Co-Curricular Track",
-                    discipline: "Small Business Consulting",
-                    outcome: "Conduct local business market feasibility studies for Bryan/College Station merchants.",
-                    activity: "On-site business operations review and customer traffic analysis for local retail clients.",
-                    assessment: "Small Business Improvement Recommendations Brief."
-                  }
-                ]
-              },
-              integrated: {
-                scope: "Integrated (Scope 3: External & Professional — Target: 20-24 pts)",
-                desc: "Unscripted partnership; students navigate the ambiguity of a 'live' professional/civic ecosystem.",
-                exemplars: [
-                  {
-                    track: "stem",
-                    trackLabel: "STEM Track",
-                    discipline: "Computer Science / Cybersecurity",
-                    outcome: "Deploy a live, production-grade cybersecurity tracking tool for regional health systems.",
-                    activity: "Unscripted software architecture sprints responding to live system vulnerabilities in partner networks.",
-                    assessment: "Live System Deployment Audit & Sponsor CTO Evaluation."
-                  },
-                  {
-                    track: "humanities",
-                    trackLabel: "Humanities & Social Sciences Track",
-                    discipline: "Urban Planning / Public Policy",
-                    outcome: "Author regional transit policy amendments submitted to city council for legislative vote.",
-                    activity: "Direct engagement with city transit boards navigating public hearings and policy drafting.",
-                    assessment: "Adopted Policy Amendment & City Council Defense."
-                  },
-                  {
-                    track: "business",
-                    trackLabel: "Business & Co-Curricular Track",
-                    discipline: "Management Consulting Capstone",
-                    outcome: "Manage $50k+ active project budgets for Fortune 500 strategic expansion initiatives.",
-                    activity: "Unscripted corporate management consulting addressing live market expansion challenges.",
-                    assessment: "Client Final Acceptance Signoff & Project ROI Audit."
-                  }
-                ]
-              }
-            }
-          },
-          {
-            title: "Public Demonstration",
-            rationale: "Accountability: Makes the hidden work of the university 'visible.' Public competence is the ultimate proof of institutional quality.",
-            tiers: {
-              foundational: {
-                scope: "Foundational (Scope 1: Internal Classroom — Target: 8-13 pts)",
-                desc: "Presentation to peers/faculty to demonstrate baseline competence and communication.",
-                exemplars: [
-                  {
-                    track: "stem",
-                    trackLabel: "STEM Track",
-                    discipline: "Chemistry / Biology",
-                    outcome: "Present experimental methodology and data trends to classmates using scientific slides.",
-                    activity: "End-of-unit 5-minute poster slideshow presented during regular class hours.",
-                    assessment: "Internal Scientific Presentation Rubric."
-                  },
-                  {
-                    track: "humanities",
-                    trackLabel: "Humanities & Social Sciences Track",
-                    discipline: "Communication / History",
-                    outcome: "Deliver an informative 8-minute speech demonstrating clear structural organization.",
-                    activity: "Classroom speech presentation evaluated by instructor and peers.",
-                    assessment: "Public Speaking Performance Rubric."
-                  },
-                  {
-                    track: "business",
-                    trackLabel: "Business & Co-Curricular Track",
-                    discipline: "Marketing / Management",
-                    outcome: "Deliver professional pitch presentations introducing a new product concept to peers.",
-                    activity: "Classroom pitch presentation using slide decks and product mockups.",
-                    assessment: "Product Pitch Presentation Scorecard."
-                  }
-                ]
-              },
-              applied: {
-                scope: "Applied (Scope 2: Campus & Community — Target: 14-19 pts)",
-                desc: "Presentation to a community partner or specific stakeholder for feedback and critique.",
-                exemplars: [
-                  {
-                    track: "stem",
-                    trackLabel: "STEM Track",
-                    discipline: "Agricultural Engineering / Architecture",
-                    outcome: "Present site design proposals directly to campus facility managers and project stakeholders.",
-                    activity: "Campus design showcase presenting physical models and poster boards to TAMU administrators.",
-                    assessment: "Stakeholder Presentation Scorecard."
-                  },
-                  {
-                    track: "humanities",
-                    trackLabel: "Humanities & Social Sciences Track",
-                    discipline: "Sociology / Public Health",
-                    outcome: "Present health intervention findings to local community clinic directors.",
-                    activity: "Community briefing session delivering health research findings directly to clinic staff.",
-                    assessment: "Community Partner Feedback Rating."
-                  },
-                  {
-                    track: "business",
-                    trackLabel: "Business & Co-Curricular Track",
-                    discipline: "Business Analytics",
-                    outcome: "Present data visualization dashboards to non-profit board members.",
-                    activity: "Formal board room presentation explaining data insights and operational recommendations.",
-                    assessment: "Board Evaluation of Executive Presentation."
-                  }
-                ]
-              },
-              integrated: {
-                scope: "Integrated (Scope 3: External & Professional — Target: 20-24 pts)",
-                desc: "Public defense/dissemination to an external body with the intent to influence practice or policy.",
-                exemplars: [
-                  {
-                    track: "stem",
-                    trackLabel: "STEM Track",
-                    discipline: "Physics / Biomedical Engineering",
-                    outcome: "Defend original research findings at national academic conferences (e.g., BMES, ACS).",
-                    activity: "Presenting peer-reviewed oral or poster presentations to international scientific bodies.",
-                    assessment: "Conference Presentation Certificate & Peer Review Comments."
-                  },
-                  {
-                    track: "humanities",
-                    trackLabel: "Humanities & Social Sciences Track",
-                    discipline: "Political Science / Fine Arts",
-                    outcome: "Deliver testimony at public legislative hearings or publish work in professional public venues.",
-                    activity: "Formal public testimony before state legislative committees or public art unveiling.",
-                    assessment: "Legislative Hearing Transcript or Public Exhibition Portfolio."
-                  },
-                  {
-                    track: "business",
-                    trackLabel: "Business & Co-Curricular Track",
-                    discipline: "Venture Capital / International Business",
-                    outcome: "Defend strategic business models before regional venture capital funding panels.",
-                    activity: "Public pitch defense at regional venture competitions competing for capital funding.",
-                    assessment: "Venture Competition Placement & Investor Evaluation."
-                  }
-                ]
-              }
-            }
-          }
-        ]
-      }
-    ];
-
-    function renderMatrix() {
-      const container = document.getElementById("matrixContainer");
-      if (!container) return;
-
-      let html = `
-        <div class="grid-header">AAC&U Quality Element</div>
-        <div class="grid-header">FOUNDATIONAL<span class="score-tag">Scope 1 (Classroom - 8-13 pts)</span></div>
-        <div class="grid-header">APPLIED<span class="score-tag">Scope 2 (Campus/Community - 14-19 pts)</span></div>
-        <div class="grid-header">INTEGRATED<span class="score-tag">Scope 3 (External/Professional - 20-24 pts)</span></div>
-      `;
-
-      matrixData.forEach((q, qIndex) => {
-        html += `<div class="quadrant-row-header">${q.quadrant}</div>`;
-
-        q.elements.forEach((elem, eIndex) => {
-          html += `
-            <div class="element-title-cell">
-              <h3>${elem.title}</h3>
-              <p>${elem.rationale}</p>
-            </div>
-          `;
-
-          ["foundational", "applied", "integrated"].forEach(tierKey => {
-            const tierData = elem.tiers[tierKey];
-            html += `
-              <div class="matrix-cell" onclick="openModal(${qIndex}, ${eIndex}, '${tierKey}')">
-                <div class="cell-text">${tierData.desc}</div>
-                <div class="cell-action">Click for 3 Track Packages ➔</div>
-              </div>
-            `;
-          });
-        });
-      });
-
-      container.innerHTML = html;
-    }
-
-    function openModal(qIndex, eIndex, tierKey) {
-      const elem = matrixData[qIndex].elements[eIndex];
-      const tier = elem.tiers[tierKey];
-
-      document.getElementById("modalTitle").innerText = `${elem.title}`;
-      document.getElementById("modalSubtitle").innerText = `${matrixData[qIndex].quadrant} | ${tier.scope}`;
-
-      const modalBody = document.getElementById("modalBody");
-      
-      modalBody.innerHTML = tier.exemplars.map(ex => `
-        <div class="track-card ${ex.track}">
-          <div class="track-header">
-            <span class="track-badge ${ex.track}">${ex.trackLabel}</span>
-            <span class="discipline-title">${ex.discipline}</span>
-          </div>
-          <div class="item-group">
-            <div class="item-label">🎯 Learning Outcome</div>
-            <div class="item-text">${ex.outcome}</div>
-          </div>
-          <div class="item-group">
-            <div class="item-label">⚡ Learning Activity</div>
-            <div class="item-text">${ex.activity}</div>
-          </div>
-          <div class="item-group">
-            <div class="item-label">📊 Assessment & Artifact</div>
-            <div class="item-text">${ex.assessment}</div>
-          </div>
+    <!-- Navigation Tabs -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm no-print">
+        <div class="max-w-7xl mx-auto px-4 flex space-x-1 sm:space-x-4 overflow-x-auto">
+            <button onclick="switchTab('matrix')" id="tab-btn-matrix" class="tab-btn py-4 px-3 sm:px-4 text-sm font-medium border-b-2 border-tamu-maroon text-tamu-maroon flex items-center gap-2 whitespace-nowrap">
+                <i data-lucide="grid" class="w-4 h-4"></i> 1. HIP Matrix & Exemplars
+            </button>
+            <button onclick="switchTab('diagnostic')" id="tab-btn-diagnostic" class="tab-btn py-4 px-3 sm:px-4 text-sm font-medium border-b-2 border-transparent text-slate-600 hover:text-slate-900 flex items-center gap-2 whitespace-nowrap">
+                <i data-lucide="check-circle-2" class="w-4 h-4"></i> 2. Self-Assessment Diagnostic (24 pts)
+            </button>
+            <button onclick="switchTab('syllabus')" id="tab-btn-syllabus" class="tab-btn py-4 px-3 sm:px-4 text-sm font-medium border-b-2 border-transparent text-slate-600 hover:text-slate-900 flex items-center gap-2 whitespace-nowrap">
+                <i data-lucide="file-text" class="w-4 h-4"></i> 3. Syllabus Language Builder
+            </button>
+            <button onclick="switchTab('scaffolding')" id="tab-btn-scaffolding" class="tab-btn py-4 px-3 sm:px-4 text-sm font-medium border-b-2 border-transparent text-slate-600 hover:text-slate-900 flex items-center gap-2 whitespace-nowrap">
+                <i data-lucide="sliders" class="w-4 h-4"></i> 4. Profile Report & Scaffolding (Phase 1 & 2)
+            </button>
         </div>
-      `).join("");
+    </nav>
 
-      document.getElementById("modalOverlay").classList.add("active");
-    }
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 py-8 flex-1 w-full">
 
-    function closeModal() {
-      document.getElementById("modalOverlay").classList.remove("active");
-    }
+        <!-- TAB 1: MATRIX & EXEMPLARS -->
+        <section id="tab-matrix" class="tab-content">
+            <div class="mb-6 bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                <h2 class="text-xl font-bold text-slate-900 mb-2 flex items-center gap-2">
+                    <i data-lucide="layers" class="w-5 h-5 text-tamu-maroon"></i>
+                    Interactive Quality Framework Matrix
+                </h2>
+                <p class="text-slate-600 text-sm">
+                    Explore high-impact instructional practices mapped across all 4 AAC&U Quadrants and 3 Scope Levels. Click any cell to view 3 realistic, discipline-specific exemplars with TAMU Undergraduate Learning Outcome (ULO) mappings.
+                </p>
+            </div>
 
-    function handleOverlayClick(event) {
-      if (event.target.id === "modalOverlay") {
-        closeModal();
-      }
-    }
+            <!-- Matrix Table -->
+            <div class="overflow-x-auto bg-white rounded-xl border border-slate-200 shadow-sm mb-8">
+                <table class="w-full text-left text-sm border-collapse">
+                    <thead>
+                        <tr class="bg-slate-100 border-b border-slate-200">
+                            <th class="p-4 font-bold text-slate-700 w-1/5">Quadrant & Quality Element</th>
+                            <th class="p-4 font-bold text-slate-700 text-center w-1/4">Foundational</th>
+                            <th class="p-4 font-bold text-slate-700 text-center w-1/4">Applied</th>
+                            <th class="p-4 font-bold text-slate-700 text-center w-1/4">Integrated</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-200" id="matrix-tbody">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
 
-    document.addEventListener("keydown", function(e) {
-      if (e.key === "Escape") {
-        closeModal();
-      }
-    });
+        <!-- TAB 2: DIAGNOSTIC TOOL -->
+        <section id="tab-diagnostic" class="tab-content hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Left: Assessment Form -->
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                        <h2 class="text-xl font-bold text-slate-900 mb-2 flex items-center gap-2">
+                            <i data-lucide="check-square" class="w-5 h-5 text-tamu-maroon"></i>
+                            Course Fidelity Self-Assessment (24 Points Max)
+                        </h2>
+                        <p class="text-slate-600 text-sm">
+                            Evaluate your course against all 8 AAC&U High-Impact Quality Elements. Select the fidelity level (0–3 points) that best represents your current or planned course design.
+                        </p>
+                    </div>
 
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", renderMatrix);
-    } else {
-      renderMatrix();
-    }
-  </script>
+                    <div class="space-y-4" id="diagnostic-questions">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Right: Real-time Score Panel -->
+                <div class="lg:col-span-1">
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm sticky top-24">
+                        <h3 class="text-lg font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100">Fidelity Scorecard</h3>
+                        
+                        <div class="text-center py-4 bg-slate-50 rounded-xl mb-6">
+                            <div class="text-5xl font-extrabold text-tamu-maroon" id="total-score">0</div>
+                            <div class="text-xs text-slate-500 font-semibold mt-1">OUT OF 24 POINTS</div>
+                            <div class="mt-3 inline-block px-3 py-1 rounded-full text-xs font-bold" id="score-badge">Developing</div>
+                        </div>
+
+                        <h4 class="text-sm font-bold text-slate-700 mb-2">Mapped TAMU ULO Badges</h4>
+                        <div class="flex flex-wrap gap-1.5 mb-6" id="ulo-badges-container">
+                            <!-- Populated dynamically -->
+                        </div>
+
+                        <button onclick="switchTab('scaffolding')" class="w-full bg-tamu-maroon hover:bg-red-900 text-white font-semibold py-2.5 px-4 rounded-lg shadow text-sm transition flex items-center justify-center gap-2">
+                            <i data-lucide="file-output" class="w-4 h-4"></i> View & Print Summary Report
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: SYLLABUS BUILDER -->
+        <section id="tab-syllabus" class="tab-content hidden">
+            <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm mb-6">
+                <h2 class="text-xl font-bold text-slate-900 mb-2 flex items-center gap-2">
+                    <i data-lucide="file-code" class="w-5 h-5 text-tamu-maroon"></i>
+                    Syllabus Language Generator
+                </h2>
+                <p class="text-slate-600 text-sm">
+                    Select an AAC&U Element and desired Scope Level to generate copy-paste syllabus modules mapped to TAMU Undergraduate Learning Outcomes (ULOs).
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Controls -->
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Select AAC&U Element</label>
+                        <select id="syllabus-element-select" class="w-full p-2.5 border border-slate-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-tamu-maroon focus:outline-none">
+                            <!-- Options populated by JS -->
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Select Scope Level</label>
+                        <select id="syllabus-level-select" class="w-full p-2.5 border border-slate-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-tamu-maroon focus:outline-none">
+                            <option value="Foundational">Foundational</option>
+                            <option value="Applied">Applied</option>
+                            <option value="Integrated">Integrated</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Discipline Track</label>
+                        <select id="syllabus-track-select" class="w-full p-2.5 border border-slate-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-tamu-maroon focus:outline-none">
+                            <option value="STEM">STEM Track</option>
+                            <option value="Non-STEM">Non-STEM Track</option>
+                            <option value="Co-Curricular">Co-Curricular Track</option>
+                        </select>
+                    </div>
+                    <button onclick="generateSyllabusLanguage()" class="w-full bg-tamu-maroon text-white font-semibold py-2.5 rounded-lg hover:bg-red-900 transition text-sm flex items-center justify-center gap-2">
+                        <i data-lucide="sparkles" class="w-4 h-4"></i> Generate Statement
+                    </button>
+                </div>
+
+                <!-- Output Box -->
+                <div class="md:col-span-2 bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-bold text-slate-900">Generated Syllabus Text</h3>
+                            <button onclick="copySyllabusText()" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-1.5 px-3 rounded flex items-center gap-1 border border-slate-300">
+                                <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copy to Clipboard
+                            </button>
+                        </div>
+                        <div id="syllabus-output" class="bg-slate-50 p-4 rounded-lg border border-slate-200 text-slate-700 text-sm leading-relaxed min-h-[220px] whitespace-pre-wrap font-mono">
+Click "Generate Statement" to preview ready-to-use syllabus language formatted for Texas A&M course outlines.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: PHASE 1 & PHASE 2 (PROFILE REPORT & IMPLEMENTATION SCAFFOLDING) -->
+        <section id="tab-scaffolding" class="tab-content hidden space-y-10">
+            
+            <!-- PHASE 1: EXPANDED HIP COURSE PROFILE REPORT -->
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6 sm:p-8" id="printable-report">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-6 border-b border-slate-200">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="bg-tamu-maroon text-white text-xs font-bold px-2.5 py-1 rounded">PHASE 1 DELIVERABLE</span>
+                            <span class="text-xs font-semibold text-slate-500">Official Profile Summary</span>
+                        </div>
+                        <h2 class="text-2xl font-bold text-slate-900 mt-2">Texas A&M HIP Course Profile Report</h2>
+                        <p class="text-slate-600 text-sm">Documentation for Peer Review, P&T Dossiers, & Curriculum Committees.</p>
+                    </div>
+                    <button onclick="window.print()" class="no-print bg-tamu-maroon hover:bg-red-900 text-white font-semibold px-4 py-2 rounded-lg text-sm flex items-center gap-2 shadow">
+                        <i data-lucide="printer" class="w-4 h-4"></i> Print / Export PDF
+                    </button>
+                </div>
+
+                <!-- Course Meta Info Form (Editable) -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 my-6 no-print">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Course Code & Name</label>
+                        <input type="text" id="report-course-name" value="ENGR 482 / COMM 305" class="w-full p-2 text-sm border rounded border-slate-300">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Instructor / Lead</label>
+                        <input type="text" id="report-instructor" value="Dr. Faculty Member" class="w-full p-2 text-sm border rounded border-slate-300">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Academic Unit / Dept</label>
+                        <input type="text" id="report-dept" value="College of Engineering / Liberal Arts" class="w-full p-2 text-sm border rounded border-slate-300">
+                    </div>
+                </div>
+
+                <!-- Printable Metadata Summary Box -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-slate-50 p-6 rounded-xl border border-slate-200 my-6">
+                    <div>
+                        <div class="text-xs font-bold text-slate-500 uppercase tracking-wider">Overall Fidelity Score</div>
+                        <div class="text-3xl font-extrabold text-tamu-maroon mt-1" id="report-score-display">0 / 24 Points</div>
+                        <p class="text-xs text-slate-600 mt-1" id="report-status-desc">Calculated based on 8 AAC&U Quality Elements.</p>
+                    </div>
+                    <div>
+                        <div class="text-xs font-bold text-slate-500 uppercase tracking-wider">Primary Alignment Track</div>
+                        <div class="text-lg font-bold text-slate-800 mt-1">Interdisciplinary / Applied</div>
+                        <p class="text-xs text-slate-600 mt-1">Integrates academic rigor with experiential application.</p>
+                    </div>
+                    <div>
+                        <div class="text-xs font-bold text-slate-500 uppercase tracking-wider">TAMU ULO Coverage</div>
+                        <div class="flex flex-wrap gap-1 mt-2" id="report-ulo-list">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <h3 class="font-bold text-slate-900 border-b pb-2">High-Impact Practice Element Summary</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs" id="report-element-grid">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- PHASE 2: IMPLEMENTATION PITFALLS & SCAFFOLDING ACCORDION -->
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6 sm:p-8">
+                <div class="mb-6">
+                    <div class="flex items-center gap-2">
+                        <span class="bg-amber-500 text-slate-900 text-xs font-bold px-2.5 py-1 rounded">PHASE 2 DELIVERABLE</span>
+                        <span class="text-xs font-semibold text-slate-500">Pedagogical Scaffolding & Equity Guide</span>
+                    </div>
+                    <h2 class="text-2xl font-bold text-slate-900 mt-2">Implementation Pitfalls & Scaffolding Solutions</h2>
+                    <p class="text-slate-600 text-sm">Concrete strategies to prevent common course design failures and foster inclusive, high-fidelity execution across all 8 AAC&U elements.</p>
+                </div>
+
+                <!-- Accordion List -->
+                <div class="space-y-4" id="scaffolding-accordion">
+                    <!-- Dynamic accordion populated by JS -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Modal for Exemplars -->
+    <div id="exemplar-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200 p-6">
+            <div class="flex justify-between items-start pb-4 border-b border-slate-200">
+                <div>
+                    <span id="modal-quadrant" class="text-xs font-bold text-tamu-maroon uppercase tracking-wider">Quadrant A</span>
+                    <h3 id="modal-title" class="text-xl font-bold text-slate-900">Element Title</h3>
+                </div>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600 p-1">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+
+            <div class="py-6 space-y-6" id="modal-body">
+                <!-- 3 Exemplars (STEM, Non-STEM, Co-Curricular) populated by JS -->
+            </div>
+
+            <div class="pt-4 border-t border-slate-200 flex justify-end">
+                <button onclick="closeModal()" class="bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold px-4 py-2 rounded-lg text-sm">
+                    Close Window
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-6 text-center text-xs no-print">
+        <p>Texas A&M University High-Impact Practices (HIPs) Framework • Mapped to Texas A&M 7 Undergraduate Learning Outcomes (ULOs)</p>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // AAC&U Elements & Quadrants Data
+        const elementsData = [
+            { id: 1, quad: "Quadrant A", name: "1. Faculty & Peer Interactions", desc: "Substantive, frequent interactions about academic matters.", ulo: ["Communication", "Collaboration"] },
+            { id: 2, quad: "Quadrant A", name: "2. Iterative Feedback & Revision", desc: "Constructive, timely feedback paired with opportunities to refine work.", ulo: ["Critical Thinking", "Lifelong Learning"] },
+            { id: 3, quad: "Quadrant B", name: "3. Time & Effort Investment", desc: "Significant time demands over an extended duration.", ulo: ["Depth of Knowledge", "Lifelong Learning"] },
+            { id: 4, quad: "Quadrant B", name: "4. High Performance Expectations", desc: "Challenging expectations set clearly at the start.", ulo: ["Depth of Knowledge", "Critical Thinking"] },
+            { id: 5, quad: "Quadrant C", name: "5. Real-World Application & Context", desc: "Connecting theory with practical, hands-on environments.", ulo: ["Depth of Knowledge", "Social Responsibility"] },
+            { id: 6, quad: "Quadrant C", name: "6. Diversity & Global Perspectives", desc: "Engaging across differences and unfamiliar contexts.", ulo: ["Cultural Competence", "Social Responsibility"] },
+            { id: 7, quad: "Quadrant D", name: "7. Structured Reflection & Metacognition", desc: "Periodic opportunities to integrate and evaluate learning.", ulo: ["Critical Thinking", "Lifelong Learning"] },
+            { id: 8, quad: "Quadrant D", name: "8. Public Demonstration of Competence", desc: "Showcasing mastery to audiences beyond the classroom.", ulo: ["Communication", "Collaboration"] }
+        ];
+
+        // Scaffolding Data (Phase 2)
+        const scaffoldingData = [
+            {
+                element: "1. Faculty & Peer Interactions",
+                pitfall: "Students engage in free-riding or superficial peer interactions without meaningful academic debate.",
+                solution: "Implement structured group contracts, mandatory peer feedback rubrics, and brief 5-minute biweekly check-ins between faculty and teams.",
+                equity: "Offer asynchronous peer review options and flexible virtual office hours for working or commuting students."
+            },
+            {
+                element: "2. Iterative Feedback & Revision",
+                pitfall: "Students treat instructor feedback as final grade justifications rather than actionable revision guidance.",
+                solution: "Require a 1-page 'Revision Log' accompanying final submissions detailing specific changes made in response to earlier feedback.",
+                equity: "Provide transparent rubrics upfront and low-stakes draft submissions to reduce grade anxiety."
+            },
+            {
+                element: "3. Time & Effort Investment",
+                pitfall: "Assignment creep causes sudden workload spikes leading to student burnout or missed deadlines.",
+                solution: "Map out milestone deadlines across the semester and benchmark out-of-class effort using a 3:1 credit-hour ratio guide.",
+                equity: "Utilize low-cost course materials and offer clear grace period policies for unexpected life conflicts."
+            },
+            {
+                element: "4. High Performance Expectations",
+                pitfall: "High expectations without clear scaffolding cause student confusion and defensiveness.",
+                solution: "Share annotated student exemplars (strong, average, weak) from previous semesters to illustrate high-quality work.",
+                equity: "Provide multiple pathways (written, oral, visual) to demonstrate high mastery of core learning objectives."
+            },
+            {
+                element: "5. Real-World Application & Context",
+                pitfall: "Real-world projects lack clear boundaries, causing partner friction or unachievable project scopes.",
+                solution: "Draft a formal project brief specifying client deliverables, student roles, and realistic time commitments.",
+                equity: "Ensure field options are local, zero-cost, or accessible via virtual site visits."
+            },
+            {
+                element: "6. Diversity & Global Perspectives",
+                pitfall: "Diverse topics are added tokenistically without meaningful engagement or critical reflection.",
+                solution: "Embed structured intercultural frameworks and diverse author panels into core assignments.",
+                equity: "Validate non-traditional student backgrounds and lived experiences as valid academic knowledge."
+            },
+            {
+                element: "7. Structured Reflection & Metacognition",
+                pitfall: "Reflections devolve into simple 'what I did' logs rather than deep analytical learning.",
+                solution: "Structure reflection prompts using the 'WHAT? SO WHAT? NOW WHAT?' model to prompt metacognition.",
+                equity: "Allow reflection submissions in multi-modal formats (written essay, audio memo, video journal)."
+            },
+            {
+                element: "8. Public Demonstration of Competence",
+                pitfall: "High-stakes public showcases trigger severe performance anxiety or technical failures.",
+                solution: "Schedule low-stakes internal practice runs before final public poster sessions, symposia, or client pitches.",
+                equity: "Provide alternative public formats (e.g., digital portfolios, asynchronous presentations) when needed."
+            }
+        ];
+
+        // Diagnostic State
+        let diagnosticScores = {};
+
+        // Initialize application
+        window.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            renderMatrix();
+            renderDiagnostic();
+            populateSyllabusOptions();
+            renderScaffoldingAccordion();
+            updateDiagnosticScore();
+        });
+
+        // Tab Switching Logic
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('border-tamu-maroon', 'text-tamu-maroon');
+                btn.classList.add('border-transparent', 'text-slate-600');
+            });
+
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`tab-btn-${tabId}`);
+            activeBtn.classList.add('border-tamu-maroon', 'text-tamu-maroon');
+            activeBtn.classList.remove('border-transparent', 'text-slate-600');
+
+            if(tabId === 'scaffolding') {
+                updateReportView();
+            }
+        }
+
+        // Render Matrix Table
+        function renderMatrix() {
+            const tbody = document.getElementById('matrix-tbody');
+            tbody.innerHTML = elementsData.map(el => `
+                <tr class="hover:bg-slate-100 transition">
+                    <td class="p-4 font-semibold text-slate-800 border-r border-slate-200">
+                        <span class="text-xs font-bold text-tamu-maroon uppercase block">${el.quad}</span>
+                        ${el.name}
+                    </td>
+                    <td onclick="openExemplarModal('${el.name}', 'Foundational')" class="p-4 border-r border-slate-200 cursor-pointer bg-matrix-cell hover:bg-red-50 transition text-center text-xs font-medium text-slate-700">
+                        <div class="font-bold mb-1 text-tamu-maroon">Foundational</div>
+                        <span class="text-slate-500">Click to view 3 Exemplars</span>
+                    </td>
+                    <td onclick="openExemplarModal('${el.name}', 'Applied')" class="p-4 border-r border-slate-200 cursor-pointer bg-matrix-cell hover:bg-red-50 transition text-center text-xs font-medium text-slate-700">
+                        <div class="font-bold mb-1 text-tamu-maroon">Applied</div>
+                        <span class="text-slate-500">Click to view 3 Exemplars</span>
+                    </td>
+                    <td onclick="openExemplarModal('${el.name}', 'Integrated')" class="p-4 cursor-pointer bg-matrix-cell hover:bg-red-50 transition text-center text-xs font-medium text-slate-700">
+                        <div class="font-bold mb-1 text-tamu-maroon">Integrated</div>
+                        <span class="text-slate-500">Click to view 3 Exemplars</span>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Modal Handler
+        function openExemplarModal(elementName, level) {
+            document.getElementById('modal-title').innerText = `${elementName} (${level} Level)`;
+            
+            const modalBody = document.getElementById('modal-body');
+            modalBody.innerHTML = `
+                <div class="border border-slate-200 rounded-lg p-4 bg-slate-50">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="bg-blue-100 text-blue-800 text-xs font-bold px-2 py-0.5 rounded">STEM Track</span>
+                        <span class="text-xs font-semibold text-slate-500">Mapped ULO: Critical Thinking, Communication</span>
+                    </div>
+                    <h4 class="font-bold text-slate-800 text-sm mb-1">${level} Lab/Engineering Design Module</h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">Students engage in structured technical problem solving with peer code/design reviews, structured milestone feedback, and real-world application briefs.</p>
+                </div>
+
+                <div class="border border-slate-200 rounded-lg p-4 bg-slate-50">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-2 py-0.5 rounded">Non-STEM Track</span>
+                        <span class="text-xs font-semibold text-slate-500">Mapped ULO: Social Responsibility, Cultural Competence</span>
+                    </div>
+                    <h4 class="font-bold text-slate-800 text-sm mb-1">${level} Humanities / Social Science Analysis</h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">Students conduct qualitative analysis, participating in biweekly peer workshops, iterative draft revisions, and community-engaged case studies.</p>
+                </div>
+
+                <div class="border border-slate-200 rounded-lg p-4 bg-slate-50">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="bg-purple-100 text-purple-800 text-xs font-bold px-2 py-0.5 rounded">Co-Curricular Track</span>
+                        <span class="text-xs font-semibold text-slate-500">Mapped ULO: Collaboration, Lifelong Learning</span>
+                    </div>
+                    <h4 class="font-bold text-slate-800 text-sm mb-1">${level} Student Leadership / Internship Practicum</h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">Participants manage campus projects, engaging in regular mentor coaching, guided reflection logs, and public showcase posters.</p>
+                </div>
+            `;
+
+            document.getElementById('exemplar-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('exemplar-modal').classList.add('hidden');
+        }
+
+        // Render Diagnostic Form
+        function renderDiagnostic() {
+            const container = document.getElementById('diagnostic-questions');
+            container.innerHTML = elementsData.map(el => {
+                diagnosticScores[el.id] = 0;
+                return `
+                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="text-xs font-bold text-tamu-maroon uppercase">${el.quad}</span>
+                                <h4 class="font-bold text-slate-800 text-base">${el.name}</h4>
+                                <p class="text-xs text-slate-500">${el.desc}</p>
+                            </div>
+                            <span class="text-xs font-bold text-slate-400 bg-slate-100 px-2.5 py-1 rounded-full" id="score-val-${el.id}">0 / 3 pts</span>
+                        </div>
+                        <div class="grid grid-cols-4 gap-2 text-xs">
+                            <button onclick="setScore(${el.id}, 0)" id="btn-${el.id}-0" class="diag-btn p-2 rounded border border-slate-200 bg-tamu-maroon text-white font-medium">0: Absent</button>
+                            <button onclick="setScore(${el.id}, 1)" id="btn-${el.id}-1" class="diag-btn p-2 rounded border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 font-medium">1: Foundational</button>
+                            <button onclick="setScore(${el.id}, 2)" id="btn-${el.id}-2" class="diag-btn p-2 rounded border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 font-medium">2: Applied</button>
+                            <button onclick="setScore(${el.id}, 3)" id="btn-${el.id}-3" class="diag-btn p-2 rounded border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 font-medium">3: Integrated</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function setScore(elementId, score) {
+            diagnosticScores[elementId] = score;
+            document.getElementById(`score-val-${elementId}`).innerText = `${score} / 3 pts`;
+            
+            for(let i=0; i<=3; i++) {
+                const btn = document.getElementById(`btn-${elementId}-${i}`);
+                if(i === score) {
+                    btn.className = "diag-btn p-2 rounded border border-slate-200 bg-tamu-maroon text-white font-medium";
+                } else {
+                    btn.className = "diag-btn p-2 rounded border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 font-medium";
+                }
+            }
+            updateDiagnosticScore();
+        }
+
+        function updateDiagnosticScore() {
+            const total = Object.values(diagnosticScores).reduce((a, b) => a + b, 0);
+            document.getElementById('total-score').innerText = total;
+
+            const badge = document.getElementById('score-badge');
+            if(total >= 18) {
+                badge.innerText = "High-Fidelity HIP Course";
+                badge.className = "mt-3 inline-block px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800";
+            } else if(total >= 10) {
+                badge.innerText = "Developing HIP Course";
+                badge.className = "mt-3 inline-block px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800";
+            } else {
+                badge.innerText = "Emerging Design";
+                badge.className = "mt-3 inline-block px-3 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-700";
+            }
+
+            // Update Badges
+            const activeUlos = new Set();
+            elementsData.forEach(el => {
+                if(diagnosticScores[el.id] > 0) {
+                    el.ulo.forEach(u => activeUlos.add(u));
+                }
+            });
+
+            const ulosContainer = document.getElementById('ulo-badges-container');
+            ulosContainer.innerHTML = Array.from(activeUlos).map(u => 
+                `<span class="bg-slate-100 border border-slate-300 text-slate-700 text-xs px-2 py-0.5 rounded-full font-medium">${u}</span>`
+            ).join('') || '<span class="text-xs text-slate-400">Complete self-assessment to map ULOs</span>';
+        }
+
+        // Populate Syllabus Options
+        function populateSyllabusOptions() {
+            const select = document.getElementById('syllabus-element-select');
+            select.innerHTML = elementsData.map(e => `<option value="${e.id}">${e.name}</option>`).join('');
+        }
+
+        function generateSyllabusLanguage() {
+            const elemId = document.getElementById('syllabus-element-select').value;
+            const level = document.getElementById('syllabus-level-select').value;
+            const track = document.getElementById('syllabus-track-select').value;
+            const elem = elementsData.find(e => e.id == elemId);
+
+            const text = `COURSE SYLLABUS MODULE: HIGH-IMPACT PRACTICE IMPLEMENTATION\n` +
+                         `Quality Element: ${elem.name}\n` +
+                         `Target Level: ${level}\n` +
+                         `Track Focus: ${track}\n` +
+                         `Mapped Texas A&M ULOs: ${elem.ulo.join(', ')}\n\n` +
+                         `COURSE POLICY STATEMENT:\n` +
+                         `"In accordance with Texas A&M's commitment to high-impact learning, this course embeds structured ${elem.name.toLowerCase()} at the ${level} level. Students will engage in ${level.toLowerCase()}-level activities designed to foster ${elem.ulo.join(' and ')}, ensuring direct application of course concepts to professional and real-world contexts."`;
+
+            document.getElementById('syllabus-output').innerText = text;
+        }
+
+        function copySyllabusText() {
+            const text = document.getElementById('syllabus-output').innerText;
+            navigator.clipboard.writeText(text);
+            alert("Syllabus language copied to clipboard!");
+        }
+
+        // Render Phase 2 Accordion
+        function renderScaffoldingAccordion() {
+            const container = document.getElementById('scaffolding-accordion');
+            container.innerHTML = scaffoldingData.map((item, idx) => `
+                <div class="border border-slate-200 rounded-lg overflow-hidden bg-white shadow-sm">
+                    <button onclick="toggleAccordion(${idx})" class="w-full text-left p-4 bg-slate-50 hover:bg-slate-100 flex justify-between items-center transition">
+                        <span class="font-bold text-slate-800 text-sm">${item.element}</span>
+                        <i data-lucide="chevron-down" id="acc-icon-${idx}" class="w-4 h-4 text-slate-500 transition-transform"></i>
+                    </button>
+                    <div id="acc-content-${idx}" class="hidden p-4 space-y-3 text-xs border-t border-slate-200">
+                        <div class="p-3 bg-red-50 border-l-4 border-red-500 text-red-900 rounded-r">
+                            <strong class="font-bold uppercase text-[10px] tracking-wider block mb-0.5 text-red-700">Common Execution Pitfall</strong>
+                            ${item.pitfall}
+                        </div>
+                        <div class="p-3 bg-emerald-50 border-l-4 border-emerald-500 text-emerald-900 rounded-r">
+                            <strong class="font-bold uppercase text-[10px] tracking-wider block mb-0.5 text-emerald-700">Actionable Scaffolding Solution</strong>
+                            ${item.solution}
+                        </div>
+                        <div class="p-3 bg-blue-50 border-l-4 border-blue-500 text-blue-900 rounded-r">
+                            <strong class="font-bold uppercase text-[10px] tracking-wider block mb-0.5 text-blue-700">Equity & Inclusion Lens</strong>
+                            ${item.equity}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        function toggleAccordion(idx) {
+            const content = document.getElementById(`acc-content-${idx}`);
+            const icon = document.getElementById(`acc-icon-${idx}`);
+            if(content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.style.transform = "rotate(180deg)";
+            } else {
+                content.classList.add('hidden');
+                icon.style.transform = "rotate(0deg)";
+            }
+        }
+
+        // Update Report View (Phase 1)
+        function updateReportView() {
+            const total = Object.values(diagnosticScores).reduce((a, b) => a + b, 0);
+            document.getElementById('report-score-display').innerText = `${total} / 24 Points`;
+
+            const activeUlos = new Set();
+            elementsData.forEach(el => {
+                if(diagnosticScores[el.id] > 0) {
+                    el.ulo.forEach(u => activeUlos.add(u));
+                }
+            });
+
+            document.getElementById('report-ulo-list').innerHTML = Array.from(activeUlos).map(u => 
+                `<span class="bg-tamu-maroon text-white text-[10px] font-bold px-2 py-0.5 rounded">${u}</span>`
+            ).join('') || '<span class="text-xs text-slate-400">None mapped yet</span>';
+
+            const grid = document.getElementById('report-element-grid');
+            grid.innerHTML = elementsData.map(el => {
+                const score = diagnosticScores[el.id] || 0;
+                const status = score === 3 ? "Integrated" : score === 2 ? "Applied" : score === 1 ? "Foundational" : "Not Present";
+                const badgeColor = score > 0 ? "bg-emerald-100 text-emerald-800" : "bg-slate-100 text-slate-500";
+                return `
+                    <div class="p-3 border rounded border-slate-200 flex justify-between items-center bg-slate-50">
+                        <div>
+                            <div class="font-bold text-slate-800">${el.name}</div>
+                            <div class="text-[10px] text-slate-500">${el.quad}</div>
+                        </div>
+                        <span class="text-[10px] font-bold px-2 py-0.5 rounded ${badgeColor}">${status} (${score}/3)</span>
+                    </div>
+                `;
+            }).join('');
+        }
+    </script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TAMU HIPs Interactive Course Profile & Design Matrix</title>
+  <title>TAMU High-Impact Practices (HIPs) Interactive Course Profile</title>
   <style>
     :root {
       --tamu-maroon: #500000;
@@ -42,46 +42,12 @@
     header h1 {
       font-size: 1.8rem;
       font-weight: 700;
-      letter-spacing: -0.02em;
       margin-bottom: 6px;
     }
 
     header p {
       font-size: 0.95rem;
       opacity: 0.9;
-    }
-
-    .controls-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: white;
-      padding: 16px 24px;
-      border-radius: 8px;
-      margin-bottom: 24px;
-      border: 1px solid var(--tamu-card-border);
-    }
-
-    .toggle-group {
-      display: flex;
-      gap: 8px;
-    }
-
-    .toggle-btn {
-      background: var(--tamu-light-bg);
-      border: 1px solid var(--tamu-card-border);
-      padding: 8px 16px;
-      border-radius: 6px;
-      font-weight: 600;
-      font-size: 0.85rem;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .toggle-btn.active {
-      background: var(--tamu-maroon);
-      color: white;
-      border-color: var(--tamu-maroon);
     }
 
     .matrix-grid {
@@ -97,7 +63,6 @@
       font-weight: 700;
       font-size: 0.85rem;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
       border-radius: 6px;
       color: var(--tamu-gray);
       display: flex;
@@ -121,7 +86,6 @@
       font-weight: 700;
       font-size: 0.9rem;
       border-radius: 6px;
-      letter-spacing: 0.03em;
       margin-top: 8px;
     }
 
@@ -129,9 +93,8 @@
       background: white;
       padding: 16px;
       border-radius: 6px;
-      border-left: 4px solid var(--tamu-maroon);
       border: 1px solid var(--tamu-card-border);
-      border-left-width: 5px;
+      border-left: 5px solid var(--tamu-maroon);
     }
 
     .element-title-cell h3 {
@@ -176,11 +139,6 @@
       font-weight: 700;
       padding: 3px 8px;
       border-radius: 4px;
-      background: #f1f5f9;
-      color: #334155;
-    }
-
-    .badge-cte {
       background: #eff6ff;
       color: var(--tamu-blue-accent);
       border: 1px solid #bfdbfe;
@@ -195,7 +153,7 @@
       height: 100vh;
       background: rgba(15, 23, 42, 0.6);
       backdrop-filter: blur(4px);
-      display: none;
+      display: none; /* Crucial: Keeps modal hidden until clicked */
       justify-content: center;
       align-items: center;
       z-index: 1000;
@@ -203,7 +161,7 @@
     }
 
     .modal-overlay.active {
-      display: flex;
+      display: flex !important;
     }
 
     .modal-content {
@@ -295,9 +253,6 @@
     .track-card h4 {
       font-size: 0.9rem;
       margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
     }
 
     .track-card p {
@@ -365,15 +320,6 @@
     <p>Center for Teaching Excellence | Texas A&M University</p>
   </header>
 
-  <div class="controls-bar">
-    <div>
-      <strong>Framework Navigation Mode:</strong>
-    </div>
-    <div class="toggle-group">
-      <button class="toggle-btn active" id="btn-3tier" onclick="switchTier('3tier')">3-Tier Fidelity View (Foundational / Applied / Integrated)</button>
-    </div>
-  </div>
-
   <main class="matrix-grid" id="matrixContainer">
     <!-- Rendered via JS -->
   </main>
@@ -382,7 +328,7 @@
   <div class="modal-overlay" id="modalOverlay">
     <div class="modal-content">
       <div class="modal-header">
-        <button class="close-btn" onclick="closeModal()">&times;</button>
+        <button type="button" class="close-btn" onclick="closeModal()">&times;</button>
         <h2 id="modalTitle">Element Title</h2>
         <p id="modalSubtitle">Quadrant & Fidelity Level</p>
       </div>
@@ -421,17 +367,17 @@
           {
             id: "perf_exp",
             title: "Performance Expectations",
-            rationale: "Audit Defense: Prevents 'HIP-in-name-only' reporting. High expectations ensure the value of the TAMU degree remains gold-standard in state audits.",
+            rationale: "Audit Defense: Prevents 'HIP-in-name-only' reporting. High expectations ensure TAMU degree value.",
             cteTool: "Higher Impact Practice Audit (Grid)",
             tiers: {
               foundational: {
                 target: "Target Score: 8-13 Points | Scope 1 (Internal)",
                 desc: "Students identify and follow modeled professional standards to complete structured tasks.",
-                curricular: "Students execute problem sets adhering strictly to field formatting and integrity protocols defined in the syllabus.",
+                curricular: "Students execute problem sets adhering strictly to field formatting and integrity protocols defined in syllabus.",
                 cocurricular: "DEEP student volunteers follow established event setup and safety guidelines for demonstration tables.",
                 prompts: [
                   "Where do students hit an early wall on quality standards?",
-                  "What is the single checklist item that de-risks initial submission errors?"
+                  "What single checklist item de-risks initial submission errors?"
                 ],
                 tweak: "Add a 5-point peer-checklist before initial submission to filter out standard formatting errors."
               },
@@ -462,7 +408,7 @@
           {
             id: "time_effort",
             title: "Time & Effort",
-            rationale: "Retention Math: Direct correlation between 'time on task' in HIPs and student retention/graduation rates.",
+            rationale: "Retention Math: Direct correlation between time on task in HIPs and student retention rates.",
             cteTool: "Higher Impact Practice Audit (Grid)",
             tiers: {
               foundational: {
@@ -487,48 +433,7 @@
                 curricular: "Multi-semester research thesis or immersive industry co-op.",
                 cocurricular: "Executive leadership role overseeing year-round TAMU outreach programs.",
                 prompts: ["How do students document agility when managing shifting project deadlines?"],
-                tweak: "Use shared digital kanban boards (e.g., Trello/GitHub Project) to track time commitments transparently."
-              }
-            }
-          },
-          {
-            id: "real_world",
-            title: "Real-World Application",
-            rationale: "External Brand Value: Measures university community impact. High scores justify state & donor support.",
-            cteTool: "Service-Learning Project Explorer",
-            tiers: {
-              foundational: {
-                target: "Target Score: 8-13 Points | Scope 1 (Internal)",
-                desc: "Hypothetical or simulated scenarios; low-stakes external connection.",
-                curricular: "Analyzing a case study derived from real municipal water dataset.",
-                cocurricular: "Rehearsing science demonstrations with peer student groups.",
-                prompts: [
-                  "Quadrant 1 (Academic Anchor): What non-negotiable course outcome does this simulation address?",
-                  "Quadrant 2 (Public Intersection): What real-world challenge does it model?"
-                ],
-                tweak: "Replace arbitrary textbook scenarios with authentic local civic datasets."
-              },
-              applied: {
-                target: "Target Score: 14-19 Points | Scope 2 (Campus/Community)",
-                desc: "Active projects with live stakeholders; solving defined problems.",
-                curricular: "Designing a prototype solution for a local community non-profit partner.",
-                cocurricular: "Delivering hands-on STEM exhibits to K-12 students at local schools.",
-                prompts: [
-                  "Quadrant 3 (Reciprocal Deliverable): What bounded output serves both community and syllabus?",
-                  "Quadrant 4 (Exposure Check): What timeline dependencies need de-risking?"
-                ],
-                tweak: "Have external partners provide a 10-minute mid-semester feedback video on student progress."
-              },
-              integrated: {
-                target: "Target Score: 20-24 Points | Scope 3 (External/Professional)",
-                desc: "Unscripted partnership; navigating ambiguous live professional ecosystems.",
-                curricular: "Deploying a fully functional software or engineering system directly into partner workflows.",
-                cocurricular: "Managing state-wide community science festivals involving thousands of visitors.",
-                prompts: [
-                  "How is long-term project continuity documented for the partner handoff?",
-                  "What risk mitigation protocols are established for external deployment?"
-                ],
-                tweak: "Include a formal project 'Handoff Manual' as the primary course final deliverable."
+                tweak: "Use shared digital kanban boards (e.g., Trello/GitHub Project) to track time commitments."
               }
             }
           }
@@ -549,8 +454,8 @@
                 curricular: "Structured peer review of draft essay introduction using explicit rubric.",
                 cocurricular: "Peer feedback during initial DEEP demonstration rehearsals.",
                 prompts: [
-                  "Quadrant 1 (Pain Point): Where does administrative team friction usually start?",
-                  "Quadrant 2 (Tool Match): Establish a simple Team Charter for communication norms."
+                  "Where does administrative team friction usually start?",
+                  "Establish a simple Team Charter for communication norms."
                 ],
                 tweak: "Require group members to sign a 1-page Team Charter during week 2."
               },
@@ -560,8 +465,8 @@
                 curricular: "Small team capstone project with weekly peer-critique logs and instructor consultations.",
                 cocurricular: "Cross-disciplinary student teams co-designing interactive festival booths.",
                 prompts: [
-                  "Quadrant 3 (Integration Tweak): Implement a Student-Led Escalation Protocol.",
-                  "Quadrant 4 (De-Risk): Grade charters complete/incomplete to save grading time."
+                  "Implement a Student-Led Escalation Protocol.",
+                  "Grade charters complete/incomplete to save grading time."
                 ],
                 tweak: "Adopt a 3-step internal conflict escalation protocol before instructor intervenes."
               },
@@ -570,42 +475,8 @@
                 desc: "Sustained partnership; co-authoring or co-designing final products with partners.",
                 curricular: "Co-authoring a peer-reviewed publication or patent application with faculty mentor.",
                 cocurricular: "Joint leadership between senior student mentors and faculty chairs to run university events.",
-                prompts: [
-                  "How do student leaders model inclusive decision-making during high-stakes events?"
-                ],
+                prompts: ["How do student leaders model inclusive decision-making during high-stakes events?"],
                 tweak: "Structure student leadership roles as formal peer-mentorship apprenticeships."
-              }
-            }
-          },
-          {
-            id: "diversity",
-            title: "Experiences with Diversity",
-            rationale: "Market Readiness: Employers prioritize cultural competence and global awareness.",
-            cteTool: "Higher Impact Practice Audit (Grid)",
-            tiers: {
-              foundational: {
-                target: "Target Score: 8-13 Points | Scope 1 (Internal)",
-                desc: "Exposure to diverse perspectives through guided readings or guest speakers.",
-                curricular: "Analyzing case studies highlighting environmental justice and equitable access.",
-                cocurricular: "Attending inclusivity training prior to engaging diverse K-12 public audiences.",
-                prompts: ["How do students identify personal biases in disciplinary problem-solving?"],
-                tweak: "Add one reflection prompt asking how personal background shapes problem framing."
-              },
-              applied: {
-                target: "Target Score: 14-19 Points | Scope 2 (Campus/Community)",
-                desc: "Engagement with differing viewpoints through project-based team work.",
-                curricular: "Adapting engineering designs to account for non-standard accessibility requirements.",
-                cocurricular: "Designing multilingual physics demonstrations for regional K-12 outreach.",
-                prompts: ["How do students adapt deliverables for specific stakeholder group lived experiences?"],
-                tweak: "Incorporate a mandatory universal design audit into project specs."
-              },
-              integrated: {
-                target: "Target Score: 20-24 Points | Scope 3 (External/Professional)",
-                desc: "Transformation through sustained direct engagement in complex, unfamiliar environments.",
-                curricular: "Executing immersive field research within marginalized or international communities.",
-                cocurricular: "Leading community-wide access initiatives that break down systemic STEM barriers.",
-                prompts: ["How do project outcomes address underlying systemic inequities?"],
-                tweak: "Require project defense to address long-term community impact and equitable access."
               }
             }
           }
@@ -615,38 +486,6 @@
         quadrant: "QUADRANT C: FEEDBACK & REFINEMENT",
         elements: [
           {
-            id: "feedback",
-            title: "Iterative Feedback",
-            rationale: "Efficiency Math: Formative feedback reduces DFW rates by catching gaps early.",
-            cteTool: "Higher Impact Practice Audit (Grid)",
-            tiers: {
-              foundational: {
-                target: "Target Score: 8-13 Points | Scope 1 (Internal)",
-                desc: "Feedback focuses on accuracy, alignment with models, and basic skill acquisition.",
-                curricular: "Automated Canvas quiz feedback paired with draft outline reviews.",
-                cocurricular: "Immediate feedback from student mentors after first demo test run.",
-                prompts: ["Where do students need immediate correction before wasting effort?"],
-                tweak: "Use standard rubric comment banks for common structural errors."
-              },
-              applied: {
-                target: "Target Score: 14-19 Points | Scope 2 (Campus/Community)",
-                desc: "Feedback focuses on applying theory to practice and quality of revision.",
-                curricular: "Two-stage project submission: Stage 1 draft receives inline feedback; Stage 2 graded on revision depth.",
-                cocurricular: "Iterative presentation dry-runs evaluated by faculty and community partners.",
-                prompts: ["How do students explicitly document revisions made between drafts?"],
-                tweak: "Require a 'Revision Memo' detailing how feedback altered the final draft."
-              },
-              integrated: {
-                target: "Target Score: 20-24 Points | Scope 3 (External/Professional)",
-                desc: "Feedback focuses on real-world impact, professional ethics, and public reach.",
-                curricular: "Formal peer and external partner double-blind review process for public deliverables.",
-                cocurricular: "Public feedback metrics gathered from thousands of festival participants shaping next year's design.",
-                prompts: ["How is external stakeholder feedback integrated into project lifecycle?"],
-                tweak: "Incorporate public feedback cards directly into the final grading scheme."
-              }
-            }
-          },
-          {
             id: "reflection",
             title: "Structured Reflection",
             rationale: "The Learning Engine: Converts activity into portable skills. Prevents lost impact.",
@@ -654,29 +493,29 @@
             tiers: {
               foundational: {
                 target: "Target Score: 8-13 Points | Scope 1 (Internal)",
-                desc: "Descriptive: 'How does this experience match classroom learning?'",
-                curricular: "Short post-assignment journal: 'What concept was most challenging and why?'",
-                cocurricular: "Debrief log: 'What went as expected during the school demonstration?'",
+                desc: "Descriptive: How does this experience match classroom learning?",
+                curricular: "Short post-assignment journal: What concept was most challenging and why?",
+                cocurricular: "Debrief log: What went as expected during the school demonstration?",
                 prompts: [
-                  "Quadrant 1 (Bottleneck): Where did you hit a wall in this module?",
-                  "Quadrant 2 (Cognitive Status): At this stage, what do I understand vs what remains unclear?"
+                  "Where did you hit a wall in this module?",
+                  "At this stage, what do I understand vs what remains unclear?"
                 ],
                 tweak: "Embed a 3-question prompt stem directly into Canvas submission pages."
               },
               applied: {
                 target: "Target Score: 14-19 Points | Scope 2 (Campus/Community)",
-                desc: "Integrative: 'How am I adapting my skills to meet specific context needs?'",
+                desc: "Integrative: How am I adapting my skills to meet specific context needs?",
                 curricular: "Mid-semester synthesis paper evaluating theoretical predictions against lab anomalies.",
                 cocurricular: "Leader reflection analyzing how communication was adapted for K-12 students.",
                 prompts: [
-                  "Quadrant 3 (Process Audit): What approaches did I attempt? What failed and why?",
-                  "Quadrant 4 (Adaptive Pivot): What specific strategy will I adjust next phase?"
+                  "What approaches did I attempt? What failed and why?",
+                  "What specific strategy will I adjust next phase?"
                 ],
                 tweak: "Replace summary conclusion with a formal Process Audit & Pivot Memo."
               },
               integrated: {
                 target: "Target Score: 20-24 Points | Scope 3 (External/Professional)",
-                desc: "Metacognitive: 'How has this partnership redefined my professional identity?'",
+                desc: "Metacognitive: How has this partnership redefined my professional identity?",
                 curricular: "E-portfolio reflecting on professional growth, ethics, and career alignment across full program.",
                 cocurricular: "Comprehensive exit defense detailing leadership evolution and civic agency.",
                 prompts: [
@@ -688,92 +527,40 @@
             }
           }
         ]
-      },
-      {
-        quadrant: "QUADRANT D: ACCOUNTABILITY & PUBLIC DEMONSTRATION",
-        elements: [
-          {
-            id: "public_demo",
-            title: "Public Demonstration",
-            rationale: "Accountability: Makes hidden university work visible. Proof of institutional quality.",
-            cteTool: "Service-Learning Project Explorer",
-            tiers: {
-              foundational: {
-                target: "Target Score: 8-13 Points | Scope 1 (Internal)",
-                desc: "Presentation to peers/faculty demonstrating baseline competence.",
-                curricular: "In-class 5-minute PowerPoint presentation of project results.",
-                cocurricular: "Presenting demonstration concepts during internal student club meetings.",
-                prompts: ["How do we build public communication skills in low-stakes environments?"],
-                tweak: "Host a 30-minute in-class poster gallery walk."
-              },
-              applied: {
-                target: "Target Score: 14-19 Points | Scope 2 (Campus/Community)",
-                desc: "Presentation to community partners or stakeholders for feedback.",
-                curricular: "Presenting research findings at TAMU Student Research Week or partner symposium.",
-                cocurricular: "Operating interactive science booths at the TAMU Physics & Engineering Festival.",
-                prompts: ["What public audience critique mechanism is built into the presentation?"],
-                tweak: "Invite campus/community stakeholders to attend final project presentations."
-              },
-              integrated: {
-                target: "Target Score: 20-24 Points | Scope 3 (External/Professional)",
-                desc: "Public defense/dissemination to external bodies to influence practice or policy.",
-                curricular: "Defending whitepapers before municipal councils, professional conferences, or journals.",
-                cocurricular: "National media feature or statewide science advocacy campaign leadership.",
-                prompts: ["How does student work create lasting institutional or public policy utility?"],
-                tweak: "Submit final student project reports directly to external agency leaders."
-              }
-            }
-          }
-        ]
       }
     ];
 
     function renderMatrix() {
       const container = document.getElementById("matrixContainer");
+      if (!container) return;
       container.innerHTML = "";
 
-      // Column Headers
       container.innerHTML += `
         <div class="grid-header">AAC&U Quality Element</div>
-        <div class="grid-header">
-          FOUNDATIONAL
-          <span class="score-tag">Target: 8-13 Pts | Scope 1 (Internal)</span>
-        </div>
-        <div class="grid-header">
-          APPLIED
-          <span class="score-tag">Target: 14-19 Pts | Scope 2 (Campus/Community)</span>
-        </div>
-        <div class="grid-header">
-          INTEGRATED
-          <span class="score-tag">Target: 20-24 Pts | Scope 3 (External/Professional)</span>
-        </div>
+        <div class="grid-header">FOUNDATIONAL<span class="score-tag">Score: 8-13 Pts | Scope 1</span></div>
+        <div class="grid-header">APPLIED<span class="score-tag">Score: 14-19 Pts | Scope 2</span></div>
+        <div class="grid-header">INTEGRATED<span class="score-tag">Score: 20-24 Pts | Scope 3</span></div>
       `;
 
       matrixData.forEach(q => {
-        // Quadrant Row Banner
         const qHeader = document.createElement("div");
         qHeader.className = "quadrant-row-header";
         qHeader.innerText = q.quadrant;
         container.appendChild(qHeader);
 
         q.elements.forEach(elem => {
-          // Element Title Cell
           const titleCell = document.createElement("div");
           titleCell.className = "element-title-cell";
-          titleCell.innerHTML = `
-            <h3>${elem.title}</h3>
-            <p>${elem.rationale}</p>
-          `;
+          titleCell.innerHTML = `<h3>${elem.title}</h3><p>${elem.rationale}</p>`;
           container.appendChild(titleCell);
 
-          // Render 3 Tier Cells
           ["foundational", "applied", "integrated"].forEach(tierKey => {
             const tierData = elem.tiers[tierKey];
             const cell = document.createElement("div");
             cell.className = "matrix-cell";
             cell.innerHTML = `
               <div class="cell-text">${tierData.desc}</div>
-              <span class="cell-badge badge-cte">🛠️ ${elem.cteTool}</span>
+              <span class="cell-badge">🛠️ ${elem.cteTool}</span>
             `;
             cell.onclick = () => openModal(elem, tierKey);
             container.appendChild(cell);
@@ -803,12 +590,7 @@
       document.getElementById("modalOverlay").classList.remove("active");
     }
 
-    function switchTier(mode) {
-      // Future expansion toggle handler
-    }
-
-    // Initial load
-    renderMatrix();
+    document.addEventListener("DOMContentLoaded", renderMatrix);
   </script>
 </body>
 </html>

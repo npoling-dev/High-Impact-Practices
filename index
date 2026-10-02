@@ -3,45 +3,60 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TAMU High-Impact Practices (HIPs) Interactive Course Profile</title>
+  <title>TAMU High-Impact Practices (HIPs) Course Profile Tool</title>
   <style>
     :root {
       --tamu-maroon: #500000;
       --tamu-dark-maroon: #3c0000;
-      --tamu-gray: #333333;
-      --tamu-light-bg: #f8f9fa;
-      --tamu-card-border: #e2e8f0;
-      --tamu-accent-gold: #d4af37;
-      --tamu-blue-accent: #1e3a8a;
-      --tamu-green-accent: #065f46;
+      --tamu-gold: #d4af37;
+      --tamu-gray-dark: #1e293b;
+      --tamu-gray-light: #f8fafc;
+      --tamu-border: #cbd5e1;
+      --badge-stem-bg: #eff6ff;
+      --badge-stem-text: #1d4ed8;
+      --badge-stem-border: #bfdbfe;
+      --badge-hum-bg: #fef3c7;
+      --badge-hum-text: #b45309;
+      --badge-hum-border: #fde68a;
+      --badge-bus-bg: #ecfdf5;
+      --badge-bus-text: #047857;
+      --badge-bus-border: #a7f3d0;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     }
 
     body {
-      background-color: #f4f6f8;
-      color: var(--tamu-gray);
-      line-height: 1.5;
+      background-color: var(--tamu-gray-light);
+      color: var(--tamu-gray-dark);
       padding: 24px;
+      line-height: 1.5;
     }
 
+    .container {
+      max-width: 1350px;
+      margin: 0 auto;
+    }
+
+    /* Header Banner */
     header {
-      background-color: var(--tamu-maroon);
-      color: white;
-      padding: 24px 32px;
-      border-radius: 8px;
+      background: var(--tamu-maroon);
+      color: #ffffff;
+      padding: 28px 32px;
+      border-radius: 10px;
       margin-bottom: 24px;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      border-bottom: 5px solid var(--tamu-gold);
     }
 
     header h1 {
       font-size: 1.8rem;
       font-weight: 700;
+      letter-spacing: -0.02em;
       margin-bottom: 6px;
     }
 
@@ -50,21 +65,32 @@
       opacity: 0.9;
     }
 
-    .matrix-grid {
-      display: grid;
-      grid-template-columns: 240px repeat(3, 1fr);
-      gap: 12px;
-      margin-bottom: 32px;
+    /* Matrix Container */
+    .matrix-wrapper {
+      overflow-x: auto;
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 20px;
+      border: 1px solid var(--tamu-border);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     }
 
+    .matrix-grid {
+      display: grid;
+      grid-template-columns: 260px repeat(3, 1fr);
+      gap: 12px;
+      min-width: 960px;
+    }
+
+    /* Headers */
     .grid-header {
       background: #e2e8f0;
-      padding: 14px;
+      padding: 14px 16px;
       font-weight: 700;
       font-size: 0.85rem;
       text-transform: uppercase;
       border-radius: 6px;
-      color: var(--tamu-gray);
+      color: var(--tamu-gray-dark);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -72,7 +98,7 @@
 
     .grid-header .score-tag {
       font-size: 0.75rem;
-      font-weight: 500;
+      font-weight: 600;
       color: #475569;
       margin-top: 4px;
       text-transform: none;
@@ -81,20 +107,25 @@
     .quadrant-row-header {
       grid-column: span 4;
       background: var(--tamu-dark-maroon);
-      color: white;
-      padding: 10px 16px;
+      color: #ffffff;
+      padding: 12px 18px;
       font-weight: 700;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       border-radius: 6px;
-      margin-top: 8px;
+      margin-top: 12px;
+      letter-spacing: 0.03em;
     }
 
+    /* Cells */
     .element-title-cell {
-      background: white;
+      background: #ffffff;
       padding: 16px;
       border-radius: 6px;
-      border: 1px solid var(--tamu-card-border);
+      border: 1px solid var(--tamu-border);
       border-left: 5px solid var(--tamu-maroon);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .element-title-cell h3 {
@@ -109,12 +140,12 @@
     }
 
     .matrix-cell {
-      background: white;
+      background: #ffffff;
       padding: 16px;
       border-radius: 6px;
-      border: 1px solid var(--tamu-card-border);
+      border: 1px solid var(--tamu-border);
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all 0.2s ease-in-out;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -122,38 +153,35 @@
 
     .matrix-cell:hover {
       transform: translateY(-2px);
-      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 8px 16px rgba(80, 0, 0, 0.12);
       border-color: var(--tamu-maroon);
     }
 
     .cell-text {
       font-size: 0.85rem;
-      color: var(--tamu-gray);
+      color: var(--tamu-gray-dark);
       margin-bottom: 12px;
     }
 
-    .cell-badge {
-      display: inline-block;
-      align-self: flex-start;
-      font-size: 0.7rem;
+    .cell-action {
+      font-size: 0.75rem;
       font-weight: 700;
-      padding: 3px 8px;
-      border-radius: 4px;
-      background: #eff6ff;
-      color: var(--tamu-blue-accent);
-      border: 1px solid #bfdbfe;
+      color: var(--tamu-maroon);
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
 
-    /* Modal Overlay */
+    /* Modal Overlay & Card */
     .modal-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: rgba(15, 23, 42, 0.6);
+      background: rgba(15, 23, 42, 0.65);
       backdrop-filter: blur(4px);
-      display: none; /* Crucial: Keeps modal hidden until clicked */
+      display: none;
       justify-content: center;
       align-items: center;
       z-index: 1000;
@@ -161,36 +189,37 @@
     }
 
     .modal-overlay.active {
-      display: flex !important;
+      display: flex;
     }
 
     .modal-content {
-      background: white;
+      background: #ffffff;
       width: 100%;
-      max-width: 820px;
+      max-width: 880px;
       max-height: 90vh;
       border-radius: 12px;
       overflow-y: auto;
-      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25);
       position: relative;
     }
 
     .modal-header {
       background: var(--tamu-maroon);
-      color: white;
+      color: #ffffff;
       padding: 24px;
       position: sticky;
       top: 0;
       z-index: 10;
+      border-bottom: 3px solid var(--tamu-gold);
     }
 
     .modal-header h2 {
-      font-size: 1.3rem;
+      font-size: 1.35rem;
       margin-bottom: 4px;
     }
 
     .modal-header p {
-      font-size: 0.85rem;
+      font-size: 0.88rem;
       opacity: 0.9;
     }
 
@@ -199,7 +228,7 @@
       top: 20px;
       right: 24px;
       background: rgba(255, 255, 255, 0.2);
-      color: white;
+      color: #ffffff;
       border: none;
       width: 32px;
       height: 32px;
@@ -219,142 +248,116 @@
       padding: 24px;
     }
 
-    .rationale-box {
-      background: #fffbe3;
-      border-left: 4px solid var(--tamu-accent-gold);
-      padding: 12px 16px;
-      border-radius: 4px;
-      font-size: 0.85rem;
-      margin-bottom: 20px;
+    .modal-section {
+      margin-bottom: 28px;
     }
 
-    .track-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-bottom: 24px;
+    .modal-section-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--tamu-maroon);
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 8px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
-    .track-card {
-      background: var(--tamu-light-bg);
-      border: 1px solid var(--tamu-card-border);
-      border-radius: 8px;
-      padding: 16px;
+    .example-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
 
-    .track-card.curricular {
-      border-top: 4px solid var(--tamu-blue-accent);
-    }
-
-    .track-card.cocurricular {
-      border-top: 4px solid var(--tamu-green-accent);
-    }
-
-    .track-card h4 {
-      font-size: 0.9rem;
-      margin-bottom: 8px;
-    }
-
-    .track-card p {
-      font-size: 0.82rem;
-      color: #475569;
-    }
-
-    .cte-tool-container {
-      background: #f0f9ff;
-      border: 1px solid #bae6fd;
-      border-radius: 8px;
-      padding: 20px;
-      margin-bottom: 20px;
-    }
-
-    .cte-tool-container h3 {
-      font-size: 1rem;
-      color: #0369a1;
-      margin-bottom: 12px;
-    }
-
-    .prompt-list {
-      list-style: none;
-    }
-
-    .prompt-list li {
-      font-size: 0.85rem;
-      margin-bottom: 8px;
-      padding-left: 20px;
-      position: relative;
-    }
-
-    .prompt-list li::before {
-      content: "▶";
-      position: absolute;
-      left: 0;
-      color: #0284c7;
-      font-size: 0.7rem;
-      top: 3px;
-    }
-
-    .micro-tweak-box {
+    .example-card {
       background: #f8fafc;
-      border: 1px dashed #cbd5e1;
-      padding: 16px;
+      border: 1px solid var(--tamu-border);
       border-radius: 8px;
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
     }
 
-    .micro-tweak-box h4 {
-      font-size: 0.85rem;
+    .discipline-badge {
+      display: inline-block;
+      align-self: flex-start;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .discipline-badge.stem {
+      background: var(--badge-stem-bg);
+      color: var(--badge-stem-text);
+      border: 1px solid var(--badge-stem-border);
+    }
+
+    .discipline-badge.humanities {
+      background: var(--badge-hum-bg);
+      color: var(--badge-hum-text);
+      border: 1px solid var(--badge-hum-border);
+    }
+
+    .discipline-badge.business {
+      background: var(--badge-bus-bg);
+      color: var(--badge-bus-text);
+      border: 1px solid var(--badge-bus-border);
+    }
+
+    .example-text {
+      font-size: 0.88rem;
       color: #334155;
-      margin-bottom: 6px;
-    }
-
-    .micro-tweak-box p {
-      font-size: 0.8rem;
-      color: #64748b;
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>TAMU High-Impact Practices (HIPs) Interactive Course Profile</h1>
-    <p>Center for Teaching Excellence | Texas A&M University</p>
-  </header>
+  <div class="container">
+    <header>
+      <h1>TAMU High-Impact Practices (HIPs) Course Profile Tool</h1>
+      <p>Center for Teaching Excellence | Matrix Alignment & Discipline Exemplars</p>
+    </header>
 
-  <main class="matrix-grid" id="matrixContainer">
-    <!-- Rendered via JS -->
-  </main>
+    <div class="matrix-wrapper">
+      <div class="matrix-grid" id="matrixContainer">
+        <!-- Rendered dynamically via JavaScript -->
+      </div>
+    </div>
+  </div>
 
-  <!-- Modal -->
-  <div class="modal-overlay" id="modalOverlay">
+  <!-- Interactive Modal -->
+  <div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close-btn" onclick="closeModal()">&times;</button>
         <h2 id="modalTitle">Element Title</h2>
-        <p id="modalSubtitle">Quadrant & Fidelity Level</p>
+        <p id="modalSubtitle">Quadrant & Scope Level</p>
       </div>
       <div class="modal-body">
-        <div class="rationale-box" id="modalRationale"></div>
-
-        <div class="track-grid">
-          <div class="track-card curricular">
-            <h4>📘 Academic / Curricular Track</h4>
-            <p id="modalCurricular"></p>
-          </div>
-          <div class="track-card cocurricular">
-            <h4>🚀 Co-Curricular Track (DEEP / Outreach)</h4>
-            <p id="modalCoCurricular"></p>
-          </div>
+        
+        <!-- Outcomes Section -->
+        <div class="modal-section">
+          <h3 class="modal-section-title">🎯 3 Sample Learning Outcomes</h3>
+          <div class="example-list" id="outcomesContainer"></div>
         </div>
 
-        <div class="cte-tool-container" id="modalCteBox">
-          <h3 id="modalCteTitle">Embedded CTE Diagnostic Worksheet</h3>
-          <ul class="prompt-list" id="modalCtePrompts"></ul>
+        <!-- Activities Section -->
+        <div class="modal-section">
+          <h3 class="modal-section-title">⚡ 3 Sample Learning Activities</h3>
+          <div class="example-list" id="activitiesContainer"></div>
         </div>
 
-        <div class="micro-tweak-box">
-          <h4>Subtractive Innovation: Low-Overhead Micro-Tweak</h4>
-          <p id="modalMicroTweak"></p>
+        <!-- Assessments Section -->
+        <div class="modal-section">
+          <h3 class="modal-section-title">📊 3 Sample Assessments & Artifacts</h3>
+          <div class="example-list" id="assessmentsContainer"></div>
         </div>
+
       </div>
     </div>
   </div>
@@ -365,164 +368,264 @@
         quadrant: "QUADRANT A: STRUCTURAL DESIGN & RIGOR",
         elements: [
           {
-            id: "perf_exp",
-            title: "Performance Expectations",
-            rationale: "Audit Defense: Prevents 'HIP-in-name-only' reporting. High expectations ensure TAMU degree value.",
-            cteTool: "Higher Impact Practice Audit (Grid)",
+            title: "Performance Expectations & Rigor",
+            rationale: "Ensures high standards and prevents 'HIP-in-name-only' implementation.",
             tiers: {
               foundational: {
-                target: "Target Score: 8-13 Points | Scope 1 (Internal)",
-                desc: "Students identify and follow modeled professional standards to complete structured tasks.",
-                curricular: "Students execute problem sets adhering strictly to field formatting and integrity protocols defined in syllabus.",
-                cocurricular: "DEEP student volunteers follow established event setup and safety guidelines for demonstration tables.",
-                prompts: [
-                  "Where do students hit an early wall on quality standards?",
-                  "What single checklist item de-risks initial submission errors?"
+                scope: "Foundational (Scope 1: Internal Classroom)",
+                desc: "Students follow modeled professional standards to complete structured tasks within the course.",
+                outcomes: [
+                  { tag: "STEM (Biology)", text: "Apply standardized laboratory safety protocols and data formatting to evaluate cellular growth curves." },
+                  { tag: "Humanities (History)", text: "Construct an evidence-based historical thesis using primary source analysis protocols." },
+                  { tag: "Business / Co-Curricular", text: "Conduct a baseline market SWOT analysis using standard industry benchmarking frameworks." }
                 ],
-                tweak: "Add a 5-point peer-checklist before initial submission to filter out standard formatting errors."
+                activities: [
+                  { tag: "STEM (Biology)", text: "Guided lab benchmarking where students test unknown solutions against professional safety and formatting protocols." },
+                  { tag: "Humanities (History)", text: "Primary source workshop analyzing conflicting archival accounts using a discipline citation rubric." },
+                  { tag: "Business / Co-Curricular", text: "Case study audit requiring students to identify organizational gaps using standard business templates." }
+                ],
+                assessments: [
+                  { tag: "STEM (Biology)", text: "Standardized Lab Data Audit with a 5-point formatting checklist and peer-verification signoff." },
+                  { tag: "Humanities (History)", text: "Annotated Bibliography & Thesis Framework evaluated against primary source citation standards." },
+                  { tag: "Business / Co-Curricular", text: "Executive One-Pager Briefing evaluated against professional communication rubrics." }
+                ]
               },
               applied: {
-                target: "Target Score: 14-19 Points | Scope 2 (Campus/Community)",
-                desc: "Students apply standards to solve semi-structured problems with increasing autonomy.",
-                curricular: "Students complete a term project addressing an authentic client case, managing internal team milestones.",
-                cocurricular: "DEEP student leads design and test a novel physics demonstration for the Physics & Engineering Festival.",
-                prompts: [
-                  "Identify a specific threshold concept or data hurdle in mid-stage execution.",
-                  "Draft a rubric criterion focused on adaptive problem solving under semi-structured conditions."
+                scope: "Applied (Scope 2: Campus & Community)",
+                desc: "Students apply discipline standards to semi-structured problems with increasing autonomy.",
+                outcomes: [
+                  { tag: "STEM (Engineering)", text: "Adapt fluid mechanics principles to design a scaled prototype addressing a campus stormwater runoff bottleneck." },
+                  { tag: "Humanities (Sociology)", text: "Design and execute a campus survey measuring student resource utilization using validated survey methodology." },
+                  { tag: "Business / Co-Curricular (DEEP)", text: "Coordinate multi-team logistics and safety protocols for a campus-wide public STEM festival." }
                 ],
-                tweak: "Require students to submit a 1-page milestone progress audit halfway through the project timeline."
+                activities: [
+                  { tag: "STEM (Engineering)", text: "Client-facing sprint project collaborating with TAMU Facilities engineers on drainage modeling." },
+                  { tag: "Humanities (Sociology)", text: "Field research study gathering and coding qualitative survey data from campus stakeholders." },
+                  { tag: "Business / Co-Curricular (DEEP)", text: "Demonstration dry-run where student leads refine interactive outreach exhibits based on peer critique." }
+                ],
+                assessments: [
+                  { tag: "STEM (Engineering)", text: "Engineering Design Milestone Proposal & Feasibility Report reviewed by campus engineers." },
+                  { tag: "Humanities (Sociology)", text: "Empirical Research Report with coded data analysis and actionable policy recommendations." },
+                  { tag: "Business / Co-Curricular (DEEP)", text: "Operational Safety & Event Logistics Audit evaluated prior to public deployment." }
+                ]
               },
               integrated: {
-                target: "Target Score: 20-24 Points | Scope 3 (External/Professional)",
-                desc: "Students negotiate and define criteria for original, unscripted outcomes.",
-                curricular: "Students co-create project deliverables with external industry partners, defending choices before external reviewers.",
-                cocurricular: "Student coordinators manage university-wide festival logistics and oversee external partner relationships.",
-                prompts: [
-                  "How do students self-assess professional agency during unscripted ambiguity?",
-                  "What safety/liability agreements ground the external deliverable?"
+                scope: "Integrated (Scope 3: External & Professional)",
+                desc: "Students define performance criteria and manage original, unscripted deliverables for external partners.",
+                outcomes: [
+                  { tag: "STEM (Computer Science)", text: "Negotiate technical specifications and deploy an open-source web application for a municipal partner." },
+                  { tag: "Humanities (Public History)", text: "Co-create an interactive digital museum exhibit with regional historical society archivists." },
+                  { tag: "Business / Co-Curricular", text: "Manage corporate client deliverables and budget lines for an intercollegiate consulting competition." }
                 ],
-                tweak: "Replace final internal exam with an open defense panel featuring external professional stakeholders."
+                activities: [
+                  { tag: "STEM (Computer Science)", text: "Agile software development sprints with weekly client code reviews and client feature backlogs." },
+                  { tag: "Humanities (Public History)", text: "Archival curation and oral history interviews conducted on-site with community members." },
+                  { tag: "Business / Co-Curricular", text: "Client advisory board meetings where students defend strategy adjustments under real budget constraints." }
+                ],
+                assessments: [
+                  { tag: "STEM (Computer Science)", text: "Live Client Code Review Defense and open-source deployment audit." },
+                  { tag: "Humanities (Public History)", text: "Public Exhibit Launch and peer-reviewed Curation Defense with regional archivists." },
+                  { tag: "Business / Co-Curricular", text: "Final Client Deliverable Package & External Partner Performance Review." }
+                ]
               }
             }
           },
           {
-            id: "time_effort",
-            title: "Time & Effort",
-            rationale: "Retention Math: Direct correlation between time on task in HIPs and student retention rates.",
-            cteTool: "Higher Impact Practice Audit (Grid)",
+            title: "Time & Effort Investment",
+            rationale: "Sustained time-on-task over time correlates directly with higher student retention rates.",
             tiers: {
               foundational: {
-                target: "Target Score: 8-13 Points | Scope 1 (Internal)",
-                desc: "Consistent engagement over a term (<20 hrs); focus on workflow habits.",
-                curricular: "Regular weekly 2-hour lab sessions dedicated to skill-building and guided practice.",
-                cocurricular: "Attending bi-weekly DEEP planning workshops to prepare outreach activities.",
-                prompts: ["How do we measure consistent weekly workflow without inflating grading workload?"],
-                tweak: "Convert passive homework into active 15-minute weekly pre-lab check-in logs."
+                scope: "Foundational (Scope 1: Internal Classroom)",
+                desc: "Consistent weekly workflow habits (<20 out-of-class hours across the term).",
+                outcomes: [
+                  { tag: "STEM (Chemistry)", text: "Maintain a rigorous weekly laboratory notebook meeting professional documentation standards." },
+                  { tag: "Humanities (English)", text: "Execute iterative drafting cycles incorporating weekly writing lab feedback." },
+                  { tag: "Business / Co-Curricular", text: "Log consistent project hours and milestone updates using digital task boards." }
+                ],
+                activities: [
+                  { tag: "STEM (Chemistry)", text: "Weekly pre-lab prep modules paired with post-lab error analysis exercises." },
+                  { tag: "Humanities (English)", text: "Weekly low-stakes writing sprints with peer peer-editing roundtables." },
+                  { tag: "Business / Co-Curricular", text: "Bi-weekly sprint check-ins tracking task completion against personal project plans." }
+                ],
+                assessments: [
+                  { tag: "STEM (Chemistry)", text: "Weekly Lab Notebook Inspections evaluated on completeness, accuracy, and timing." },
+                  { tag: "Humanities (English)", text: "Draft Evolution Portfolio comparing initial outlines to final polished submissions." },
+                  { tag: "Business / Co-Curricular", text: "Project Effort Log & Task Completion Rubric (Pass/Fail milestone tracking)." }
+                ]
               },
               applied: {
-                target: "Target Score: 14-19 Points | Scope 2 (Campus/Community)",
-                desc: "Sustained intensity; significant out-of-class time (40-80 hrs) on iterative work.",
-                curricular: "Semester-long CURE lab or capstone project requiring independent data collection.",
-                cocurricular: "Leading a multi-month demonstration team preparing major public exhibits.",
-                prompts: ["Where do time-management bottlenecks occur between weeks 6 and 10?"],
-                tweak: "Implement sprint-style bi-weekly check-ins evaluated on pass/fail effort logs."
+                scope: "Applied (Scope 2: Campus & Community)",
+                desc: "Sustained effort (40–80 hours) devoted to iterative research or development.",
+                outcomes: [
+                  { tag: "STEM (Biomedical Sciences)", text: "Execute an independent multi-week undergraduate research protocol in a faculty laboratory." },
+                  { tag: "Humanities (Political Science)", text: "Conduct multi-week qualitative field observations at local municipal government meetings." },
+                  { tag: "Business / Co-Curricular", text: "Manage semester-long outreach marketing campaigns reaching over 1,000 campus participants." }
+                ],
+                activities: [
+                  { tag: "STEM (Biomedical Sciences)", text: "Semester CURE project incorporating weekly wet-lab experimentation and troubleshooting." },
+                  { tag: "Humanities (Political Science)", text: "Observational field work requiring 30+ hours of community meeting transcripts and coding." },
+                  { tag: "Business / Co-Curricular", text: "Campaign sprint management with weekly social media analytics reviews and strategy pivots." }
+                ],
+                assessments: [
+                  { tag: "STEM (Biomedical Sciences)", text: "Mid-Semester CURE Progress Report & Raw Data Verification Audit." },
+                  { tag: "Humanities (Political Science)", text: "Fieldwork Transcript Archive & Qualitative Analysis Summary." },
+                  { tag: "Business / Co-Curricular", text: "Campaign Milestone Audit evaluating effort distribution and engagement metrics." }
+                ]
               },
               integrated: {
-                target: "Target Score: 20-24 Points | Scope 3 (External/Professional)",
-                desc: "Deep, immersive investment (100+ hrs); managing complex timelines.",
-                curricular: "Multi-semester research thesis or immersive industry co-op.",
-                cocurricular: "Executive leadership role overseeing year-round TAMU outreach programs.",
-                prompts: ["How do students document agility when managing shifting project deadlines?"],
-                tweak: "Use shared digital kanban boards (e.g., Trello/GitHub Project) to track time commitments."
+                scope: "Integrated (Scope 3: External & Professional)",
+                desc: "Deep, immersive investment (100+ hours) managing complex project lifecycles.",
+                outcomes: [
+                  { tag: "STEM (Materials Science)", text: "Complete an intensive multi-semester senior design project or industry research fellowship." },
+                  { tag: "Humanities (Education)", text: "Execute full-time student teaching immersion managing daily classroom instruction." },
+                  { tag: "Business / Co-Curricular", text: "Serve in senior executive leadership managing year-round university outreach programs." }
+                ],
+                activities: [
+                  { tag: "STEM (Materials Science)", text: "Daily lab engineering sprints, physical fabrication, and external sponsor progress updates." },
+                  { tag: "Humanities (Education)", text: "Full-time immersive classroom management, lesson planning, and parent-teacher conferences." },
+                  { tag: "Business / Co-Curricular", text: "Executive board governance, budget management, and multi-event regional oversight." }
+                ],
+                assessments: [
+                  { tag: "STEM (Materials Science)", text: "Senior Design Capstone Defense & Physical Prototype Sponsor Evaluation." },
+                  { tag: "Humanities (Education)", text: "Teaching Performance Assessment (edTPA) Portfolio & Clinical Supervisor Rating." },
+                  { tag: "Business / Co-Curricular", text: "Annual Governance Audit & Leadership Transition Portfolio." }
+                ]
               }
             }
           }
         ]
       },
       {
-        quadrant: "QUADRANT B: INTERACTION & ENGAGEMENT",
+        quadrant: "QUADRANT B: INTERACTION & MENTORSHIP",
         elements: [
           {
-            id: "interactions",
-            title: "Interactions (Faculty/Peer)",
-            rationale: "Social Capital ROI: Density of mentorship predicts alumni engagement and post-grad success.",
-            cteTool: "Small Group Work Audit",
+            title: "Faculty & Peer Interactions",
+            rationale: "Frequent interaction with faculty and peers builds student social capital and sense of belonging.",
             tiers: {
               foundational: {
-                target: "Target Score: 8-13 Points | Scope 1 (Internal)",
-                desc: "Faculty-led modeling; peers provide introductory feedback based on checklists.",
-                curricular: "Structured peer review of draft essay introduction using explicit rubric.",
-                cocurricular: "Peer feedback during initial DEEP demonstration rehearsals.",
-                prompts: [
-                  "Where does administrative team friction usually start?",
-                  "Establish a simple Team Charter for communication norms."
+                scope: "Foundational (Scope 1: Internal Classroom)",
+                desc: "Structured interaction guided by explicit rubrics and instructor modeling.",
+                outcomes: [
+                  { tag: "STEM (Mathematics)", text: "Formulate and defend problem solutions during structured peer-led team learning sessions." },
+                  { tag: "Humanities (Philosophy)", text: "Engage in civil structured debate using formal logical fallacies criteria." },
+                  { tag: "Business / Co-Curricular", text: "Establish team communication agreements and conflict resolution protocols." }
                 ],
-                tweak: "Require group members to sign a 1-page Team Charter during week 2."
+                activities: [
+                  { tag: "STEM (Mathematics)", text: "Peer-Led Team Learning (PLTL) workshops solving complex calculus proof sets in groups." },
+                  { tag: "Humanities (Philosophy)", text: "Fishbowl debate exercises with structured peer critique roles." },
+                  { tag: "Business / Co-Curricular", text: "Team Charter Workshop crafting group norms and communication channels." }
+                ],
+                assessments: [
+                  { tag: "STEM (Mathematics)", text: "Peer Peer-Evaluation Rubric measuring collaborative problem-solving contribution." },
+                  { tag: "Humanities (Philosophy)", text: "Structured Debate Critique Form evaluated by peers and instructor." },
+                  { tag: "Business / Co-Curricular", text: "Signed Team Charter & Communication Plan (Graded Complete/Incomplete)." }
+                ]
               },
               applied: {
-                target: "Target Score: 14-19 Points | Scope 2 (Campus/Community)",
-                desc: "Iterative collaboration; peers give formative critique; faculty acts as Consultant.",
-                curricular: "Small team capstone project with weekly peer-critique logs and instructor consultations.",
-                cocurricular: "Cross-disciplinary student teams co-designing interactive festival booths.",
-                prompts: [
-                  "Implement a Student-Led Escalation Protocol.",
-                  "Grade charters complete/incomplete to save grading time."
+                scope: "Applied (Scope 2: Campus & Community)",
+                desc: "Formative collaboration; instructor transitions to mentor and project consultant.",
+                outcomes: [
+                  { tag: "STEM (Architecture)", text: "Iterate structural designs through weekly studio desk critiques with faculty and guest architects." },
+                  { tag: "Humanities (Communication)", text: "Co-design community dialogue sessions alongside local civic leaders." },
+                  { tag: "Business / Co-Curricular", text: "Mentor junior student leaders through structured event planning apprenticeships." }
                 ],
-                tweak: "Adopt a 3-step internal conflict escalation protocol before instructor intervenes."
+                activities: [
+                  { tag: "STEM (Architecture)", text: "Weekly Studio 'Pin-Up' critiques presenting design drafts to faculty and visiting practitioners." },
+                  { tag: "Humanities (Communication)", text: "Facilitated town hall simulations co-led with community organization representatives." },
+                  { tag: "Business / Co-Curricular", text: "Bi-weekly peer mentorship coaching sessions between senior student leads and new members." }
+                ],
+                assessments: [
+                  { tag: "STEM (Architecture)", text: "Design Studio Pin-Up Critique Rubric focused on responsiveness to expert feedback." },
+                  { tag: "Humanities (Communication)", text: "Civic Partner Evaluation of student moderation and dialogue facilitation." },
+                  { tag: "Business / Co-Curricular", text: "Peer Mentorship Reflection & 360-Degree Team Feedback Review." }
+                ]
               },
               integrated: {
-                target: "Target Score: 20-24 Points | Scope 3 (External/Professional)",
-                desc: "Sustained partnership; co-authoring or co-designing final products with partners.",
-                curricular: "Co-authoring a peer-reviewed publication or patent application with faculty mentor.",
-                cocurricular: "Joint leadership between senior student mentors and faculty chairs to run university events.",
-                prompts: ["How do student leaders model inclusive decision-making during high-stakes events?"],
-                tweak: "Structure student leadership roles as formal peer-mentorship apprenticeships."
+                scope: "Integrated (Scope 3: External & Professional)",
+                desc: "Sustained professional partnership; co-creating deliverables with external mentors.",
+                outcomes: [
+                  { tag: "STEM (Physics)", text: "Co-author a peer-reviewed research manuscript alongside faculty and national lab scientists." },
+                  { tag: "Humanities (Visual Arts)", text: "Curate a public gallery exhibition in partnership with professional museum conservators." },
+                  { tag: "Business / Co-Curricular", text: "Manage external corporate sponsor relationships for university-wide initiatives." }
+                ],
+                activities: [
+                  { tag: "STEM (Physics)", text: "Joint data analysis sessions and co-drafting manuscripts for scientific journal submission." },
+                  { tag: "Humanities (Visual Arts)", text: "Collaborative gallery installation, lighting design, and public opening remarks with curators." },
+                  { tag: "Business / Co-Curricular", text: "Executive board briefings presenting quarterly impact metrics to external industry sponsors." }
+                ],
+                assessments: [
+                  { tag: "STEM (Physics)", text: "Journal Manuscript Acceptance or Co-Author Contribution Defense." },
+                  { tag: "Humanities (Visual Arts)", text: "Professional Exhibition Review & Curator Partnership Evaluation." },
+                  { tag: "Business / Co-Curricular", text: "Corporate Sponsor Engagement Audit & Partnership Renewal Rating." }
+                ]
               }
             }
           }
         ]
       },
       {
-        quadrant: "QUADRANT C: FEEDBACK & REFINEMENT",
+        quadrant: "QUADRANT C: REFLECTION & DEMONSTRATION",
         elements: [
           {
-            id: "reflection",
-            title: "Structured Reflection",
-            rationale: "The Learning Engine: Converts activity into portable skills. Prevents lost impact.",
-            cteTool: "Metacognitive Prompt Designer",
+            title: "Structured Reflection & Metacognition",
+            rationale: "Metacognitive reflection converts raw activity into portable, career-ready competencies.",
             tiers: {
               foundational: {
-                target: "Target Score: 8-13 Points | Scope 1 (Internal)",
-                desc: "Descriptive: How does this experience match classroom learning?",
-                curricular: "Short post-assignment journal: What concept was most challenging and why?",
-                cocurricular: "Debrief log: What went as expected during the school demonstration?",
-                prompts: [
-                  "Where did you hit a wall in this module?",
-                  "At this stage, what do I understand vs what remains unclear?"
+                scope: "Foundational (Scope 1: Internal Classroom)",
+                desc: "Descriptive reflection connecting course concepts to personal learning habits.",
+                outcomes: [
+                  { tag: "STEM (Neuroscience)", text: "Identify personal cognitive hurdles in understanding complex neurological pathways." },
+                  { tag: "Humanities (Psychology)", text: "Analyze how personal biases influence interpretation of behavioral case studies." },
+                  { tag: "Business / Co-Curricular", text: "Evaluate personal time-management efficiency following major project deadlines." }
                 ],
-                tweak: "Embed a 3-question prompt stem directly into Canvas submission pages."
+                activities: [
+                  { tag: "STEM (Neuroscience)", text: "3-Question Canvas exit tickets submitted immediately after challenging concept lectures." },
+                  { tag: "Humanities (Psychology)", text: "Reflective journal prompts exploring personal reactions to case study scenarios." },
+                  { tag: "Business / Co-Curricular", text: "Post-assignment retrospective logs documenting what strategies succeeded or failed." }
+                ],
+                assessments: [
+                  { tag: "STEM (Neuroscience)", text: "Metacognitive Exit Ticket Portfolio (Graded on depth of self-analysis)." },
+                  { tag: "Humanities (Psychology)", text: "Reflective Journal Rubric measuring self-awareness and bias identification." },
+                  { tag: "Business / Co-Curricular", text: "Project Retrospective One-Pager detailing personal workflow adjustments." }
+                ]
               },
               applied: {
-                target: "Target Score: 14-19 Points | Scope 2 (Campus/Community)",
-                desc: "Integrative: How am I adapting my skills to meet specific context needs?",
-                curricular: "Mid-semester synthesis paper evaluating theoretical predictions against lab anomalies.",
-                cocurricular: "Leader reflection analyzing how communication was adapted for K-12 students.",
-                prompts: [
-                  "What approaches did I attempt? What failed and why?",
-                  "What specific strategy will I adjust next phase?"
+                scope: "Applied (Scope 2: Campus & Community)",
+                desc: "Integrative reflection evaluating how skills adapt to solve dynamic problems.",
+                outcomes: [
+                  { tag: "STEM (Environmental Science)", text: "Evaluate discrepancies between theoretical ecological models and field-collected water samples." },
+                  { tag: "Humanities (Anthropology)", text: "Examine ethical implications of field observation techniques within local communities." },
+                  { tag: "Business / Co-Curricular", text: "Assess how team leadership style shifted when managing unexpected project roadblocks." }
                 ],
-                tweak: "Replace summary conclusion with a formal Process Audit & Pivot Memo."
+                activities: [
+                  { tag: "STEM (Environmental Science)", text: "Mid-semester Process Audit comparing expected research hypotheses against data anomalies." },
+                  { tag: "Humanities (Anthropology)", text: "Ethical Dilemma Discussion Board analyzing real-time field interaction challenges." },
+                  { tag: "Business / Co-Curricular", text: "Leadership Pivot Memos written following mid-project client feedback." }
+                ],
+                assessments: [
+                  { tag: "STEM (Environmental Science)", text: "Scientific Process Audit Memo evaluating analytical adaptations." },
+                  { tag: "Humanities (Anthropology)", text: "Ethical Fieldwork Essay linking fieldwork practice to discipline codes of ethics." },
+                  { tag: "Business / Co-Curricular", text: "Leadership Adaptation Analysis detailing team problem resolution." }
+                ]
               },
               integrated: {
-                target: "Target Score: 20-24 Points | Scope 3 (External/Professional)",
-                desc: "Metacognitive: How has this partnership redefined my professional identity?",
-                curricular: "E-portfolio reflecting on professional growth, ethics, and career alignment across full program.",
-                cocurricular: "Comprehensive exit defense detailing leadership evolution and civic agency.",
-                prompts: [
-                  "How has navigating unscripted friction redefined your professional ethics?",
-                  "What portable competencies will you articulate to future employers?"
+                scope: "Integrated (Scope 3: External & Professional)",
+                desc: "Transformative reflection articulating personal growth, ethics, and professional identity.",
+                outcomes: [
+                  { tag: "STEM (Biomedical Engineering)", text: "Articulate professional ethical values and technical identity to industry recruiters." },
+                  { tag: "Humanities (International Studies)", text: "Synthesize cross-cultural competency gains across multi-year study abroad or service." },
+                  { tag: "Business / Co-Curricular", text: "Construct an e-portfolio framing university leadership experiences into marketable career skills." }
                 ],
-                tweak: "Require an overarching synthetic narrative statement in the final portfolio."
+                activities: [
+                  { tag: "STEM (Biomedical Engineering)", text: "Capstone e-Portfolio curation showcasing engineering artifacts alongside professional identity essays." },
+                  { tag: "Humanities (International Studies)", text: "Senior Exit Interview & Defense presenting multi-year global learning synthesis." },
+                  { tag: "Business / Co-Curricular", text: "Career Competency Workshop converting student leadership experiences into STAR method interview stories." }
+                ],
+                assessments: [
+                  { tag: "STEM (Biomedical Engineering)", text: "Professional Capstone e-Portfolio evaluated by faculty and alumni industry mentors." },
+                  { tag: "Humanities (International Studies)", text: "Senior Synthesis Defense evaluated on cross-cultural fluency and ethical reasoning." },
+                  { tag: "Business / Co-Curricular", text: "Comprehensive Leadership Career Portfolio & Oral Defense." }
+                ]
               }
             }
           }
@@ -533,64 +636,94 @@
     function renderMatrix() {
       const container = document.getElementById("matrixContainer");
       if (!container) return;
-      container.innerHTML = "";
 
-      container.innerHTML += `
+      let html = `
         <div class="grid-header">AAC&U Quality Element</div>
-        <div class="grid-header">FOUNDATIONAL<span class="score-tag">Score: 8-13 Pts | Scope 1</span></div>
-        <div class="grid-header">APPLIED<span class="score-tag">Score: 14-19 Pts | Scope 2</span></div>
-        <div class="grid-header">INTEGRATED<span class="score-tag">Score: 20-24 Pts | Scope 3</span></div>
+        <div class="grid-header">FOUNDATIONAL<span class="score-tag">Scope 1 (Classroom)</span></div>
+        <div class="grid-header">APPLIED<span class="score-tag">Scope 2 (Campus/Community)</span></div>
+        <div class="grid-header">INTEGRATED<span class="score-tag">Scope 3 (Professional)</span></div>
       `;
 
-      matrixData.forEach(q => {
-        const qHeader = document.createElement("div");
-        qHeader.className = "quadrant-row-header";
-        qHeader.innerText = q.quadrant;
-        container.appendChild(qHeader);
+      matrixData.forEach((q, qIndex) => {
+        html += `<div class="quadrant-row-header">${q.quadrant}</div>`;
 
-        q.elements.forEach(elem => {
-          const titleCell = document.createElement("div");
-          titleCell.className = "element-title-cell";
-          titleCell.innerHTML = `<h3>${elem.title}</h3><p>${elem.rationale}</p>`;
-          container.appendChild(titleCell);
+        q.elements.forEach((elem, eIndex) => {
+          html += `
+            <div class="element-title-cell">
+              <h3>${elem.title}</h3>
+              <p>${elem.rationale}</p>
+            </div>
+          `;
 
           ["foundational", "applied", "integrated"].forEach(tierKey => {
             const tierData = elem.tiers[tierKey];
-            const cell = document.createElement("div");
-            cell.className = "matrix-cell";
-            cell.innerHTML = `
-              <div class="cell-text">${tierData.desc}</div>
-              <span class="cell-badge">🛠️ ${elem.cteTool}</span>
+            html += `
+              <div class="matrix-cell" onclick="openModal(${qIndex}, ${eIndex}, '${tierKey}')">
+                <div class="cell-text">${tierData.desc}</div>
+                <div class="cell-action">Click for 9 Exemplars ➔</div>
+              </div>
             `;
-            cell.onclick = () => openModal(elem, tierKey);
-            container.appendChild(cell);
           });
         });
       });
+
+      container.innerHTML = html;
     }
 
-    function openModal(elem, tierKey) {
+    function openModal(qIndex, eIndex, tierKey) {
+      const elem = matrixData[qIndex].elements[eIndex];
       const tier = elem.tiers[tierKey];
-      document.getElementById("modalTitle").innerText = `${elem.title} (${tierKey.toUpperCase()})`;
-      document.getElementById("modalSubtitle").innerText = tier.target;
-      document.getElementById("modalRationale").innerHTML = `<strong>Institutional Rationale:</strong> ${elem.rationale}`;
-      document.getElementById("modalCurricular").innerText = tier.curricular;
-      document.getElementById("modalCoCurricular").innerText = tier.cocurricular;
-      
-      document.getElementById("modalCteTitle").innerText = `Embedded CTE Diagnostic: ${elem.cteTool}`;
-      const promptsList = document.getElementById("modalCtePrompts");
-      promptsList.innerHTML = tier.prompts.map(p => `<li>${p}</li>`).join("");
 
-      document.getElementById("modalMicroTweak").innerText = tier.tweak;
+      document.getElementById("modalTitle").innerText = `${elem.title}`;
+      document.getElementById("modalSubtitle").innerText = tier.scope;
+
+      renderExampleList("outcomesContainer", tier.outcomes);
+      renderExampleList("activitiesContainer", tier.activities);
+      renderExampleList("assessmentsContainer", tier.assessments);
 
       document.getElementById("modalOverlay").classList.add("active");
+    }
+
+    function renderExampleList(containerId, items) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = items.map(item => {
+        let badgeClass = "stem";
+        if (item.tag.includes("Humanities") || item.tag.includes("Psychology") || item.tag.includes("Sociology") || item.tag.includes("English") || item.tag.includes("History") || item.tag.includes("Education") || item.tag.includes("Political Science") || item.tag.includes("Communication") || item.tag.includes("Visual Arts") || item.tag.includes("Anthropology") || item.tag.includes("International")) {
+          badgeClass = "humanities";
+        } else if (item.tag.includes("Business") || item.tag.includes("DEEP") || item.tag.includes("Co-Curricular")) {
+          badgeClass = "business";
+        }
+
+        return `
+          <div class="example-card">
+            <span class="discipline-badge ${badgeClass}">${item.tag}</span>
+            <div class="example-text">${item.text}</div>
+          </div>
+        `;
+      }).join("");
     }
 
     function closeModal() {
       document.getElementById("modalOverlay").classList.remove("active");
     }
 
-    document.addEventListener("DOMContentLoaded", renderMatrix);
+    function handleOverlayClick(event) {
+      if (event.target.id === "modalOverlay") {
+        closeModal();
+      }
+    }
+
+    document.addEventListener("keydown", function(e) {
+      if (e.key === "Escape") {
+        closeModal();
+      }
+    });
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", renderMatrix);
+    } else {
+      renderMatrix();
+    }
   </script>
 </body>
 </html>

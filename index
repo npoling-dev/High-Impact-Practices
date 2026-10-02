@@ -12,15 +12,21 @@
       --tamu-gray-dark: #1e293b;
       --tamu-gray-light: #f8fafc;
       --tamu-border: #cbd5e1;
-      --badge-stem-bg: #eff6ff;
-      --badge-stem-text: #1d4ed8;
-      --badge-stem-border: #bfdbfe;
-      --badge-hum-bg: #fef3c7;
-      --badge-hum-text: #b45309;
-      --badge-hum-border: #fde68a;
-      --badge-bus-bg: #ecfdf5;
-      --badge-bus-text: #047857;
-      --badge-bus-border: #a7f3d0;
+      
+      --stem-bg: #f0f9ff;
+      --stem-border: #bae6fd;
+      --stem-badge-bg: #0284c7;
+      --stem-badge-text: #ffffff;
+      
+      --hum-bg: #fffbeb;
+      --hum-border: #fde68a;
+      --hum-badge-bg: #d97706;
+      --hum-badge-text: #ffffff;
+      
+      --bus-bg: #f0fdf4;
+      --bus-border: #bbf7d0;
+      --bus-badge-bg: #16a34a;
+      --bus-badge-text: #ffffff;
     }
 
     * {
@@ -42,7 +48,6 @@
       margin: 0 auto;
     }
 
-    /* Header Banner */
     header {
       background: var(--tamu-maroon);
       color: #ffffff;
@@ -65,7 +70,6 @@
       opacity: 0.9;
     }
 
-    /* Matrix Container */
     .matrix-wrapper {
       overflow-x: auto;
       background: #ffffff;
@@ -77,12 +81,11 @@
 
     .matrix-grid {
       display: grid;
-      grid-template-columns: 260px repeat(3, 1fr);
+      grid-template-columns: 280px repeat(3, 1fr);
       gap: 12px;
-      min-width: 960px;
+      min-width: 1000px;
     }
 
-    /* Headers */
     .grid-header {
       background: #e2e8f0;
       padding: 14px 16px;
@@ -112,11 +115,10 @@
       font-weight: 700;
       font-size: 0.95rem;
       border-radius: 6px;
-      margin-top: 12px;
-      letter-spacing: 0.03em;
+      margin-top: 14px;
+      letter-spacing: 0.04em;
     }
 
-    /* Cells */
     .element-title-cell {
       background: #ffffff;
       padding: 16px;
@@ -172,7 +174,6 @@
       gap: 4px;
     }
 
-    /* Modal Overlay & Card */
     .modal-overlay {
       position: fixed;
       top: 0;
@@ -195,7 +196,7 @@
     .modal-content {
       background: #ffffff;
       width: 100%;
-      max-width: 880px;
+      max-width: 960px;
       max-height: 90vh;
       border-radius: 12px;
       overflow-y: auto;
@@ -246,72 +247,94 @@
 
     .modal-body {
       padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
     }
 
-    .modal-section {
-      margin-bottom: 28px;
+    .track-card {
+      border-radius: 8px;
+      padding: 20px;
+      border: 1px solid var(--tamu-border);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
     }
 
-    .modal-section-title {
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: var(--tamu-maroon);
-      border-bottom: 2px solid #e2e8f0;
-      padding-bottom: 8px;
-      margin-bottom: 14px;
+    .track-card.stem {
+      background: var(--stem-bg);
+      border-color: var(--stem-border);
+    }
+
+    .track-card.humanities {
+      background: var(--hum-bg);
+      border-color: var(--hum-border);
+    }
+
+    .track-card.business {
+      background: var(--bus-bg);
+      border-color: var(--bus-border);
+    }
+
+    .track-header {
       display: flex;
       align-items: center;
-      gap: 8px;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      padding-bottom: 10px;
     }
 
-    .example-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .example-card {
-      background: #f8fafc;
-      border: 1px solid var(--tamu-border);
-      border-radius: 8px;
-      padding: 12px 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .discipline-badge {
-      display: inline-block;
-      align-self: flex-start;
-      font-size: 0.7rem;
+    .track-badge {
+      font-size: 0.72rem;
       font-weight: 700;
-      padding: 2px 8px;
+      padding: 4px 10px;
       border-radius: 4px;
       text-transform: uppercase;
       letter-spacing: 0.04em;
     }
 
-    .discipline-badge.stem {
-      background: var(--badge-stem-bg);
-      color: var(--badge-stem-text);
-      border: 1px solid var(--badge-stem-border);
+    .track-badge.stem {
+      background: var(--stem-badge-bg);
+      color: var(--stem-badge-text);
     }
 
-    .discipline-badge.humanities {
-      background: var(--badge-hum-bg);
-      color: var(--badge-hum-text);
-      border: 1px solid var(--badge-hum-border);
+    .track-badge.humanities {
+      background: var(--hum-badge-bg);
+      color: var(--hum-badge-text);
     }
 
-    .discipline-badge.business {
-      background: var(--badge-bus-bg);
-      color: var(--badge-bus-text);
-      border: 1px solid var(--badge-bus-border);
+    .track-badge.business {
+      background: var(--bus-badge-bg);
+      color: var(--bus-badge-text);
     }
 
-    .example-text {
+    .discipline-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--tamu-gray-dark);
+    }
+
+    .item-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .item-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      color: var(--tamu-maroon);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .item-text {
       font-size: 0.88rem;
       color: #334155;
+      padding-left: 20px;
     }
   </style>
 </head>
@@ -320,17 +343,14 @@
   <div class="container">
     <header>
       <h1>TAMU High-Impact Practices (HIPs) Course Profile Tool</h1>
-      <p>Center for Teaching Excellence | Matrix Alignment & Discipline Exemplars</p>
+      <p>Center for Teaching Excellence | Fidelity Matrix & Disciplinary Exemplars</p>
     </header>
 
     <div class="matrix-wrapper">
-      <div class="matrix-grid" id="matrixContainer">
-        <!-- Rendered dynamically via JavaScript -->
-      </div>
+      <div class="matrix-grid" id="matrixContainer"></div>
     </div>
   </div>
 
-  <!-- Interactive Modal -->
   <div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
     <div class="modal-content">
       <div class="modal-header">
@@ -338,157 +358,203 @@
         <h2 id="modalTitle">Element Title</h2>
         <p id="modalSubtitle">Quadrant & Scope Level</p>
       </div>
-      <div class="modal-body">
-        
-        <!-- Outcomes Section -->
-        <div class="modal-section">
-          <h3 class="modal-section-title">🎯 3 Sample Learning Outcomes</h3>
-          <div class="example-list" id="outcomesContainer"></div>
-        </div>
-
-        <!-- Activities Section -->
-        <div class="modal-section">
-          <h3 class="modal-section-title">⚡ 3 Sample Learning Activities</h3>
-          <div class="example-list" id="activitiesContainer"></div>
-        </div>
-
-        <!-- Assessments Section -->
-        <div class="modal-section">
-          <h3 class="modal-section-title">📊 3 Sample Assessments & Artifacts</h3>
-          <div class="example-list" id="assessmentsContainer"></div>
-        </div>
-
-      </div>
+      <div class="modal-body" id="modalBody"></div>
     </div>
   </div>
 
   <script>
     const matrixData = [
       {
-        quadrant: "QUADRANT A: STRUCTURAL DESIGN & RIGOR",
+        quadrant: "QUADRANT A: ENGAGEMENT",
         elements: [
           {
-            title: "Performance Expectations & Rigor",
-            rationale: "Ensures high standards and prevents 'HIP-in-name-only' implementation.",
+            title: "Interactions (Faculty/Peer)",
+            rationale: "Social Capital ROI: Measures the density of mentorship. Higher interaction scores predict higher alumni engagement and post-grad success.",
             tiers: {
               foundational: {
-                scope: "Foundational (Scope 1: Internal Classroom)",
-                desc: "Students follow modeled professional standards to complete structured tasks within the course.",
-                outcomes: [
-                  { tag: "STEM (Biology)", text: "Apply standardized laboratory safety protocols and data formatting to evaluate cellular growth curves." },
-                  { tag: "Humanities (History)", text: "Construct an evidence-based historical thesis using primary source analysis protocols." },
-                  { tag: "Business / Co-Curricular", text: "Conduct a baseline market SWOT analysis using standard industry benchmarking frameworks." }
-                ],
-                activities: [
-                  { tag: "STEM (Biology)", text: "Guided lab benchmarking where students test unknown solutions against professional safety and formatting protocols." },
-                  { tag: "Humanities (History)", text: "Primary source workshop analyzing conflicting archival accounts using a discipline citation rubric." },
-                  { tag: "Business / Co-Curricular", text: "Case study audit requiring students to identify organizational gaps using standard business templates." }
-                ],
-                assessments: [
-                  { tag: "STEM (Biology)", text: "Standardized Lab Data Audit with a 5-point formatting checklist and peer-verification signoff." },
-                  { tag: "Humanities (History)", text: "Annotated Bibliography & Thesis Framework evaluated against primary source citation standards." },
-                  { tag: "Business / Co-Curricular", text: "Executive One-Pager Briefing evaluated against professional communication rubrics." }
+                scope: "Foundational (Scope 1: Internal Classroom — Target: 8-13 pts)",
+                desc: "Faculty-led modeling; peers provide introductory feedback based on provided checklists.",
+                exemplars: [
+                  {
+                    track: "stem",
+                    trackLabel: "STEM Track",
+                    discipline: "Biology / Chemistry",
+                    outcome: "Apply standardized peer-review protocols to evaluate classmate laboratory calculation workflows.",
+                    activity: "Peer-Led Team Learning (PLTL) session where students cross-verify lab procedures using structured checklists.",
+                    assessment: "Peer Verification Signoff Sheet evaluated for diagnostic accuracy and feedback depth."
+                  },
+                  {
+                    track: "humanities",
+                    trackLabel: "Humanities & Social Sciences Track",
+                    discipline: "History / English",
+                    outcome: "Analyze peer thesis statements using instructor-modeled rubrics for logical argument structure.",
+                    activity: "Structured 'Fishbowl' peer review workshop evaluating essay introductions against formal thesis rubrics.",
+                    assessment: "Annotated Peer Thesis Review Rubric with actionable revision notes."
+                  },
+                  {
+                    track: "business",
+                    trackLabel: "Business & Co-Curricular Track",
+                    discipline: "Management / Student Leadership",
+                    outcome: "Execute structured team peer-evaluations following established organizational communication norms.",
+                    activity: "Team charter orientation drafting ground rules and practicing introductory peer feedback scenarios.",
+                    assessment: "Completed Peer Feedback Worksheet and signed Team Operating Agreement."
+                  }
                 ]
               },
               applied: {
-                scope: "Applied (Scope 2: Campus & Community)",
-                desc: "Students apply discipline standards to semi-structured problems with increasing autonomy.",
-                outcomes: [
-                  { tag: "STEM (Engineering)", text: "Adapt fluid mechanics principles to design a scaled prototype addressing a campus stormwater runoff bottleneck." },
-                  { tag: "Humanities (Sociology)", text: "Design and execute a campus survey measuring student resource utilization using validated survey methodology." },
-                  { tag: "Business / Co-Curricular (DEEP)", text: "Coordinate multi-team logistics and safety protocols for a campus-wide public STEM festival." }
-                ],
-                activities: [
-                  { tag: "STEM (Engineering)", text: "Client-facing sprint project collaborating with TAMU Facilities engineers on drainage modeling." },
-                  { tag: "Humanities (Sociology)", text: "Field research study gathering and coding qualitative survey data from campus stakeholders." },
-                  { tag: "Business / Co-Curricular (DEEP)", text: "Demonstration dry-run where student leads refine interactive outreach exhibits based on peer critique." }
-                ],
-                assessments: [
-                  { tag: "STEM (Engineering)", text: "Engineering Design Milestone Proposal & Feasibility Report reviewed by campus engineers." },
-                  { tag: "Humanities (Sociology)", text: "Empirical Research Report with coded data analysis and actionable policy recommendations." },
-                  { tag: "Business / Co-Curricular (DEEP)", text: "Operational Safety & Event Logistics Audit evaluated prior to public deployment." }
+                scope: "Applied (Scope 2: Campus & Community — Target: 14-19 pts)",
+                desc: "Iterative collaboration; peers provide formative critique; faculty acts as a 'Consultant.'",
+                exemplars: [
+                  {
+                    track: "stem",
+                    trackLabel: "STEM Track",
+                    discipline: "Civil Engineering",
+                    outcome: "Refine site design prototypes through formative critique sessions with faculty acting as engineering consultants.",
+                    activity: "Weekly studio 'Pin-Up' sessions presenting stormwater drainage models to faculty and peer reviewers.",
+                    assessment: "Design Iteration Log documenting how peer and instructor feedback altered the engineering draft."
+                  },
+                  {
+                    track: "humanities",
+                    trackLabel: "Humanities & Social Sciences Track",
+                    discipline: "Sociology / Communication",
+                    outcome: "Co-design community survey instruments through iterative peer feedback and instructor consultations.",
+                    activity: "Collaborative workshop revising qualitative survey questions based on pilot test feedback from campus groups.",
+                    assessment: "Survey Methodology Proposal accompanied by a Peer Revision & Response Matrix."
+                  },
+                  {
+                    track: "business",
+                    trackLabel: "Business & Co-Curricular Track",
+                    discipline: "Marketing / Campus Programs",
+                    outcome: "Execute multi-stage campaign planning with faculty acting as strategic advisors during project sprints.",
+                    activity: "Bi-weekly sprint review meetings where student project managers present campaign metrics to faculty advisors.",
+                    assessment: "Mid-Project Progress Memo with peer 360-degree performance evaluation summaries."
+                  }
                 ]
               },
               integrated: {
-                scope: "Integrated (Scope 3: External & Professional)",
-                desc: "Students define performance criteria and manage original, unscripted deliverables for external partners.",
-                outcomes: [
-                  { tag: "STEM (Computer Science)", text: "Negotiate technical specifications and deploy an open-source web application for a municipal partner." },
-                  { tag: "Humanities (Public History)", text: "Co-create an interactive digital museum exhibit with regional historical society archivists." },
-                  { tag: "Business / Co-Curricular", text: "Manage corporate client deliverables and budget lines for an intercollegiate consulting competition." }
-                ],
-                activities: [
-                  { tag: "STEM (Computer Science)", text: "Agile software development sprints with weekly client code reviews and client feature backlogs." },
-                  { tag: "Humanities (Public History)", text: "Archival curation and oral history interviews conducted on-site with community members." },
-                  { tag: "Business / Co-Curricular", text: "Client advisory board meetings where students defend strategy adjustments under real budget constraints." }
-                ],
-                assessments: [
-                  { tag: "STEM (Computer Science)", text: "Live Client Code Review Defense and open-source deployment audit." },
-                  { tag: "Humanities (Public History)", text: "Public Exhibit Launch and peer-reviewed Curation Defense with regional archivists." },
-                  { tag: "Business / Co-Curricular", text: "Final Client Deliverable Package & External Partner Performance Review." }
+                scope: "Integrated (Scope 3: External & Professional — Target: 20-24 pts)",
+                desc: "Sustained partnership; students and faculty/partners co-author or co-design the final product.",
+                exemplars: [
+                  {
+                    track: "stem",
+                    trackLabel: "STEM Track",
+                    discipline: "Physics / Biomedical Engineering",
+                    outcome: "Co-author original scientific findings alongside faculty and external lab sponsors for publication.",
+                    activity: "Year-long collaborative laboratory research sprints co-investigating novel biomedical compound delivery.",
+                    assessment: "Co-Authored Journal Manuscript draft and External Sponsor Technical Defense."
+                  },
+                  {
+                    track: "humanities",
+                    trackLabel: "Humanities & Social Sciences Track",
+                    discipline: "Public History / Fine Arts",
+                    outcome: "Co-curate a public museum exhibit in direct partnership with faculty and community archivists.",
+                    activity: "On-site archival curation and community oral history gathering with regional historical society directors.",
+                    assessment: "Public Exhibit Catalogue & External Partner Co-Design Evaluation."
+                  },
+                  {
+                    track: "business",
+                    trackLabel: "Business & Co-Curricular Track",
+                    discipline: "Executive Consulting / Non-Profit Governance",
+                    outcome: "Co-create long-term strategic growth frameworks alongside corporate or municipal leadership boards.",
+                    activity: "Executive advisory board meetings co-leading strategic policy design for external client organizations.",
+                    assessment: "Client-Signed Governance Strategy Deliverable and External Board Rating."
+                  }
                 ]
               }
             }
           },
           {
-            title: "Time & Effort Investment",
-            rationale: "Sustained time-on-task over time correlates directly with higher student retention rates.",
+            title: "Iterative Feedback",
+            rationale: "Efficiency Math: Formative feedback reduces 'D-F-W' (Drop/Fail/Withdraw) rates by catching learning gaps before the final assessment.",
             tiers: {
               foundational: {
-                scope: "Foundational (Scope 1: Internal Classroom)",
-                desc: "Consistent weekly workflow habits (<20 out-of-class hours across the term).",
-                outcomes: [
-                  { tag: "STEM (Chemistry)", text: "Maintain a rigorous weekly laboratory notebook meeting professional documentation standards." },
-                  { tag: "Humanities (English)", text: "Execute iterative drafting cycles incorporating weekly writing lab feedback." },
-                  { tag: "Business / Co-Curricular", text: "Log consistent project hours and milestone updates using digital task boards." }
-                ],
-                activities: [
-                  { tag: "STEM (Chemistry)", text: "Weekly pre-lab prep modules paired with post-lab error analysis exercises." },
-                  { tag: "Humanities (English)", text: "Weekly low-stakes writing sprints with peer peer-editing roundtables." },
-                  { tag: "Business / Co-Curricular", text: "Bi-weekly sprint check-ins tracking task completion against personal project plans." }
-                ],
-                assessments: [
-                  { tag: "STEM (Chemistry)", text: "Weekly Lab Notebook Inspections evaluated on completeness, accuracy, and timing." },
-                  { tag: "Humanities (English)", text: "Draft Evolution Portfolio comparing initial outlines to final polished submissions." },
-                  { tag: "Business / Co-Curricular", text: "Project Effort Log & Task Completion Rubric (Pass/Fail milestone tracking)." }
+                scope: "Foundational (Scope 1: Internal Classroom — Target: 8-13 pts)",
+                desc: "Feedback focuses on accuracy, alignment with models, and basic skill acquisition.",
+                exemplars: [
+                  {
+                    track: "stem",
+                    trackLabel: "STEM Track",
+                    discipline: "Mathematics / Physics",
+                    outcome: "Correct technical calculation errors by incorporating instructor feedback on early homework drafts.",
+                    activity: "Two-stage homework submission process where Stage 1 receives targeted feedback on mathematical rigor.",
+                    assessment: "Revised Problem Set demonstrating error corrections and step-by-step logic."
+                  },
+                  {
+                    track: "humanities",
+                    trackLabel: "Humanities & Social Sciences Track",
+                    discipline: "English / Philosophy",
+                    outcome: "Refine paragraph unity and citation accuracy following low-stakes instructor writing feedback.",
+                    activity: "Writing center peer-review module focusing on citation formatting and structural thesis alignment.",
+                    assessment: "Draft Evolution Portfolio showing original submission, feedback notes, and final text."
+                  },
+                  {
+                    track: "business",
+                    trackLabel: "Business & Co-Curricular Track",
+                    discipline: "Accounting / Finance",
+                    outcome: "Identify spreadsheet formatting errors against standardized financial modeling guidelines.",
+                    activity: "In-class lab auditing financial spreadsheets using automated check formulas and instructor tips.",
+                    assessment: "Corrected Financial Statement Sheet with audit change log."
+                  }
                 ]
               },
               applied: {
-                scope: "Applied (Scope 2: Campus & Community)",
-                desc: "Sustained effort (40–80 hours) devoted to iterative research or development.",
-                outcomes: [
-                  { tag: "STEM (Biomedical Sciences)", text: "Execute an independent multi-week undergraduate research protocol in a faculty laboratory." },
-                  { tag: "Humanities (Political Science)", text: "Conduct multi-week qualitative field observations at local municipal government meetings." },
-                  { tag: "Business / Co-Curricular", text: "Manage semester-long outreach marketing campaigns reaching over 1,000 campus participants." }
-                ],
-                activities: [
-                  { tag: "STEM (Biomedical Sciences)", text: "Semester CURE project incorporating weekly wet-lab experimentation and troubleshooting." },
-                  { tag: "Humanities (Political Science)", text: "Observational field work requiring 30+ hours of community meeting transcripts and coding." },
-                  { tag: "Business / Co-Curricular", text: "Campaign sprint management with weekly social media analytics reviews and strategy pivots." }
-                ],
-                assessments: [
-                  { tag: "STEM (Biomedical Sciences)", text: "Mid-Semester CURE Progress Report & Raw Data Verification Audit." },
-                  { tag: "Humanities (Political Science)", text: "Fieldwork Transcript Archive & Qualitative Analysis Summary." },
-                  { tag: "Business / Co-Curricular", text: "Campaign Milestone Audit evaluating effort distribution and engagement metrics." }
+                scope: "Applied (Scope 2: Campus & Community — Target: 14-19 pts)",
+                desc: "Feedback focuses on the application of theory to practice and the quality of revisions.",
+                exemplars: [
+                  {
+                    track: "stem",
+                    trackLabel: "STEM Track",
+                    discipline: "Computer Science / GIS",
+                    outcome: "Modify spatial algorithms based on real-world dataset feedback provided by campus facilities staff.",
+                    activity: "Agile development sprint where campus planners test student software tools and log feature requests.",
+                    assessment: "Sprint Release Notes & Code Revision Documentation responding to user feedback."
+                  },
+                  {
+                    track: "humanities",
+                    trackLabel: "Humanities & Social Sciences Track",
+                    discipline: "Political Science / Urban Planning",
+                    outcome: "Adapt policy recommendation briefs based on formative feedback from local municipal officials.",
+                    activity: "Roundtable presentation of preliminary policy briefs to city staff, receiving live critique on feasibility.",
+                    assessment: "Revised Municipal Policy Brief incorporating partner feedback and feasibility adjustments."
+                  },
+                  {
+                    track: "business",
+                    trackLabel: "Business & Co-Curricular Track",
+                    discipline: "Supply Chain / Business Analytics",
+                    outcome: "Optimize supply chain logistics models in response to client critique on cost constraints.",
+                    activity: "Mid-semester client design review adjusting inventory models based on real-world constraints.",
+                    assessment: "Logistics Optimization Report featuring a dedicated 'Client Feedback Response' section."
+                  }
                 ]
               },
               integrated: {
-                scope: "Integrated (Scope 3: External & Professional)",
-                desc: "Deep, immersive investment (100+ hours) managing complex project lifecycles.",
-                outcomes: [
-                  { tag: "STEM (Materials Science)", text: "Complete an intensive multi-semester senior design project or industry research fellowship." },
-                  { tag: "Humanities (Education)", text: "Execute full-time student teaching immersion managing daily classroom instruction." },
-                  { tag: "Business / Co-Curricular", text: "Serve in senior executive leadership managing year-round university outreach programs." }
-                ],
-                activities: [
-                  { tag: "STEM (Materials Science)", text: "Daily lab engineering sprints, physical fabrication, and external sponsor progress updates." },
-                  { tag: "Humanities (Education)", text: "Full-time immersive classroom management, lesson planning, and parent-teacher conferences." },
-                  { tag: "Business / Co-Curricular", text: "Executive board governance, budget management, and multi-event regional oversight." }
-                ],
-                assessments: [
-                  { tag: "STEM (Materials Science)", text: "Senior Design Capstone Defense & Physical Prototype Sponsor Evaluation." },
-                  { tag: "Humanities (Education)", text: "Teaching Performance Assessment (edTPA) Portfolio & Clinical Supervisor Rating." },
-                  { tag: "Business / Co-Curricular", text: "Annual Governance Audit & Leadership Transition Portfolio." }
+                scope: "Integrated (Scope 3: External & Professional — Target: 20-24 pts)",
+                desc: "Feedback focuses on the impact, professional ethics, and public reach of the final work.",
+                exemplars: [
+                  {
+                    track: "stem",
+                    trackLabel: "STEM Track",
+                    discipline: "Biomedical Devices / Data Science",
+                    outcome: "Refine medical device designs to adhere to professional regulatory and ethical standards.",
+                    activity: "Formal advisory board review with industry compliance officers evaluating device safety protocols.",
+                    assessment: "Regulatory Compliance Audit & Final Industrial Design Specification."
+                  },
+                  {
+                    track: "humanities",
+                    trackLabel: "Humanities & Social Sciences Track",
+                    discipline: "Journalism / Public Policy",
+                    outcome: "Publish investigative reports meeting professional editorial and media ethics standards.",
+                    activity: "Editorial board review cycles with professional journalists interrogating source credibility and ethics.",
+                    assessment: "Published News Feature or Policy Report with Editorial Signoff Certification."
+                  },
+                  {
+                    track: "business",
+                    trackLabel: "Business & Co-Curricular Track",
+                    discipline: "Entrepreneurship / Venture Capital",
+                    outcome: "Pitch scalable business models refined through feedback from external angel investor panels.",
+                    activity: "Venture pitch showcase receiving direct critique on market entry strategy and financial risk.",
+                    assessment: "Final Investment Prospectus & Executive Board Pitch Defense."
+                  }
                 ]
               }
             }
@@ -496,67 +562,196 @@
         ]
       },
       {
-        quadrant: "QUADRANT B: INTERACTION & MENTORSHIP",
+        quadrant: "QUADRANT B: CHALLENGE AND RIGOR",
         elements: [
           {
-            title: "Faculty & Peer Interactions",
-            rationale: "Frequent interaction with faculty and peers builds student social capital and sense of belonging.",
+            title: "Time & Effort",
+            rationale: "Retention Math: Research shows a direct correlation between 'time on task' in HIPs and student retention/graduation rates.",
             tiers: {
               foundational: {
-                scope: "Foundational (Scope 1: Internal Classroom)",
-                desc: "Structured interaction guided by explicit rubrics and instructor modeling.",
-                outcomes: [
-                  { tag: "STEM (Mathematics)", text: "Formulate and defend problem solutions during structured peer-led team learning sessions." },
-                  { tag: "Humanities (Philosophy)", text: "Engage in civil structured debate using formal logical fallacies criteria." },
-                  { tag: "Business / Co-Curricular", text: "Establish team communication agreements and conflict resolution protocols." }
-                ],
-                activities: [
-                  { tag: "STEM (Mathematics)", text: "Peer-Led Team Learning (PLTL) workshops solving complex calculus proof sets in groups." },
-                  { tag: "Humanities (Philosophy)", text: "Fishbowl debate exercises with structured peer critique roles." },
-                  { tag: "Business / Co-Curricular", text: "Team Charter Workshop crafting group norms and communication channels." }
-                ],
-                assessments: [
-                  { tag: "STEM (Mathematics)", text: "Peer Peer-Evaluation Rubric measuring collaborative problem-solving contribution." },
-                  { tag: "Humanities (Philosophy)", text: "Structured Debate Critique Form evaluated by peers and instructor." },
-                  { tag: "Business / Co-Curricular", text: "Signed Team Charter & Communication Plan (Graded Complete/Incomplete)." }
+                scope: "Foundational (Scope 1: Internal Classroom — Target: 8-13 pts)",
+                desc: "Consistent engagement with the HIP over a term (<20 hours of engagement); focus on establishing workflow and habits.",
+                exemplars: [
+                  {
+                    track: "stem",
+                    trackLabel: "STEM Track",
+                    discipline: "General Chemistry / Biology",
+                    outcome: "Maintain a consistent weekly laboratory notebook meeting standardized scientific logging routines.",
+                    activity: "Weekly pre-lab prep work and post-lab observations totaling 15 hours across the semester.",
+                    assessment: "Weekly Lab Notebook Inspection evaluated on accuracy, timeliness, and consistency."
+                  },
+                  {
+                    track: "humanities",
+                    trackLabel: "Humanities & Social Sciences Track",
+                    discipline: "English Composition / Communications",
+                    outcome: "Sustain regular drafting and editing schedules across multiple short writing assignments.",
+                    activity: "Weekly 2-hour writing lab modules incorporating low-stakes editing exercises.",
+                    assessment: "Drafting Log and Completed Writing Portfolio."
+                  },
+                  {
+                    track: "business",
+                    trackLabel: "Business & Co-Curricular Track",
+                    discipline: "Introduction to Business / Org Leadership",
+                    outcome: "Demonstrate personal time-management habits using professional digital task boards.",
+                    activity: "Weekly project tracking updates logged in digital project management tools (e.g., Trello/Asana).",
+                    assessment: "Weekly Project Management Log & Task Completion Verification."
+                  }
                 ]
               },
               applied: {
-                scope: "Applied (Scope 2: Campus & Community)",
-                desc: "Formative collaboration; instructor transitions to mentor and project consultant.",
-                outcomes: [
-                  { tag: "STEM (Architecture)", text: "Iterate structural designs through weekly studio desk critiques with faculty and guest architects." },
-                  { tag: "Humanities (Communication)", text: "Co-design community dialogue sessions alongside local civic leaders." },
-                  { tag: "Business / Co-Curricular", text: "Mentor junior student leaders through structured event planning apprenticeships." }
-                ],
-                activities: [
-                  { tag: "STEM (Architecture)", text: "Weekly Studio 'Pin-Up' critiques presenting design drafts to faculty and visiting practitioners." },
-                  { tag: "Humanities (Communication)", text: "Facilitated town hall simulations co-led with community organization representatives." },
-                  { tag: "Business / Co-Curricular", text: "Bi-weekly peer mentorship coaching sessions between senior student leads and new members." }
-                ],
-                assessments: [
-                  { tag: "STEM (Architecture)", text: "Design Studio Pin-Up Critique Rubric focused on responsiveness to expert feedback." },
-                  { tag: "Humanities (Communication)", text: "Civic Partner Evaluation of student moderation and dialogue facilitation." },
-                  { tag: "Business / Co-Curricular", text: "Peer Mentorship Reflection & 360-Degree Team Feedback Review." }
+                scope: "Applied (Scope 2: Campus & Community — Target: 14-19 pts)",
+                desc: "Sustained intensity; significant out-of-class time (40–80 hours) dedicated to iterative project development.",
+                exemplars: [
+                  {
+                    track: "stem",
+                    trackLabel: "STEM Track",
+                    discipline: "Environmental Science / CURE",
+                    outcome: "Execute an extended multi-week campus environmental field sampling protocol requiring 50+ hours.",
+                    activity: "Bi-weekly field sampling trips, lab processing, and longitudinal data tracking across the campus watershed.",
+                    assessment: "Mid-Term Field Data Summary & Final Environmental Analysis Report."
+                  },
+                  {
+                    track: "humanities",
+                    trackLabel: "Humanities & Social Sciences Track",
+                    discipline: "Sociology / Anthropology",
+                    outcome: "Conduct extensive observational field research accumulating 60+ hours of qualitative community data.",
+                    activity: "Fieldwork observation hours, transcript coding, and qualitative data entry over 8 weeks.",
+                    assessment: "Fieldwork Transcript Archive & Qualitative Research Synthesis."
+                  },
+                  {
+                    track: "business",
+                    trackLabel: "Business & Co-Curricular Track",
+                    discipline: "Event Management / Marketing",
+                    outcome: "Coordinate semester-long campus marketing campaigns requiring 60+ total project hours.",
+                    activity: "Managing event logistics, social media marketing schedules, and live event setup teams.",
+                    assessment: "Campaign Operational Audit and Event Execution Metric Portfolio."
+                  }
                 ]
               },
               integrated: {
-                scope: "Integrated (Scope 3: External & Professional)",
-                desc: "Sustained professional partnership; co-creating deliverables with external mentors.",
-                outcomes: [
-                  { tag: "STEM (Physics)", text: "Co-author a peer-reviewed research manuscript alongside faculty and national lab scientists." },
-                  { tag: "Humanities (Visual Arts)", text: "Curate a public gallery exhibition in partnership with professional museum conservators." },
-                  { tag: "Business / Co-Curricular", text: "Manage external corporate sponsor relationships for university-wide initiatives." }
-                ],
-                activities: [
-                  { tag: "STEM (Physics)", text: "Joint data analysis sessions and co-drafting manuscripts for scientific journal submission." },
-                  { tag: "Humanities (Visual Arts)", text: "Collaborative gallery installation, lighting design, and public opening remarks with curators." },
-                  { tag: "Business / Co-Curricular", text: "Executive board briefings presenting quarterly impact metrics to external industry sponsors." }
-                ],
-                assessments: [
-                  { tag: "STEM (Physics)", text: "Journal Manuscript Acceptance or Co-Author Contribution Defense." },
-                  { tag: "Humanities (Visual Arts)", text: "Professional Exhibition Review & Curator Partnership Evaluation." },
-                  { tag: "Business / Co-Curricular", text: "Corporate Sponsor Engagement Audit & Partnership Renewal Rating." }
+                scope: "Integrated (Scope 3: External & Professional — Target: 20-24 pts)",
+                desc: "Deep, immersive investment (100+ hours); students manage complex timelines and competing priorities.",
+                exemplars: [
+                  {
+                    track: "stem",
+                    trackLabel: "STEM Track",
+                    discipline: "Engineering Senior Design / CS Capstone",
+                    outcome: "Manage full-lifecycle physical engineering fabrication requiring 120+ total team project hours.",
+                    activity: "Daily design fabrication, stress testing, and industry client status updates across 15 weeks.",
+                    assessment: "Senior Design Capstone Defense & Physical Prototype Sponsor Verification."
+                  },
+                  {
+                    track: "humanities",
+                    trackLabel: "Humanities & Social Sciences Track",
+                    discipline: "Clinical Student Teaching / International Internships",
+                    outcome: "Complete full-time professional immersion managing daily instructional or organizational tasks.",
+                    activity: "12-week full-time immersion (300+ hours) managing real-world client or classroom operations.",
+                    assessment: "Clinical Supervisor Evaluation & edTPA / Internship Capstone Portfolio."
+                  },
+                  {
+                    track: "business",
+                    trackLabel: "Business & Co-Curricular Track",
+                    discipline: "Student Organization Executive Leadership",
+                    outcome: "Direct year-round executive operations managing budgets and enterprise-scale projects.",
+                    activity: "Managing multi-team committee structures, fiscal budgets, and external partner contracts (150+ hours).",
+                    assessment: "Annual Governance Audit & Executive Leadership Transition Archive."
+                  }
+                ]
+              }
+            }
+          },
+          {
+            title: "Performance Expectations",
+            rationale: "Audit Defense: Prevents 'HIP-in-name-only' reporting. High expectations ensure the value of the TAMU degree remains gold-standard in state audits.",
+            tiers: {
+              foundational: {
+                scope: "Foundational (Scope 1: Internal Classroom — Target: 8-13 pts)",
+                desc: "Students identify and follow modeled professional standards to complete structured tasks.",
+                exemplars: [
+                  {
+                    track: "stem",
+                    trackLabel: "STEM Track",
+                    discipline: "Microbiology / Genetics",
+                    outcome: "Adhere to professional biosafety level (BSL-2) laboratory protocols and data logging standards.",
+                    activity: "Laboratory safety drills and standardized culture plating exercises following strict protocol guidelines.",
+                    assessment: "Biosafety Audit Checklist and Peer Safety Compliance Verification."
+                  },
+                  {
+                    track: "humanities",
+                    trackLabel: "Humanities & Social Sciences Track",
+                    discipline: "History / Art History",
+                    outcome: "Apply professional Chicago Manual of Style standards to construct annotated bibliographies.",
+                    activity: "Archival citation workshop locating primary sources and formatting entry notes.",
+                    assessment: "Annotated Bibliography evaluated against professional citation standards."
+                  },
+                  {
+                    track: "business",
+                    trackLabel: "Business & Co-Curricular Track",
+                    discipline: "Business Communication",
+                    outcome: "Produce executive memos adhering to professional corporate formatting and tone standards.",
+                    activity: "Drafting internal communications based on corporate scenario templates.",
+                    assessment: "Executive Memo Rubric scored against industry communication standards."
+                  }
+                ]
+              },
+              applied: {
+                scope: "Applied (Scope 2: Campus & Community — Target: 14-19 pts)",
+                desc: "Students apply standards to solve semi-structured problems with increasing autonomy.",
+                exemplars: [
+                  {
+                    track: "stem",
+                    trackLabel: "STEM Track",
+                    discipline: "Mechanical Engineering",
+                    outcome: "Apply ASME engineering standards to troubleshoot structural flaws in campus utility equipment.",
+                    activity: "Site inspection and stress-strain testing on campus mechanical systems in collaboration with facilities.",
+                    assessment: "Engineering Diagnostic Report evaluated against ASME professional codes."
+                  },
+                  {
+                    track: "humanities",
+                    trackLabel: "Humanities & Social Sciences Track",
+                    discipline: "Psychology / Human Services",
+                    outcome: "Execute ethical intake interviews adhering to APA professional counseling guidelines.",
+                    activity: "Simulated client intakes with campus wellness centers using standardized diagnostic instruments.",
+                    assessment: "Client Intake Case Summary & Ethics Rubric."
+                  },
+                  {
+                    track: "business",
+                    trackLabel: "Business & Co-Curricular Track",
+                    discipline: "Finance / Real Estate",
+                    outcome: "Apply GAAP accounting principles to audit campus student organization financial records.",
+                    activity: "Financial audit sprint analyzing operational budgets for compliance and risk exposure.",
+                    assessment: "Formal Audit Findings Report presented to student treasurer boards."
+                  }
+                ]
+              },
+              integrated: {
+                scope: "Integrated (Scope 3: External & Professional — Target: 20-24 pts)",
+                desc: "Students negotiate/define the standards and criteria for original, unscripted outcomes.",
+                exemplars: [
+                  {
+                    track: "stem",
+                    trackLabel: "STEM Track",
+                    discipline: "Aerospace Engineering / Software Systems",
+                    outcome: "Establish industry-grade quality criteria for original unscripted deliverables for external partners.",
+                    activity: "Negotiating technical specifications and acceptance criteria directly with NASA or industry engineers.",
+                    assessment: "Sponsor-Approved Systems Requirement Document & Final Design Review."
+                  },
+                  {
+                    track: "humanities",
+                    trackLabel: "Humanities & Social Sciences Track",
+                    discipline: "Public Policy / International Affairs",
+                    outcome: "Draft policy frameworks complying with international regulatory and human rights standards.",
+                    activity: "Co-designing legislative policy drafts with NGO leadership during live policy briefs.",
+                    assessment: "Legislative Policy Proposal & External Stakeholder Defense."
+                  },
+                  {
+                    track: "business",
+                    trackLabel: "Business & Co-Curricular Track",
+                    discipline: "Strategic Management / Consulting",
+                    outcome: "Define performance benchmarks and KPI frameworks for external corporate clients.",
+                    activity: "Contract negotiation and deliverables scoping with corporate C-suite executives.",
+                    assessment: "Master Services Agreement & Client Performance Rating."
+                  }
                 ]
               }
             }
@@ -564,67 +759,393 @@
         ]
       },
       {
-        quadrant: "QUADRANT C: REFLECTION & DEMONSTRATION",
+        quadrant: "QUADRANT C: INTEGRATION",
         elements: [
           {
-            title: "Structured Reflection & Metacognition",
-            rationale: "Metacognitive reflection converts raw activity into portable, career-ready competencies.",
+            title: "Experiences with Diversity",
+            rationale: "Market Readiness: Employers prioritize 'cultural competence.' This cell measures the university's success in preparing students for global markets.",
             tiers: {
               foundational: {
-                scope: "Foundational (Scope 1: Internal Classroom)",
-                desc: "Descriptive reflection connecting course concepts to personal learning habits.",
-                outcomes: [
-                  { tag: "STEM (Neuroscience)", text: "Identify personal cognitive hurdles in understanding complex neurological pathways." },
-                  { tag: "Humanities (Psychology)", text: "Analyze how personal biases influence interpretation of behavioral case studies." },
-                  { tag: "Business / Co-Curricular", text: "Evaluate personal time-management efficiency following major project deadlines." }
-                ],
-                activities: [
-                  { tag: "STEM (Neuroscience)", text: "3-Question Canvas exit tickets submitted immediately after challenging concept lectures." },
-                  { tag: "Humanities (Psychology)", text: "Reflective journal prompts exploring personal reactions to case study scenarios." },
-                  { tag: "Business / Co-Curricular", text: "Post-assignment retrospective logs documenting what strategies succeeded or failed." }
-                ],
-                assessments: [
-                  { tag: "STEM (Neuroscience)", text: "Metacognitive Exit Ticket Portfolio (Graded on depth of self-analysis)." },
-                  { tag: "Humanities (Psychology)", text: "Reflective Journal Rubric measuring self-awareness and bias identification." },
-                  { tag: "Business / Co-Curricular", text: "Project Retrospective One-Pager detailing personal workflow adjustments." }
+                scope: "Foundational (Scope 1: Internal Classroom — Target: 8-13 pts)",
+                desc: "Exposure to diverse perspectives through guided readings, guest speakers, or initial contact.",
+                exemplars: [
+                  {
+                    track: "stem",
+                    trackLabel: "STEM Track",
+                    discipline: "Global Health / Agriculture",
+                    outcome: "Identify how agricultural resource access varies across socio-economic and global demographics.",
+                    activity: "Guided seminar analyzing global case studies of resource distribution and agricultural tech access.",
+                    assessment: "Comparative Case Analysis Brief on agricultural equity."
+                  },
+                  {
+                    track: "humanities",
+                    trackLabel: "Humanities & Social Sciences Track",
+                    discipline: "Cultural Anthropology / Literature",
+                    outcome: "Describe how personal cultural assumptions influence interpretation of non-Western texts.",
+                    activity: "Guest speaker panel featuring international scholars followed by structured reflection prompts.",
+                    assessment: "Cultural Identity Reflective Essay."
+                  },
+                  {
+                    track: "business",
+                    trackLabel: "Business & Co-Curricular Track",
+                    discipline: "International Business",
+                    outcome: "Compare cross-cultural business etiquette and negotiation practices across global markets.",
+                    activity: "Simulated cross-cultural negotiation exercise incorporating global business norm frameworks.",
+                    assessment: "Cross-Cultural Negotiation Analysis Paper."
+                  }
                 ]
               },
               applied: {
-                scope: "Applied (Scope 2: Campus & Community)",
-                desc: "Integrative reflection evaluating how skills adapt to solve dynamic problems.",
-                outcomes: [
-                  { tag: "STEM (Environmental Science)", text: "Evaluate discrepancies between theoretical ecological models and field-collected water samples." },
-                  { tag: "Humanities (Anthropology)", text: "Examine ethical implications of field observation techniques within local communities." },
-                  { tag: "Business / Co-Curricular", text: "Assess how team leadership style shifted when managing unexpected project roadblocks." }
-                ],
-                activities: [
-                  { tag: "STEM (Environmental Science)", text: "Mid-semester Process Audit comparing expected research hypotheses against data anomalies." },
-                  { tag: "Humanities (Anthropology)", text: "Ethical Dilemma Discussion Board analyzing real-time field interaction challenges." },
-                  { tag: "Business / Co-Curricular", text: "Leadership Pivot Memos written following mid-project client feedback." }
-                ],
-                assessments: [
-                  { tag: "STEM (Environmental Science)", text: "Scientific Process Audit Memo evaluating analytical adaptations." },
-                  { tag: "Humanities (Anthropology)", text: "Ethical Fieldwork Essay linking fieldwork practice to discipline codes of ethics." },
-                  { tag: "Business / Co-Curricular", text: "Leadership Adaptation Analysis detailing team problem resolution." }
+                scope: "Applied (Scope 2: Campus & Community — Target: 14-19 pts)",
+                desc: "Engagement with 'otherness' through project-based work; students navigate differing viewpoints.",
+                exemplars: [
+                  {
+                    track: "stem",
+                    trackLabel: "STEM Track",
+                    discipline: "Urban Planning / Environmental Design",
+                    outcome: "Adapt urban infrastructure designs to accommodate diverse community accessibility requirements.",
+                    activity: "Conducting site accessibility audits with local advocacy groups representing community members with disabilities.",
+                    assessment: "Universal Design Site Assessment Report."
+                  },
+                  {
+                    track: "humanities",
+                    trackLabel: "Humanities & Social Sciences Track",
+                    discipline: "Sociology / Education",
+                    outcome: "Facilitate inclusive dialogues addressing differing community perspectives on local educational access.",
+                    activity: "Organizing multi-stakeholder community listening sessions bringing together diverse local populations.",
+                    assessment: "Community Perspective Synthesis Paper & Moderation Critique."
+                  },
+                  {
+                    track: "business",
+                    trackLabel: "Business & Co-Curricular Track",
+                    discipline: "Human Resource Management",
+                    outcome: "Design workplace inclusion initiatives addressing diverse employee needs in campus departments.",
+                    activity: "Auditing campus workplace environments and interviewing diverse employee focus groups.",
+                    assessment: "Inclusion & Belonging Audit Report."
+                  }
                 ]
               },
               integrated: {
-                scope: "Integrated (Scope 3: External & Professional)",
-                desc: "Transformative reflection articulating personal growth, ethics, and professional identity.",
-                outcomes: [
-                  { tag: "STEM (Biomedical Engineering)", text: "Articulate professional ethical values and technical identity to industry recruiters." },
-                  { tag: "Humanities (International Studies)", text: "Synthesize cross-cultural competency gains across multi-year study abroad or service." },
-                  { tag: "Business / Co-Curricular", text: "Construct an e-portfolio framing university leadership experiences into marketable career skills." }
-                ],
-                activities: [
-                  { tag: "STEM (Biomedical Engineering)", text: "Capstone e-Portfolio curation showcasing engineering artifacts alongside professional identity essays." },
-                  { tag: "Humanities (International Studies)", text: "Senior Exit Interview & Defense presenting multi-year global learning synthesis." },
-                  { tag: "Business / Co-Curricular", text: "Career Competency Workshop converting student leadership experiences into STAR method interview stories." }
-                ],
-                assessments: [
-                  { tag: "STEM (Biomedical Engineering)", text: "Professional Capstone e-Portfolio evaluated by faculty and alumni industry mentors." },
-                  { tag: "Humanities (International Studies)", text: "Senior Synthesis Defense evaluated on cross-cultural fluency and ethical reasoning." },
-                  { tag: "Business / Co-Curricular", text: "Comprehensive Leadership Career Portfolio & Oral Defense." }
+                scope: "Integrated (Scope 3: External & Professional — Target: 20-24 pts)",
+                desc: "Transformation through sustained, direct engagement in unfamiliar or complex environments.",
+                exemplars: [
+                  {
+                    track: "stem",
+                    trackLabel: "STEM Track",
+                    discipline: "Biomedical Outreach / Water Engineering",
+                    outcome: "Co-design appropriate medical technologies directly within under-resourced international communities.",
+                    activity: "Immersive field engineering fellowship in international communities working alongside local health providers.",
+                    assessment: "Field Deployment Protocol & Community Partner Impact Assessment."
+                  },
+                  {
+                    track: "humanities",
+                    trackLabel: "Humanities & Social Sciences Track",
+                    discipline: "International Relations / Immigration Law",
+                    outcome: "Advocate for marginalized stakeholder populations within complex legal or civic environments.",
+                    activity: "Semester-long immersion working directly in legal aid clinics or international refugee support NGOs.",
+                    assessment: "Client Advocacy Casebook & Supervisor Performance Rating."
+                  },
+                  {
+                    track: "business",
+                    trackLabel: "Business & Co-Curricular Track",
+                    discipline: "Global Supply Chain / Microfinance",
+                    outcome: "Develop sustainable microfinance frameworks supporting female entrepreneurs in emerging economies.",
+                    activity: "On-site or virtual consulting with international micro-entrepreneurs to restructure loan systems.",
+                    assessment: "Microfinance Impact Portfolio & Partner Renewal Review."
+                  }
+                ]
+              }
+            }
+          },
+          {
+            title: "Structured Reflection",
+            rationale: "The 'Learning Engine': Converts activity into portable skills. Without reflection, the 'Impact' is lost once the semester ends.",
+            tiers: {
+              foundational: {
+                scope: "Foundational (Scope 1: Internal Classroom — Target: 8-13 pts)",
+                desc: "Descriptive: 'How does this experience match what I am learning in the classroom?'",
+                exemplars: [
+                  {
+                    track: "stem",
+                    trackLabel: "STEM Track",
+                    discipline: "Introductory Biology",
+                    outcome: "Connect lab-observed enzyme reaction rates to theoretical kinetics equations taught in lecture.",
+                    activity: "Weekly post-lab 3-question exit ticket prompting connection between lab data and lecture theory.",
+                    assessment: "Weekly Reflection Exit Ticket Log."
+                  },
+                  {
+                    track: "humanities",
+                    trackLabel: "Humanities & Social Sciences Track",
+                    discipline: "Psychology",
+                    outcome: "Describe how personal cognitive bias was manifested during classroom debate exercises.",
+                    activity: "Post-discussion journal entries analyzing personal reactions using psychological concepts.",
+                    assessment: "Descriptive Reflection Journal Rubric."
+                  },
+                  {
+                    track: "business",
+                    trackLabel: "Business & Co-Curricular Track",
+                    discipline: "Principles of Marketing",
+                    outcome: "Identify alignment between course consumer behavior models and personal purchasing habits.",
+                    activity: "Weekly self-audit blog analyzing personal brand choices against textbook marketing concepts.",
+                    assessment: "Consumer Behavior Personal Audit Journal."
+                  }
+                ]
+              },
+              applied: {
+                scope: "Applied (Scope 2: Campus & Community — Target: 14-19 pts)",
+                desc: "Integrative: 'How am I adapting my skills to meet the specific needs of this context?'",
+                exemplars: [
+                  {
+                    track: "stem",
+                    trackLabel: "STEM Track",
+                    discipline: "Civil Engineering / Field Geology",
+                    outcome: "Analyze discrepancies between theoretical computer models and messy field-collected soil samples.",
+                    activity: "Mid-project reflection essay examining why real-world field conditions diverged from lab simulations.",
+                    assessment: "Integrative Process Audit Memo."
+                  },
+                  {
+                    track: "humanities",
+                    trackLabel: "Humanities & Social Sciences Track",
+                    discipline: "Community Sociology",
+                    outcome: "Evaluate how academic research methods were modified to accommodate community partner schedules.",
+                    activity: "Guided reflection roundtables discussing ethical adaptations made during community field research.",
+                    assessment: "Methodological Adaptation Essay."
+                  },
+                  {
+                    track: "business",
+                    trackLabel: "Business & Co-Curricular Track",
+                    discipline: "Project Management",
+                    outcome: "Critique personal leadership adaptations made when managing unexpected group conflict.",
+                    activity: "STAR-method (Situation, Task, Action, Result) reflection write-up following major project milestones.",
+                    assessment: "STAR Leadership Retrospective Analysis."
+                  }
+                ]
+              },
+              integrated: {
+                scope: "Integrated (Scope 3: External & Professional — Target: 20-24 pts)",
+                desc: "Metacognitive: 'How has this partnership redefined my professional identity and values?'",
+                exemplars: [
+                  {
+                    track: "stem",
+                    trackLabel: "STEM Track",
+                    discipline: "Bioethics / Computer Science Capstone",
+                    outcome: "Articulate personal professional identity and ethical responsibilities as a emerging technical practitioner.",
+                    activity: "Capstone e-Portfolio curation compiling project artifacts alongside a professional ethics philosophy essay.",
+                    assessment: "Professional Capstone e-Portfolio Defense."
+                  },
+                  {
+                    track: "humanities",
+                    trackLabel: "Humanities & Social Sciences Track",
+                    discipline: "Education / Social Work",
+                    outcome: "Synthesize how long-term community immersion altered personal career trajectory and systemic values.",
+                    activity: "Senior exit interview and oral defense presenting a multi-year reflection on civic identity.",
+                    assessment: "Senior Identity Synthesis Defense."
+                  },
+                  {
+                    track: "business",
+                    trackLabel: "Business & Co-Curricular Track",
+                    discipline: "Executive Business Leadership",
+                    outcome: "Translate complex student leadership experiences into marketable, high-impact career narratives.",
+                    activity: "Mock executive interview and digital career portfolio presentation for industry recruiters.",
+                    assessment: "Executive Career Portfolio & Oral Defense."
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      {
+        quadrant: "QUADRANT D: IMPACT",
+        elements: [
+          {
+            title: "Real-World Application",
+            rationale: "External Brand Value: Measures the university's impact on the community. High scores here justify state and private donor funding.",
+            tiers: {
+              foundational: {
+                scope: "Foundational (Scope 1: Internal Classroom — Target: 8-13 pts)",
+                desc: "Hypothetical or 'simulated' real-world scenarios; low-stakes external connection.",
+                exemplars: [
+                  {
+                    track: "stem",
+                    trackLabel: "STEM Track",
+                    discipline: "Introductory Engineering / CS",
+                    outcome: "Solve a simulated structural stress scenario using pre-programmed software tools.",
+                    activity: "In-class simulation lab testing bridge truss stability against modeled load forces.",
+                    assessment: "Simulation Accuracy Report."
+                  },
+                  {
+                    track: "humanities",
+                    trackLabel: "Humanities & Social Sciences Track",
+                    discipline: "Pre-Law / Political Science",
+                    outcome: "Argue a simulated constitutional case using established legal precedents.",
+                    activity: "In-class Moot Court simulation presenting oral arguments before peer judges.",
+                    assessment: "Moot Court Oral Argument Rubric."
+                  },
+                  {
+                    track: "business",
+                    trackLabel: "Business & Co-Curricular Track",
+                    discipline: "Corporate Finance",
+                    outcome: "Evaluate corporate financial risk using historical stock market case studies.",
+                    activity: "Simulated stock portfolio management exercise tracking mock investments across 6 weeks.",
+                    assessment: "Portfolio Performance Analysis."
+                  }
+                ]
+              },
+              applied: {
+                scope: "Applied (Scope 2: Campus & Community — Target: 14-19 pts)",
+                desc: "Active projects with a live stakeholder; solving a defined problem with real consequences.",
+                exemplars: [
+                  {
+                    track: "stem",
+                    trackLabel: "STEM Track",
+                    discipline: "Environmental Science",
+                    outcome: "Develop an actionable campus recycling plan addressing specific waste accumulation data.",
+                    activity: "Collaborating with TAMU Office of Sustainability to audit and redesign campus waste station placement.",
+                    assessment: "Waste Audit Proposal & Campus Implementation Plan."
+                  },
+                  {
+                    track: "humanities",
+                    trackLabel: "Humanities & Social Sciences Track",
+                    discipline: "Communication / Journalism",
+                    outcome: "Produce promotional media content for local non-profit community partners.",
+                    activity: "Field filming and interviews creating promotional videos for local food bank initiatives.",
+                    assessment: "Final Client Video Asset & Non-Profit Media Review."
+                  },
+                  {
+                    track: "business",
+                    trackLabel: "Business & Co-Curricular Track",
+                    discipline: "Small Business Consulting",
+                    outcome: "Conduct local business market feasibility studies for Bryan/College Station merchants.",
+                    activity: "On-site business operations review and customer traffic analysis for local retail clients.",
+                    assessment: "Small Business Improvement Recommendations Brief."
+                  }
+                ]
+              },
+              integrated: {
+                scope: "Integrated (Scope 3: External & Professional — Target: 20-24 pts)",
+                desc: "Unscripted partnership; students navigate the ambiguity of a 'live' professional/civic ecosystem.",
+                exemplars: [
+                  {
+                    track: "stem",
+                    trackLabel: "STEM Track",
+                    discipline: "Computer Science / Cybersecurity",
+                    outcome: "Deploy a live, production-grade cybersecurity tracking tool for regional health systems.",
+                    activity: "Unscripted software architecture sprints responding to live system vulnerabilities in partner networks.",
+                    assessment: "Live System Deployment Audit & Sponsor CTO Evaluation."
+                  },
+                  {
+                    track: "humanities",
+                    trackLabel: "Humanities & Social Sciences Track",
+                    discipline: "Urban Planning / Public Policy",
+                    outcome: "Author regional transit policy amendments submitted to city council for legislative vote.",
+                    activity: "Direct engagement with city transit boards navigating public hearings and policy drafting.",
+                    assessment: "Adopted Policy Amendment & City Council Defense."
+                  },
+                  {
+                    track: "business",
+                    trackLabel: "Business & Co-Curricular Track",
+                    discipline: "Management Consulting Capstone",
+                    outcome: "Manage $50k+ active project budgets for Fortune 500 strategic expansion initiatives.",
+                    activity: "Unscripted corporate management consulting addressing live market expansion challenges.",
+                    assessment: "Client Final Acceptance Signoff & Project ROI Audit."
+                  }
+                ]
+              }
+            }
+          },
+          {
+            title: "Public Demonstration",
+            rationale: "Accountability: Makes the hidden work of the university 'visible.' Public competence is the ultimate proof of institutional quality.",
+            tiers: {
+              foundational: {
+                scope: "Foundational (Scope 1: Internal Classroom — Target: 8-13 pts)",
+                desc: "Presentation to peers/faculty to demonstrate baseline competence and communication.",
+                exemplars: [
+                  {
+                    track: "stem",
+                    trackLabel: "STEM Track",
+                    discipline: "Chemistry / Biology",
+                    outcome: "Present experimental methodology and data trends to classmates using scientific slides.",
+                    activity: "End-of-unit 5-minute poster slideshow presented during regular class hours.",
+                    assessment: "Internal Scientific Presentation Rubric."
+                  },
+                  {
+                    track: "humanities",
+                    trackLabel: "Humanities & Social Sciences Track",
+                    discipline: "Communication / History",
+                    outcome: "Deliver an informative 8-minute speech demonstrating clear structural organization.",
+                    activity: "Classroom speech presentation evaluated by instructor and peers.",
+                    assessment: "Public Speaking Performance Rubric."
+                  },
+                  {
+                    track: "business",
+                    trackLabel: "Business & Co-Curricular Track",
+                    discipline: "Marketing / Management",
+                    outcome: "Deliver professional pitch presentations introducing a new product concept to peers.",
+                    activity: "Classroom pitch presentation using slide decks and product mockups.",
+                    assessment: "Product Pitch Presentation Scorecard."
+                  }
+                ]
+              },
+              applied: {
+                scope: "Applied (Scope 2: Campus & Community — Target: 14-19 pts)",
+                desc: "Presentation to a community partner or specific stakeholder for feedback and critique.",
+                exemplars: [
+                  {
+                    track: "stem",
+                    trackLabel: "STEM Track",
+                    discipline: "Agricultural Engineering / Architecture",
+                    outcome: "Present site design proposals directly to campus facility managers and project stakeholders.",
+                    activity: "Campus design showcase presenting physical models and poster boards to TAMU administrators.",
+                    assessment: "Stakeholder Presentation Scorecard."
+                  },
+                  {
+                    track: "humanities",
+                    trackLabel: "Humanities & Social Sciences Track",
+                    discipline: "Sociology / Public Health",
+                    outcome: "Present health intervention findings to local community clinic directors.",
+                    activity: "Community briefing session delivering health research findings directly to clinic staff.",
+                    assessment: "Community Partner Feedback Rating."
+                  },
+                  {
+                    track: "business",
+                    trackLabel: "Business & Co-Curricular Track",
+                    discipline: "Business Analytics",
+                    outcome: "Present data visualization dashboards to non-profit board members.",
+                    activity: "Formal board room presentation explaining data insights and operational recommendations.",
+                    assessment: "Board Evaluation of Executive Presentation."
+                  }
+                ]
+              },
+              integrated: {
+                scope: "Integrated (Scope 3: External & Professional — Target: 20-24 pts)",
+                desc: "Public defense/dissemination to an external body with the intent to influence practice or policy.",
+                exemplars: [
+                  {
+                    track: "stem",
+                    trackLabel: "STEM Track",
+                    discipline: "Physics / Biomedical Engineering",
+                    outcome: "Defend original research findings at national academic conferences (e.g., BMES, ACS).",
+                    activity: "Presenting peer-reviewed oral or poster presentations to international scientific bodies.",
+                    assessment: "Conference Presentation Certificate & Peer Review Comments."
+                  },
+                  {
+                    track: "humanities",
+                    trackLabel: "Humanities & Social Sciences Track",
+                    discipline: "Political Science / Fine Arts",
+                    outcome: "Deliver testimony at public legislative hearings or publish work in professional public venues.",
+                    activity: "Formal public testimony before state legislative committees or public art unveiling.",
+                    assessment: "Legislative Hearing Transcript or Public Exhibition Portfolio."
+                  },
+                  {
+                    track: "business",
+                    trackLabel: "Business & Co-Curricular Track",
+                    discipline: "Venture Capital / International Business",
+                    outcome: "Defend strategic business models before regional venture capital funding panels.",
+                    activity: "Public pitch defense at regional venture competitions competing for capital funding.",
+                    assessment: "Venture Competition Placement & Investor Evaluation."
+                  }
                 ]
               }
             }
@@ -639,9 +1160,9 @@
 
       let html = `
         <div class="grid-header">AAC&U Quality Element</div>
-        <div class="grid-header">FOUNDATIONAL<span class="score-tag">Scope 1 (Classroom)</span></div>
-        <div class="grid-header">APPLIED<span class="score-tag">Scope 2 (Campus/Community)</span></div>
-        <div class="grid-header">INTEGRATED<span class="score-tag">Scope 3 (Professional)</span></div>
+        <div class="grid-header">FOUNDATIONAL<span class="score-tag">Scope 1 (Classroom - 8-13 pts)</span></div>
+        <div class="grid-header">APPLIED<span class="score-tag">Scope 2 (Campus/Community - 14-19 pts)</span></div>
+        <div class="grid-header">INTEGRATED<span class="score-tag">Scope 3 (External/Professional - 20-24 pts)</span></div>
       `;
 
       matrixData.forEach((q, qIndex) => {
@@ -660,7 +1181,7 @@
             html += `
               <div class="matrix-cell" onclick="openModal(${qIndex}, ${eIndex}, '${tierKey}')">
                 <div class="cell-text">${tierData.desc}</div>
-                <div class="cell-action">Click for 9 Exemplars ➔</div>
+                <div class="cell-action">Click for 3 Track Packages ➔</div>
               </div>
             `;
           });
@@ -675,32 +1196,32 @@
       const tier = elem.tiers[tierKey];
 
       document.getElementById("modalTitle").innerText = `${elem.title}`;
-      document.getElementById("modalSubtitle").innerText = tier.scope;
+      document.getElementById("modalSubtitle").innerText = `${matrixData[qIndex].quadrant} | ${tier.scope}`;
 
-      renderExampleList("outcomesContainer", tier.outcomes);
-      renderExampleList("activitiesContainer", tier.activities);
-      renderExampleList("assessmentsContainer", tier.assessments);
+      const modalBody = document.getElementById("modalBody");
+      
+      modalBody.innerHTML = tier.exemplars.map(ex => `
+        <div class="track-card ${ex.track}">
+          <div class="track-header">
+            <span class="track-badge ${ex.track}">${ex.trackLabel}</span>
+            <span class="discipline-title">${ex.discipline}</span>
+          </div>
+          <div class="item-group">
+            <div class="item-label">🎯 Learning Outcome</div>
+            <div class="item-text">${ex.outcome}</div>
+          </div>
+          <div class="item-group">
+            <div class="item-label">⚡ Learning Activity</div>
+            <div class="item-text">${ex.activity}</div>
+          </div>
+          <div class="item-group">
+            <div class="item-label">📊 Assessment & Artifact</div>
+            <div class="item-text">${ex.assessment}</div>
+          </div>
+        </div>
+      `).join("");
 
       document.getElementById("modalOverlay").classList.add("active");
-    }
-
-    function renderExampleList(containerId, items) {
-      const container = document.getElementById(containerId);
-      container.innerHTML = items.map(item => {
-        let badgeClass = "stem";
-        if (item.tag.includes("Humanities") || item.tag.includes("Psychology") || item.tag.includes("Sociology") || item.tag.includes("English") || item.tag.includes("History") || item.tag.includes("Education") || item.tag.includes("Political Science") || item.tag.includes("Communication") || item.tag.includes("Visual Arts") || item.tag.includes("Anthropology") || item.tag.includes("International")) {
-          badgeClass = "humanities";
-        } else if (item.tag.includes("Business") || item.tag.includes("DEEP") || item.tag.includes("Co-Curricular")) {
-          badgeClass = "business";
-        }
-
-        return `
-          <div class="example-card">
-            <span class="discipline-badge ${badgeClass}">${item.tag}</span>
-            <div class="example-text">${item.text}</div>
-          </div>
-        `;
-      }).join("");
     }
 
     function closeModal() {
